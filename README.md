@@ -84,17 +84,6 @@ CountryPicker(
   },
   showPhoneCodes: true, // Default behavior
 )
-
-// Hide phone codes
-CountryPicker(
-  selectedCountry: selectedCountry,
-  onCountrySelected: (Country country) {
-    setState(() {
-      selectedCountry = country;
-    });
-  },
-  showPhoneCodes: false, // Hide phone codes
-)
 ```
 
 ### Multi-Language Support
@@ -194,4 +183,10 @@ MIT License - see [LICENSE](LICENSE) file.
 
 **Stanislav Bozhko**  
 Email: stas.bozhko@gmail.com  
-GitHub: [@stanislavworldin](https://github.com/stanislavworldin) 
+GitHub: [@stanislavworldin](https://github.com/stanislavworldin)
+
+## ☕ Support
+
+If you find this package helpful, consider buying me a coffee! ☕
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/stanislavbozhko) 
