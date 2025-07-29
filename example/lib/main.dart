@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:country_search/country_search.dart';
 
 void main() {
@@ -66,10 +65,16 @@ class _MyHomePageState extends State<MyHomePage> {
         return '🇪🇸 Español';
       case 'fr':
         return '🇫🇷 Français';
+      case 'it':
+        return '🇮🇹 Italiano';
+      case 'ja':
+        return '🇯🇵 日本語';
       case 'pt':
         return '🇵🇹 Português';
       case 'ru':
         return '🇷🇺 Русский';
+      case 'zh':
+        return '🇨🇳 中文';
       default:
         return '🇺🇸 English';
     }
@@ -101,12 +106,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Text('🇫🇷 Français'),
               ),
               const PopupMenuItem(
+                value: Locale('it'),
+                child: Text('🇮🇹 Italiano'),
+              ),
+              const PopupMenuItem(
+                value: Locale('ja'),
+                child: Text('🇯🇵 日本語'),
+              ),
+              const PopupMenuItem(
                 value: Locale('pt'),
                 child: Text('🇵🇹 Português'),
               ),
               const PopupMenuItem(
                 value: Locale('ru'),
                 child: Text('🇷🇺 Русский'),
+              ),
+              const PopupMenuItem(
+                value: Locale('zh'),
+                child: Text('🇨🇳 中文'),
               ),
             ],
             child: Padding(
