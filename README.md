@@ -48,9 +48,29 @@ CountryPicker(
 
 **✅ Works immediately without any setup!** The widget uses English by default.
 
-### Multi-Language Support (Optional)
 
-For multi-language support, add delegates to your MaterialApp:
+
+### Run the Example
+
+To see the widget in action, run the example app:
+
+```bash
+cd example
+flutter run
+```
+
+The example demonstrates:
+- ✅ Multi-language support (6 languages)
+- ✅ Country search by name, code, and phone code
+- ✅ Beautiful dark theme UI
+- ✅ Responsive design for all screen sizes
+
+
+## 🔧 Customization
+
+### Multi-Language Support
+
+The widget works with English by default. For multi-language support, add delegates to your MaterialApp:
 
 ```dart
 // If you don't have delegates yet:
@@ -74,47 +94,6 @@ MaterialApp(
     const Locale('en'),
     const Locale('de')
   ],
-)
-```
-
-### Run the Example
-
-To see the widget in action, run the example app:
-
-```bash
-cd example
-flutter run
-```
-
-The example demonstrates:
-- ✅ Multi-language support (6 languages)
-- ✅ Country search by name, code, and phone code
-- ✅ Beautiful dark theme UI
-- ✅ Responsive design for all screen sizes
-
-### Localization Setup
-
-```dart
-MaterialApp(
-  localizationsDelegates: CountrySearchDelegates.allDelegates,
-  supportedLocales: CountrySearchDelegates.supportedLocales,
-)
-```
-
-## 🔧 Customization
-
-
-## 🔧 Customization
-
-### Multi-Language Support (Optional)
-
-The widget works with English by default. For multi-language support, add delegates to your MaterialApp:
-
-```dart
-MaterialApp(
-  localizationsDelegates: CountrySearchDelegates.allDelegates,
-  supportedLocales: CountrySearchDelegates.supportedLocales,
-  // ... rest of your app
 )
 ```
 
@@ -161,45 +140,7 @@ CountryLocalizations lookupCountryLocalizations(Locale locale) {
 }
 ```
 
-### Custom Display Format
 
-```dart
-// Custom display without phone codes
-ListTile(
-  leading: Text(country.flag),
-  title: Text(countryName),
-  subtitle: Text(country.code),
-  onTap: () => onCountrySelected(country),
-)
-
-// Custom display with phone codes
-ListTile(
-  leading: Text(country.flag),
-  title: Text(countryName),
-  subtitle: Text('${country.code} (${country.phoneCode})'),
-  onTap: () => onCountrySelected(country),
-)
-```
-
-### Simple List Without Search
-
-If you don't need search functionality, create a simple picker:
-
-```dart
-// Simple country list without search
-ListView.builder(
-  itemCount: CountryData.countries.length,
-  itemBuilder: (context, index) {
-    final country = CountryData.countries[index];
-    return ListTile(
-      leading: Text(country.flag),
-      title: Text(CountryLocalizations.of(context).getCountryName(country.code)),
-      subtitle: Text(country.code),
-      onTap: () => onCountrySelected(country),
-    );
-  },
-)
-```
 
 ## 🌍 Supported Languages
 
