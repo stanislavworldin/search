@@ -67,6 +67,17 @@ void main() {
       expect(localizations.selectYourCountry, equals('Selecione seu país'));
     });
 
+    test('Chinese localizations work correctly', () {
+      final localizations = CountryLocalizationsZh();
+
+      expect(localizations.getCountryName('US'), equals('美国'));
+      expect(localizations.getCountryName('RU'), equals('俄罗斯'));
+      expect(localizations.getCountryName('CN'), equals('中国'));
+      expect(localizations.selectCountry, equals('选择国家'));
+      expect(localizations.searchCountry, equals('搜索国家...'));
+      expect(localizations.selectYourCountry, equals('选择您的国家'));
+    });
+
     test('All localizations have same country codes', () {
       final en = CountryLocalizationsEn();
       final es = CountryLocalizationsEs();
@@ -74,23 +85,25 @@ void main() {
       final ru = CountryLocalizationsRu();
       final de = CountryLocalizationsDe();
       final pt = CountryLocalizationsPt();
+      final zh = CountryLocalizationsZh();
 
       expect(en.allCountryNames.keys, equals(es.allCountryNames.keys));
       expect(en.allCountryNames.keys, equals(fr.allCountryNames.keys));
       expect(en.allCountryNames.keys, equals(ru.allCountryNames.keys));
       expect(en.allCountryNames.keys, equals(de.allCountryNames.keys));
       expect(en.allCountryNames.keys, equals(pt.allCountryNames.keys));
+      expect(en.allCountryNames.keys, equals(zh.allCountryNames.keys));
     });
 
     test('Localizations delegate works', () {
       expect(CountryLocalizations.delegate, isNotNull);
       expect(CountryLocalizations.supportedLocales, isNotEmpty);
-      expect(CountryLocalizations.supportedLocales.length, equals(6));
+      expect(CountryLocalizations.supportedLocales.length, equals(7));
     });
 
     test('Fallback to English for unsupported locale', () {
-      // Test with unsupported locale (Chinese)
-      const unsupportedLocale = Locale('zh');
+      // Test with unsupported locale (Japanese)
+      const unsupportedLocale = Locale('ja');
       final localizations = lookupCountryLocalizations(unsupportedLocale);
 
       // Should fallback to English

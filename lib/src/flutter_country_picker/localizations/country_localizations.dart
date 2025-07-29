@@ -9,6 +9,7 @@ import 'country_localizations_es.dart';
 import 'country_localizations_fr.dart';
 import 'country_localizations_pt.dart';
 import 'country_localizations_ru.dart';
+import 'country_localizations_zh.dart';
 
 // ignore_for_file: type=lint
 
@@ -66,6 +67,7 @@ abstract class CountryLocalizations {
     Locale('fr'),
     Locale('pt'),
     Locale('ru'),
+    Locale('zh'),
   ];
 
   /// Get country name by country code
@@ -106,7 +108,8 @@ class _CountryLocalizationsDelegate
         'es',
         'fr',
         'pt',
-        'ru'
+        'ru',
+        'zh'
       ].contains(locale.languageCode);
 
   @override
@@ -132,6 +135,8 @@ CountryLocalizations lookupCountryLocalizations(Locale locale) {
       return CountryLocalizationsPt();
     case 'ru':
       return CountryLocalizationsRu();
+    case 'zh':
+      return CountryLocalizationsZh();
   }
 
   // Fallback to English for unsupported locales
