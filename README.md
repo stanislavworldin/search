@@ -43,6 +43,7 @@ CountryPicker(
     });
     debugPrint('Selected: ${country.flag} ${country.code} (${country.phoneCode})');
   },
+  showPhoneCodes: true, // Show phone codes (default)
 )
 ```
 
@@ -67,6 +68,34 @@ The example demonstrates:
 
 
 ## 🔧 Customization
+
+### Show/Hide Phone Codes
+
+Control whether phone codes are displayed in the country list:
+
+```dart
+// Show phone codes (default)
+CountryPicker(
+  selectedCountry: selectedCountry,
+  onCountrySelected: (Country country) {
+    setState(() {
+      selectedCountry = country;
+    });
+  },
+  showPhoneCodes: true, // Default behavior
+)
+
+// Hide phone codes
+CountryPicker(
+  selectedCountry: selectedCountry,
+  onCountrySelected: (Country country) {
+    setState(() {
+      selectedCountry = country;
+    });
+  },
+  showPhoneCodes: false, // Hide phone codes
+)
+```
 
 ### Multi-Language Support
 
@@ -99,7 +128,7 @@ MaterialApp(
 
 ### Disable Phone Codes (Optional)
 
-If you don't need phone codes, you can disable them:
+If you don't need phone codes, you can disable them using the `showPhoneCodes` parameter:
 
 ```dart
 CountryPicker(
