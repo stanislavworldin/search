@@ -15,9 +15,6 @@ A beautiful and customizable country picker widget for Flutter with multi-langua
 - 🔧 **Highly Customizable** - easily disable unwanted features
 - 🌐 **Cross-Platform** - works on mobile, web, and desktop
 
-## 📱 Screenshots
-
-### Country Search Demo
 ![Demo](https://raw.githubusercontent.com/stanislavworldin/country_search/main/screenshots/1.png)
 
 
@@ -167,6 +164,7 @@ CountryLocalizations lookupCountryLocalizations(Locale locale) {
 - 🇪🇸 Spanish
 - 🇫🇷 French
 - 🇩🇪 German
+- 🇮🇹 Italian
 - 🇵🇹 Portuguese
 - 🇨🇳 Chinese
 

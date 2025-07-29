@@ -67,6 +67,17 @@ void main() {
       expect(localizations.selectYourCountry, equals('Selecione seu país'));
     });
 
+    test('Italian localizations work correctly', () {
+      final localizations = CountryLocalizationsIt();
+
+      expect(localizations.getCountryName('US'), equals('Stati Uniti'));
+      expect(localizations.getCountryName('RU'), equals('Russia'));
+      expect(localizations.getCountryName('IT'), equals('Italia'));
+      expect(localizations.selectCountry, equals('Seleziona Paese'));
+      expect(localizations.searchCountry, equals('Cerca paese...'));
+      expect(localizations.selectYourCountry, equals('Seleziona il tuo paese'));
+    });
+
     test('Chinese localizations work correctly', () {
       final localizations = CountryLocalizationsZh();
 
@@ -85,6 +96,7 @@ void main() {
       final ru = CountryLocalizationsRu();
       final de = CountryLocalizationsDe();
       final pt = CountryLocalizationsPt();
+      final it = CountryLocalizationsIt();
       final zh = CountryLocalizationsZh();
 
       expect(en.allCountryNames.keys, equals(es.allCountryNames.keys));
@@ -92,13 +104,14 @@ void main() {
       expect(en.allCountryNames.keys, equals(ru.allCountryNames.keys));
       expect(en.allCountryNames.keys, equals(de.allCountryNames.keys));
       expect(en.allCountryNames.keys, equals(pt.allCountryNames.keys));
+      expect(en.allCountryNames.keys, equals(it.allCountryNames.keys));
       expect(en.allCountryNames.keys, equals(zh.allCountryNames.keys));
     });
 
     test('Localizations delegate works', () {
       expect(CountryLocalizations.delegate, isNotNull);
       expect(CountryLocalizations.supportedLocales, isNotEmpty);
-      expect(CountryLocalizations.supportedLocales.length, equals(7));
+      expect(CountryLocalizations.supportedLocales.length, equals(8));
     });
 
     test('Fallback to English for unsupported locale', () {
