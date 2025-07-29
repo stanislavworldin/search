@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.2.0] - 2025-01-29
+
+### Added
+- **showPhoneCodes Parameter**: New parameter to control phone code display in country list
+- **Phone Code Control**: Users can now hide phone codes with `showPhoneCodes: false`
+- **Enhanced Documentation**: Updated README with comprehensive customization examples
+- **Ko-fi Support**: Added support link for community contributions
+
+### Changed
+- **Improved README**: Better structure and clearer examples
+- **Enhanced Customization**: More practical customization options
+- **Better User Experience**: Simplified phone code control
+
 ## [2.1.1] - 2025-01-29
 
 ### Fixed
