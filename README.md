@@ -103,16 +103,6 @@ MaterialApp(
 
 ## 📚 API
 
-### Country
-
-```dart
-class Country {
-  final String code;      // ISO code (e.g., 'US', 'RU')
-  final String flag;      // Country flag (e.g., '🇺🇸', '🇷🇺')
-  final String phoneCode; // Phone code (e.g., '+1', '+7')
-}
-```
-
 ### Search Examples
 
 ```dart
