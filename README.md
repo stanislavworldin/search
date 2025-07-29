@@ -25,7 +25,7 @@ A beautiful and customizable country picker widget for Flutter with multi-langua
 
 ```yaml
 dependencies:
-  country_search: ^2.0.2
+  country_search: ^2.1.1
 ```
 
 ## 🚀 Usage
@@ -102,15 +102,6 @@ MaterialApp(
 ```
 
 ## 📚 API
-
-### CountryPicker
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `selectedCountry` | `Country?` | Selected country |
-| `onCountrySelected` | `Function(Country)` | Callback on selection |
-| `labelText` | `String?` | Custom label text |
-| `hintText` | `String?` | Custom hint text |
 
 ### Country
 
