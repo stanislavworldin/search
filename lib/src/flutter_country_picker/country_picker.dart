@@ -4,8 +4,9 @@ import 'localizations/country_localizations.dart';
 
 /// A beautiful and customizable country picker widget
 ///
-/// This widget displays a list of countries with flags and localized names.
-/// It supports search functionality and multi-language support.
+/// This widget displays a list of countries with flags and names.
+/// It supports search functionality and works with English by default.
+/// For multi-language support, configure localization delegates.
 class CountryPicker extends StatefulWidget {
   /// Currently selected country
   final Country? selectedCountry;
@@ -49,15 +50,23 @@ class _CountryPickerState extends State<CountryPicker> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Update sorting when language changes
+    // Update sorting when language changes (only if delegates are configured)
     _updateCountriesForLanguage();
   }
 
   void _updateCountriesForLanguage() {
-    final countryLocalizations = CountryLocalizations.of(context);
-    _allCountries =
-        CountryData.getSortedCountries(countryLocalizations.getCountryName);
-    _filteredCountries = _allCountries;
+    try {
+      final countryLocalizations = CountryLocalizations.of(context);
+      _allCountries =
+          CountryData.getSortedCountries(countryLocalizations.getCountryName);
+      _filteredCountries = _allCountries;
+      debugPrint('DEBUG: Updated countries for language');
+    } catch (e) {
+      debugPrint('DEBUG: Failed to update countries for language: $e');
+      // Fallback to unsorted list
+      _allCountries = CountryData.countries;
+      _filteredCountries = _allCountries;
+    }
   }
 
   @override
@@ -81,7 +90,6 @@ class _CountryPickerState extends State<CountryPicker> {
       return;
     }
 
-    final countryLocalizations = CountryLocalizations.of(context);
     final results = <Country>[];
     final exactMatches = <Country>[];
     final startsWithMatches = <Country>[];
@@ -89,7 +97,8 @@ class _CountryPickerState extends State<CountryPicker> {
 
     for (final country in _allCountries) {
       final countryName =
-          countryLocalizations.getCountryName(country.code).toLowerCase();
+          CountryLocalizations.getCountryNameSafe(context, country.code)
+              .toLowerCase();
       final countryCode = country.code.toLowerCase();
       final countryPhoneCode = country.phoneCode.toLowerCase();
 
@@ -312,8 +321,8 @@ class _CountryPickerState extends State<CountryPicker> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      countryLocalizations
-                          .getCountryName(widget.selectedCountry!.code),
+                      CountryLocalizations.getCountryNameSafe(
+                          context, widget.selectedCountry!.code),
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,

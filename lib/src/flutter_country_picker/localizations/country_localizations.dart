@@ -20,9 +20,31 @@ abstract class CountryLocalizations {
   // Removed unused localeName field
 
   /// Get the CountryLocalizations instance for the current context
+  /// Returns fallback English localization if delegates are not configured
   static CountryLocalizations of(BuildContext context) {
-    return Localizations.of<CountryLocalizations>(
-        context, CountryLocalizations)!;
+    try {
+      final localizations =
+          Localizations.of<CountryLocalizations>(context, CountryLocalizations);
+      if (localizations != null) {
+        return localizations;
+      }
+    } catch (e) {
+      debugPrint('DEBUG: CountryLocalizations not found, using fallback: $e');
+    }
+
+    // Fallback to English if delegates are not configured
+    return CountryLocalizationsEn();
+  }
+
+  /// Safe way to get country name with fallback
+  /// Returns localized name or country code if localization fails
+  static String getCountryNameSafe(BuildContext context, String countryCode) {
+    try {
+      return of(context).getCountryName(countryCode);
+    } catch (e) {
+      debugPrint('DEBUG: Failed to get country name for $countryCode: $e');
+      return countryCode; // Fallback to country code
+    }
   }
 
   /// Localizations delegate for CountryLocalizations

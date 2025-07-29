@@ -30,7 +30,7 @@ dependencies:
 
 ## 🚀 Usage
 
-### Basic Usage
+### Basic Usage (English by default)
 
 ```dart
 import 'package:country_search/country_search.dart';
@@ -43,6 +43,37 @@ CountryPicker(
     });
     debugPrint('Selected: ${country.flag} ${country.code} (${country.phoneCode})');
   },
+)
+```
+
+**✅ Works immediately without any setup!** The widget uses English by default.
+
+### Multi-Language Support (Optional)
+
+For multi-language support, add delegates to your MaterialApp:
+
+```dart
+// If you don't have delegates yet:
+MaterialApp(
+  localizationsDelegates: CountrySearchDelegates.allDelegates,
+  supportedLocales: CountrySearchDelegates.supportedLocales,
+  // ... rest of your app
+)
+
+// If you already have delegates, add ours:
+MaterialApp(
+  localizationsDelegates: [
+    // Your existing delegates
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    // Add our delegate
+    CountryLocalizations.delegate,
+  ],
+  supportedLocales: [
+    // Your existing locales
+    const Locale('en'),
+    const Locale('de')
+  ],
 )
 ```
 
@@ -63,38 +94,9 @@ The example demonstrates:
 
 ### Localization Setup
 
-#### Simple Setup (Recommended)
 ```dart
 MaterialApp(
   localizationsDelegates: CountrySearchDelegates.allDelegates,
-  supportedLocales: CountrySearchDelegates.supportedLocales,
-)
-```
-
-#### Manual Setup
-```dart
-MaterialApp(
-  localizationsDelegates: [
-    CountryLocalizations.delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-  ],
-  supportedLocales: [
-    const Locale('en'),
-    const Locale('ru'),
-    const Locale('es'),
-    const Locale('fr'),
-    const Locale('de'),
-    const Locale('pt'),
-  ],
-)
-```
-
-#### Minimal Setup (Country Search Only)
-```dart
-MaterialApp(
-  localizationsDelegates: CountrySearchDelegates.delegates,
   supportedLocales: CountrySearchDelegates.supportedLocales,
 )
 ```
@@ -120,7 +122,7 @@ class Country {
 }
 ```
 
-### Country Search
+### Search Examples
 
 ```dart
 // Search by code
@@ -134,14 +136,15 @@ List<Country> results = CountryData.searchCountries(
   'russia',
   (code) => CountryLocalizations.of(context).getCountryName(code)
 );
-
-// Search by phone code only
-List<Country> results = CountryData.searchByPhoneCode('+1');
 ```
 
-## 🚀 Quick Start
 
-### One-Line Setup
+## 🔧 Customization
+
+### Multi-Language Support (Optional)
+
+The widget works with English by default. For multi-language support, add delegates to your MaterialApp:
+
 ```dart
 MaterialApp(
   localizationsDelegates: CountrySearchDelegates.allDelegates,
@@ -150,21 +153,11 @@ MaterialApp(
 )
 ```
 
-### Benefits of Built-in Delegates
-- ✅ **No setup required** - delegates included in package
-- ✅ **No console warnings** - all localization delegates provided
-- ✅ **Multi-language search** - search countries in 6 languages
-- ✅ **Automatic fallback** - unsupported locales fall back to English
-- ✅ **Complete localization** - dates, times, and UI text localized
+### Disable Phone Codes (Optional)
 
-## 🔧 Customization & Feature Control
-
-### Disable Phone Codes (if not needed)
-
-If you don't need phone codes, you can easily ignore them:
+If you don't need phone codes, you can ignore them:
 
 ```dart
-// Just ignore the phoneCode field
 CountryPicker(
   selectedCountry: selectedCountry,
   onCountrySelected: (Country country) {
@@ -203,28 +196,29 @@ CountryLocalizations lookupCountryLocalizations(Locale locale) {
 }
 ```
 
-### Custom Country List
-
-Create your own country list with only needed countries:
+### Custom Display Format
 
 ```dart
-// Custom country list
-final myCountries = [
-  Country(code: 'US', flag: '🇺🇸', phoneCode: '+1'),
-  Country(code: 'CA', flag: '🇨🇦', phoneCode: '+1'),
-  Country(code: 'GB', flag: '🇬🇧', phoneCode: '+44'),
-  // ... only countries you need
-];
+// Custom display without phone codes
+ListTile(
+  leading: Text(country.flag),
+  title: Text(countryName),
+  subtitle: Text(country.code),
+  onTap: () => onCountrySelected(country),
+)
 
-// Use in your custom picker
-List<Country> filteredCountries = myCountries.where((country) => 
-  country.code.toLowerCase().contains(query.toLowerCase())
-).toList();
+// Custom display with phone codes
+ListTile(
+  leading: Text(country.flag),
+  title: Text(countryName),
+  subtitle: Text('${country.code} (${country.phoneCode})'),
+  onTap: () => onCountrySelected(country),
+)
 ```
 
-### Disable Search Functionality
+### Simple List Without Search
 
-If you don't need search, create a simple picker:
+If you don't need search functionality, create a simple picker:
 
 ```dart
 // Simple country list without search
@@ -242,36 +236,14 @@ ListView.builder(
 )
 ```
 
-### Custom Display Format
-
-Control how countries are displayed:
-
-```dart
-// Custom display without phone codes
-ListTile(
-  leading: Text(country.flag),
-  title: Text(countryName),
-  subtitle: Text(country.code), // Only code, no phone
-  onTap: () => onCountrySelected(country),
-)
-
-// Custom display with only phone codes
-ListTile(
-  leading: Text(country.flag),
-  title: Text(countryName),
-  subtitle: Text(country.phoneCode), // Only phone code
-  onTap: () => onCountrySelected(country),
-)
-```
-
 ## 🌍 Supported Languages
 
-- 🇺🇸 English - "Select Country", "Search country..."
-- 🇷🇺 Russian - "Выберите страну", "Поиск страны..."
-- 🇪🇸 Spanish - "Seleccionar país", "Buscar país..."
-- 🇫🇷 French - "Sélectionner un pays", "Rechercher un pays..."
-- 🇩🇪 German - "Land auswählen", "Land suchen..."
-- 🇵🇹 Portuguese - "Selecionar país", "Pesquisar país..."
+- 🇺🇸 English
+- 🇷🇺 Russian  
+- 🇪🇸 Spanish
+- 🇫🇷 French
+- 🇩🇪 German
+- 🇵🇹 Portuguese
 
 ## 🧪 Testing
 

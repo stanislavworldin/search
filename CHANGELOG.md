@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.1.0] - 2025-01-29
+
+### Changed
+- **Simplified Default Behavior**: Widget now works with English by default without requiring delegates
+- **Improved User Experience**: No more crashes when delegates are not configured
+- **Better Fallback System**: Automatic fallback to English when localization is not available
+- **Cleaner API**: Removed complex localization setup requirements
+
+### Added
+- **Safe Localization**: Added `getCountryNameSafe()` method for error-free country name retrieval
+- **Enhanced Error Handling**: Graceful fallback when localization delegates are missing
+- **Improved Documentation**: Updated README to show simple usage without delegates
+
+### Fixed
+- **Crash Prevention**: Fixed null pointer exceptions when delegates are not configured
+- **Default Language**: English now works out of the box without any setup
+- **Simplified Setup**: Users can start using the widget immediately without configuration
+
 ## [2.0.5] - 2025-01-29
 
 ### Added
