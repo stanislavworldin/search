@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.3] - 2025-01-29
+
+### Fixed
+- **Repository URLs**: Updated all repository URLs in pubspec.yaml to point to correct GitHub repository
+- **GitHub Links**: Fixed homepage, repository, issue_tracker, and documentation URLs
+- **Package Metadata**: Corrected all external links to point to https://github.com/stanislavworldin/country_search
+
 ## [2.0.2] - 2025-01-28
 
 ### Fixed
