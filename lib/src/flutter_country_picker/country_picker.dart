@@ -20,12 +20,17 @@ class CountryPicker extends StatefulWidget {
   /// Custom hint text when no country is selected
   final String? hintText;
 
+  /// Whether to show phone codes in the country list
+  /// Default is true
+  final bool showPhoneCodes;
+
   const CountryPicker({
     super.key,
     this.selectedCountry,
     required this.onCountrySelected,
     this.labelText,
     this.hintText,
+    this.showPhoneCodes = true,
   });
 
   @override
@@ -260,14 +265,25 @@ class _CountryPickerState extends State<CountryPicker> {
                                 : FontWeight.normal,
                           ),
                         ),
-                        subtitle: Text(
-                          '${country.code} (${country.phoneCode})',
-                          style: TextStyle(
-                            color: isSelected
-                                ? const Color(0xFF699B4B).withValues(alpha: 0.7)
-                                : Colors.white54,
-                          ),
-                        ),
+                        subtitle: widget.showPhoneCodes
+                            ? Text(
+                                '${country.code} (${country.phoneCode})',
+                                style: TextStyle(
+                                  color: isSelected
+                                      ? const Color(0xFF699B4B)
+                                          .withValues(alpha: 0.7)
+                                      : Colors.white54,
+                                ),
+                              )
+                            : Text(
+                                country.code,
+                                style: TextStyle(
+                                  color: isSelected
+                                      ? const Color(0xFF699B4B)
+                                          .withValues(alpha: 0.7)
+                                      : Colors.white54,
+                                ),
+                              ),
                         trailing: isSelected
                             ? const Icon(
                                 Icons.check_circle,

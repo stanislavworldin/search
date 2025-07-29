@@ -99,7 +99,7 @@ MaterialApp(
 
 ### Disable Phone Codes (Optional)
 
-If you don't need phone codes, you can ignore them:
+If you don't need phone codes, you can disable them:
 
 ```dart
 CountryPicker(
@@ -108,9 +108,9 @@ CountryPicker(
     setState(() {
       selectedCountry = country;
     });
-    // Only use code and flag
     debugPrint('Selected: ${country.flag} ${country.code}');
   },
+  showPhoneCodes: false, // Disable phone codes display
 )
 ```
 
