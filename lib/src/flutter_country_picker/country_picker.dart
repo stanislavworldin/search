@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'country_data.dart';
 import 'localizations/country_localizations.dart';
@@ -65,9 +66,13 @@ class _CountryPickerState extends State<CountryPicker> {
       _allCountries =
           CountryData.getSortedCountries(countryLocalizations.getCountryName);
       _filteredCountries = _allCountries;
-      debugPrint('DEBUG: Updated countries for language');
+      if (kDebugMode) {
+        debugPrint('DEBUG: Updated countries for language');
+      }
     } catch (e) {
-      debugPrint('DEBUG: Failed to update countries for language: $e');
+      if (kDebugMode) {
+        debugPrint('DEBUG: Failed to update countries for language: $e');
+      }
       // Fallback to unsorted list
       _allCountries = CountryData.countries;
       _filteredCountries = _allCountries;
@@ -133,7 +138,9 @@ class _CountryPickerState extends State<CountryPicker> {
     results.addAll(containsMatches);
 
     _filteredCountries = results;
-    debugPrint('DEBUG: Search "$query" - found ${results.length} countries');
+    if (kDebugMode) {
+      debugPrint('DEBUG: Search "$query" - found ${results.length} countries');
+    }
   }
 
   void _showCountryPicker() {

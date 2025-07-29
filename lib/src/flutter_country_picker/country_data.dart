@@ -292,7 +292,9 @@ class CountryData {
       return countries
           .firstWhere((country) => country.code == code.toUpperCase());
     } catch (e) {
-      debugPrint('DEBUG: Country not found for code: $code');
+      if (kDebugMode) {
+        debugPrint('DEBUG: Country not found for code: $code');
+      }
       return null;
     }
   }
@@ -304,7 +306,9 @@ class CountryData {
     try {
       return countries.firstWhere((country) => country.phoneCode == phoneCode);
     } catch (e) {
-      debugPrint('DEBUG: Country not found for phone code: $phoneCode');
+      if (kDebugMode) {
+        debugPrint('DEBUG: Country not found for phone code: $phoneCode');
+      }
       return null;
     }
   }
@@ -322,7 +326,9 @@ class CountryData {
       return nameA.compareTo(nameB);
     });
 
-    debugPrint('DEBUG: Sorted ${sortedCountries.length} countries');
+    if (kDebugMode) {
+      debugPrint('DEBUG: Sorted ${sortedCountries.length} countries');
+    }
     return sortedCountries;
   }
 
@@ -370,7 +376,9 @@ class CountryData {
     results.addAll(startsWithMatches);
     results.addAll(containsMatches);
 
-    debugPrint('DEBUG: Search "$query" - found ${results.length} countries');
+    if (kDebugMode) {
+      debugPrint('DEBUG: Search "$query" - found ${results.length} countries');
+    }
     return results;
   }
 
@@ -384,8 +392,9 @@ class CountryData {
         .where((country) => country.phoneCode.contains(phoneCode))
         .toList();
 
-    debugPrint(
-        'DEBUG: Phone search "$phoneCode" - found ${results.length} countries');
+    if (kDebugMode) {
+      debugPrint('DEBUG: Phone search "$phoneCode" - found ${results.length} countries');
+    }
     return results;
   }
 }

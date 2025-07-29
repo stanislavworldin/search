@@ -32,7 +32,9 @@ abstract class CountryLocalizations {
         return localizations;
       }
     } catch (e) {
-      debugPrint('DEBUG: CountryLocalizations not found, using fallback: $e');
+      if (kDebugMode) {
+        debugPrint('DEBUG: CountryLocalizations not found, using fallback: $e');
+      }
     }
 
     // Fallback to English if delegates are not configured
@@ -45,7 +47,9 @@ abstract class CountryLocalizations {
     try {
       return of(context).getCountryName(countryCode);
     } catch (e) {
-      debugPrint('DEBUG: Failed to get country name for $countryCode: $e');
+      if (kDebugMode) {
+        debugPrint('DEBUG: Failed to get country name for $countryCode: $e');
+      }
       return countryCode; // Fallback to country code
     }
   }
@@ -150,6 +154,8 @@ CountryLocalizations lookupCountryLocalizations(Locale locale) {
   }
 
   // Fallback to English for unsupported locales
-  debugPrint('DEBUG: Unsupported locale "$locale", falling back to English');
+  if (kDebugMode) {
+    debugPrint('DEBUG: Unsupported locale "$locale", falling back to English');
+  }
   return CountryLocalizationsEn();
 }
