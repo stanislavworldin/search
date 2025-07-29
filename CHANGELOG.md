@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.0.4] - 2025-01-29
+
+### Fixed
+- **README Screenshot URL**: Fixed incorrect screenshot URL in README.md to point to correct repository
+
 ## [2.0.3] - 2025-01-29
 
 ### Fixed
