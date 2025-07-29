@@ -29,20 +29,8 @@ class _MyAppState extends State<MyApp> {
       title: 'Country Picker Demo',
       theme: ThemeData.dark(),
       locale: _currentLocale,
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        CountryLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('de'),
-        Locale('en'),
-        Locale('es'),
-        Locale('fr'),
-        Locale('pt'),
-        Locale('ru'),
-      ],
+      localizationsDelegates: CountrySearchLocalizations.allDelegates,
+      supportedLocales: CountrySearchLocalizations.supportedLocales,
       home: MyHomePage(
         onLanguageChanged: _changeLanguage,
         currentLocale: _currentLocale,

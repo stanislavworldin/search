@@ -55,19 +55,47 @@ cd example
 flutter run
 ```
 
+The example demonstrates:
+- ✅ Multi-language support (6 languages)
+- ✅ Country search by name, code, and phone code
+- ✅ Beautiful dark theme UI
+- ✅ Responsive design for all screen sizes
+
 ### Localization Setup
 
+#### Simple Setup (Recommended)
+```dart
+MaterialApp(
+  localizationsDelegates: CountrySearchLocalizations.allDelegates,
+  supportedLocales: CountrySearchLocalizations.supportedLocales,
+)
+```
+
+#### Manual Setup
 ```dart
 MaterialApp(
   localizationsDelegates: [
     CountryLocalizations.delegate,
-    // ... other delegates
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
   ],
   supportedLocales: [
     const Locale('en'),
     const Locale('ru'),
-    // ... other languages
+    const Locale('es'),
+    const Locale('fr'),
+    const Locale('de'),
+    const Locale('pt'),
   ],
+)
+```
+
+#### Minimal Setup (Country Search Only)
+```dart
+MaterialApp(
+  localizationsDelegates: CountrySearchLocalizations.delegates,
+  supportedLocales: CountrySearchLocalizations.supportedLocales,
 )
 ```
 
@@ -110,6 +138,24 @@ List<Country> results = CountryData.searchCountries(
 // Search by phone code only
 List<Country> results = CountryData.searchByPhoneCode('+1');
 ```
+
+## 🚀 Quick Start
+
+### One-Line Setup
+```dart
+MaterialApp(
+  localizationsDelegates: CountrySearchLocalizations.allDelegates,
+  supportedLocales: CountrySearchLocalizations.supportedLocales,
+  // ... rest of your app
+)
+```
+
+### Benefits of Built-in Delegates
+- ✅ **No setup required** - delegates included in package
+- ✅ **No console warnings** - all localization delegates provided
+- ✅ **Multi-language search** - search countries in 6 languages
+- ✅ **Automatic fallback** - unsupported locales fall back to English
+- ✅ **Complete localization** - dates, times, and UI text localized
 
 ## 🔧 Customization & Feature Control
 

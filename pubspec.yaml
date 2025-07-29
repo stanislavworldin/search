@@ -1,6 +1,6 @@
 name: country_search
 description: A beautiful and customizable country picker widget for Flutter with multi-language support, phone codes, and smart search functionality.
-version: 2.0.4
+version: 2.0.5
 homepage: https://github.com/stanislavworldin/country_search
 repository: https://github.com/stanislavworldin/country_search
 issue_tracker: https://github.com/stanislavworldin/country_search/issues
@@ -18,6 +18,8 @@ environment:
 
 dependencies:
   flutter:
+    sdk: flutter
+  flutter_localizations:
     sdk: flutter
 
 dev_dependencies:
