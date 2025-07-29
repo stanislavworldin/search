@@ -22,7 +22,7 @@ A beautiful and customizable country picker widget for Flutter with multi-langua
 
 ```yaml
 dependencies:
-  country_search: ^2.1.1
+  country_search: ^2.2.0
 ```
 
 ## 🚀 Usage
