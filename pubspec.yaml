@@ -1,10 +1,10 @@
 name: country_search
 description: A beautiful and customizable country picker widget for Flutter with multi-language support, phone codes, and smart search functionality.
 version: 2.0.2
-homepage: https://github.com/stanislavworldin/flutter_country_picker
-repository: https://github.com/stanislavworldin/flutter_country_picker
-issue_tracker: https://github.com/stanislavworldin/flutter_country_picker/issues
-documentation: https://github.com/stanislavworldin/flutter_country_picker#readme
+homepage: https://github.com/stanislavworldin/country_search
+repository: https://github.com/stanislavworldin/country_search
+issue_tracker: https://github.com/stanislavworldin/country_search/issues
+documentation: https://github.com/stanislavworldin/country_search#readme
 topics:
   - flags
   - country
