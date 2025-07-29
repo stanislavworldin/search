@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.1] - 2025-01-29
+
+### Fixed
+- **Package Size**: Reduced package size from 13MB to 158KB by removing build files
+- **Example Build Files**: Added .gitignore to example folder to prevent build artifacts
+- **Pub.dev Warnings**: Fixed warnings about ignored files in published package
+- **Clean Repository**: Removed build artifacts from git tracking
+
 ## [2.1.0] - 2025-01-29
 
 ### Changed
