@@ -78,6 +78,17 @@ void main() {
       expect(localizations.selectYourCountry, equals('Seleziona il tuo paese'));
     });
 
+    test('Japanese localizations work correctly', () {
+      final localizations = CountryLocalizationsJa();
+
+      expect(localizations.getCountryName('US'), equals('アメリカ合衆国'));
+      expect(localizations.getCountryName('RU'), equals('ロシア'));
+      expect(localizations.getCountryName('JP'), equals('日本'));
+      expect(localizations.selectCountry, equals('国を選択'));
+      expect(localizations.searchCountry, equals('国を検索...'));
+      expect(localizations.selectYourCountry, equals('あなたの国を選択してください'));
+    });
+
     test('Chinese localizations work correctly', () {
       final localizations = CountryLocalizationsZh();
 
@@ -97,6 +108,7 @@ void main() {
       final de = CountryLocalizationsDe();
       final pt = CountryLocalizationsPt();
       final it = CountryLocalizationsIt();
+      final ja = CountryLocalizationsJa();
       final zh = CountryLocalizationsZh();
 
       expect(en.allCountryNames.keys, equals(es.allCountryNames.keys));
@@ -105,18 +117,19 @@ void main() {
       expect(en.allCountryNames.keys, equals(de.allCountryNames.keys));
       expect(en.allCountryNames.keys, equals(pt.allCountryNames.keys));
       expect(en.allCountryNames.keys, equals(it.allCountryNames.keys));
+      expect(en.allCountryNames.keys, equals(ja.allCountryNames.keys));
       expect(en.allCountryNames.keys, equals(zh.allCountryNames.keys));
     });
 
     test('Localizations delegate works', () {
       expect(CountryLocalizations.delegate, isNotNull);
       expect(CountryLocalizations.supportedLocales, isNotEmpty);
-      expect(CountryLocalizations.supportedLocales.length, equals(8));
+      expect(CountryLocalizations.supportedLocales.length, equals(9));
     });
 
     test('Fallback to English for unsupported locale', () {
-      // Test with unsupported locale (Japanese)
-      const unsupportedLocale = Locale('ja');
+      // Test with unsupported locale (Korean)
+      const unsupportedLocale = Locale('ko');
       final localizations = lookupCountryLocalizations(unsupportedLocale);
 
       // Should fallback to English

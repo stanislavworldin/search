@@ -165,6 +165,7 @@ CountryLocalizations lookupCountryLocalizations(Locale locale) {
 - 🇫🇷 French
 - 🇩🇪 German
 - 🇮🇹 Italian
+- 🇯🇵 Japanese
 - 🇵🇹 Portuguese
 - 🇨🇳 Chinese
 
