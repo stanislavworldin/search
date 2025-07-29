@@ -7,7 +7,7 @@ A beautiful and customizable country picker widget for Flutter with multi-langua
 ## ✨ Features
 
 - 🌍 **246 Countries** with flags, ISO codes, and phone codes
-- 🌐 **Multi-language Support** - English, Spanish, French, German, Portuguese, Russian
+- 🌐 **Multi-language Support** - English, Spanish, French, German, Italian, Japanese, Portuguese, Russian, Chinese
 - 🔍 **Smart Search** by country name, code, or phone code
 - 📞 **Phone Codes** - Complete international dialing codes
 - 🎨 **Adaptive Design** for mobile, tablet and desktop
@@ -58,7 +58,7 @@ flutter run
 ```
 
 The example demonstrates:
-- ✅ Multi-language support (6 languages)
+- ✅ Multi-language support (9 languages)
 - ✅ Country search by name, code, and phone code
 - ✅ Beautiful dark theme UI
 - ✅ Responsive design for all screen sizes
