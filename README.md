@@ -18,7 +18,7 @@ A beautiful and customizable country picker widget for Flutter with multi-langua
 ## 📱 Screenshots
 
 ### Country Search Demo
-![Demo](https://raw.githubusercontent.com/stanislavworldin/flutter_country_picker/main/country_search/screenshots/1.png)
+![Demo](https://raw.githubusercontent.com/stanislavworldin/country_search/main/screenshots/1.png)
 
 
 ## 📦 Installation
