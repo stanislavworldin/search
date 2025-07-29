@@ -101,23 +101,7 @@ MaterialApp(
 )
 ```
 
-## 📚 API
-
-### Search Examples
-
-```dart
-// Search by code
-Country? country = CountryData.getCountryByCode('US');
-
-// Search by phone code
-Country? country = CountryData.getCountryByPhoneCode('+1');
-
-// Search by name, code, or phone code
-List<Country> results = CountryData.searchCountries(
-  'russia',
-  (code) => CountryLocalizations.of(context).getCountryName(code)
-);
-```
+## 🔧 Customization
 
 
 ## 🔧 Customization
