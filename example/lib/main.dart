@@ -29,8 +29,8 @@ class _MyAppState extends State<MyApp> {
       title: 'Country Picker Demo',
       theme: ThemeData.dark(),
       locale: _currentLocale,
-      localizationsDelegates: CountrySearchLocalizations.allDelegates,
-      supportedLocales: CountrySearchLocalizations.supportedLocales,
+      localizationsDelegates: CountrySearchDelegates.allDelegates,
+      supportedLocales: CountrySearchDelegates.supportedLocales,
       home: MyHomePage(
         onLanguageChanged: _changeLanguage,
         currentLocale: _currentLocale,

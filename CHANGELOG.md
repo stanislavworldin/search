@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.5] - 2025-01-29
+
+### Added
+- **Built-in Localization Delegates**: Added `CountrySearchDelegates` class for easy setup
+- **One-Line Setup**: Simple configuration with `CountrySearchDelegates.allDelegates`
+- **Automatic Fallback**: Unsupported locales automatically fall back to English
+- **Complete Localization**: Includes all Flutter localization delegates
+
+### Improved
+- **Better Structure**: Moved delegates to `localizations/` folder for better organization
+- **Simplified API**: Users can now set up localization with just one line of code
+- **No Console Warnings**: Eliminates MaterialLocalizations warnings
+
 ## [2.0.4] - 2025-01-29
 
 ### Fixed

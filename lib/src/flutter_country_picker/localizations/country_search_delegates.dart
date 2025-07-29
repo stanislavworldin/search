@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'localizations/country_localizations.dart';
+import 'country_localizations.dart';
 
-/// Convenience class for easy setup of country search localizations
-class CountrySearchLocalizations {
+/// Convenience class for easy setup of country search localization delegates
+class CountrySearchDelegates {
   /// All localization delegates needed for country search
   static List<LocalizationsDelegate<dynamic>> get delegates => [
     CountryLocalizations.delegate,

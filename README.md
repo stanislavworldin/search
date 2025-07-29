@@ -66,8 +66,8 @@ The example demonstrates:
 #### Simple Setup (Recommended)
 ```dart
 MaterialApp(
-  localizationsDelegates: CountrySearchLocalizations.allDelegates,
-  supportedLocales: CountrySearchLocalizations.supportedLocales,
+  localizationsDelegates: CountrySearchDelegates.allDelegates,
+  supportedLocales: CountrySearchDelegates.supportedLocales,
 )
 ```
 
@@ -94,8 +94,8 @@ MaterialApp(
 #### Minimal Setup (Country Search Only)
 ```dart
 MaterialApp(
-  localizationsDelegates: CountrySearchLocalizations.delegates,
-  supportedLocales: CountrySearchLocalizations.supportedLocales,
+  localizationsDelegates: CountrySearchDelegates.delegates,
+  supportedLocales: CountrySearchDelegates.supportedLocales,
 )
 ```
 
@@ -144,8 +144,8 @@ List<Country> results = CountryData.searchByPhoneCode('+1');
 ### One-Line Setup
 ```dart
 MaterialApp(
-  localizationsDelegates: CountrySearchLocalizations.allDelegates,
-  supportedLocales: CountrySearchLocalizations.supportedLocales,
+  localizationsDelegates: CountrySearchDelegates.allDelegates,
+  supportedLocales: CountrySearchDelegates.supportedLocales,
   // ... rest of your app
 )
 ```
