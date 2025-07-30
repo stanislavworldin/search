@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:country_search/country_search.dart';
 
 void main() {
@@ -36,8 +37,13 @@ class _MyAppState extends State<MyApp> {
       title: 'Country Picker Demo',
       theme: _isDarkTheme ? ThemeData.dark() : ThemeData.light(),
       locale: _currentLocale,
-      localizationsDelegates: CountrySearchDelegates.allDelegates,
-      supportedLocales: CountrySearchDelegates.supportedLocales,
+      localizationsDelegates: [
+        CountryLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: CountryLocalizations.supportedLocales,
       home: MyHomePage(
         onLanguageChanged: _changeLanguage,
         onThemeChanged: _toggleTheme,
@@ -253,6 +259,8 @@ class _MyHomePageState extends State<MyHomePage> {
               searchFieldBorderColor: Colors.grey.shade300,
               cursorColor: Colors.blue,
               hintTextColor: Colors.grey.shade600,
+              hoverColor: Colors.grey.shade200, // Light theme hover color
+              borderRadius: 12.0, // Custom border radius
             ),
             const SizedBox(height: 16),
 
@@ -287,6 +295,8 @@ class _MyHomePageState extends State<MyHomePage> {
               searchFieldBorderColor: Colors.purple.shade200,
               cursorColor: Colors.purple,
               hintTextColor: Colors.purple.shade600,
+              hoverColor: Colors.purple.shade200, // Purple theme hover color
+              borderRadius: 16.0, // Larger border radius for purple theme
             ),
             const SizedBox(height: 32),
 

@@ -19,6 +19,8 @@ class CountryPicker extends StatefulWidget {
   final Color? searchFieldBorderColor;
   final Color? cursorColor;
   final Color? hintTextColor;
+  final Color? hoverColor;
+  final double? borderRadius;
 
   const CountryPicker({
     super.key,
@@ -35,6 +37,8 @@ class CountryPicker extends StatefulWidget {
     this.searchFieldBorderColor,
     this.cursorColor,
     this.hintTextColor,
+    this.hoverColor,
+    this.borderRadius,
   });
 
   @override
@@ -61,6 +65,8 @@ class _CountryPickerState extends State<CountryPicker> {
   static const Color _defaultSearchFieldBorderColor = Colors.white24;
   static const Color _defaultCursorColor = Colors.white;
   static const Color _defaultHintTextColor = Colors.white54;
+  static const Color _defaultHoverColor = Colors.white10;
+  static const double _defaultBorderRadius = 8.0;
 
   // Getter methods for colors with fallback
   Color get backgroundColor =>
@@ -74,6 +80,8 @@ class _CountryPickerState extends State<CountryPicker> {
       widget.searchFieldBorderColor ?? _defaultSearchFieldBorderColor;
   Color get cursorColor => widget.cursorColor ?? _defaultCursorColor;
   Color get hintTextColor => widget.hintTextColor ?? _defaultHintTextColor;
+  Color get hoverColor => widget.hoverColor ?? _defaultHoverColor;
+  double get borderRadius => widget.borderRadius ?? _defaultBorderRadius;
 
   @override
   void initState() {
@@ -182,8 +190,9 @@ class _CountryPickerState extends State<CountryPicker> {
       context: context,
       isScrollControlled: true,
       backgroundColor: backgroundColor,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      shape: RoundedRectangleBorder(
+        borderRadius:
+            BorderRadius.vertical(top: Radius.circular(borderRadius * 2)),
       ),
       builder: (context) => StatefulBuilder(
         builder: (context, setModalState) {
@@ -199,8 +208,8 @@ class _CountryPickerState extends State<CountryPicker> {
                     padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
                     decoration: BoxDecoration(
                       color: headerColor,
-                      borderRadius:
-                          const BorderRadius.vertical(top: Radius.circular(16)),
+                      borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(borderRadius * 2)),
                     ),
                     child: Column(
                       children: [
@@ -225,7 +234,7 @@ class _CountryPickerState extends State<CountryPicker> {
                         Container(
                           decoration: BoxDecoration(
                             color: searchFieldColor,
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(borderRadius),
                             border: Border.all(
                                 color: searchFieldBorderColor, width: 0.5),
                           ),
@@ -295,12 +304,14 @@ class _CountryPickerState extends State<CountryPicker> {
                               color: isSelected
                                   ? accentColor.withValues(alpha: 0.1)
                                   : Colors.transparent,
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(borderRadius),
                             ),
                             child: Material(
                               color: Colors.transparent,
                               child: InkWell(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius:
+                                    BorderRadius.circular(borderRadius),
+                                hoverColor: hoverColor,
                                 onTap: () {
                                   widget.onCountrySelected(country);
                                   Navigator.of(context).pop();
@@ -383,12 +394,12 @@ class _CountryPickerState extends State<CountryPicker> {
         child: InkWell(
           key: ValueKey('country_picker_$_updateCounter'),
           onTap: _showCountryPicker,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(borderRadius),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(
               border: Border.all(color: searchFieldBorderColor, width: 0.5),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(borderRadius),
               color: searchFieldColor,
             ),
             child: Row(

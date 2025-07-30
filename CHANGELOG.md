@@ -1,5 +1,32 @@
 # Changelog
 
+## [2.5.0] - 2025-01-29
+
+### Added
+- **🎨 Hover Color Customization**: Added `hoverColor` parameter for customizing hover effects on country list items
+- **🔲 Border Radius Customization**: Added `borderRadius` parameter for unified control of all rounded elements
+- **📐 Unified Rounding**: Single parameter controls rounding for button, modal, search field, and hover effects
+- **🎯 Enhanced Examples**: Added hover color and border radius examples in demo app
+- **📚 Improved Documentation**: Added comprehensive color and border radius customization guide
+
+### UI Improvements
+- **Consistent Design**: All elements now use the same border radius for cohesive appearance
+- **Better Hover Feedback**: Customizable hover colors for improved user experience
+- **Modern Design**: Support for both sharp (4.0) and rounded (16.0) designs
+- **Flexible Theming**: Complete control over visual appearance
+
+### Technical Improvements
+- **Single Parameter Control**: One `borderRadius` parameter controls all rounded elements
+- **Backward Compatibility**: All new parameters are optional with sensible defaults
+- **Performance Maintained**: No impact on existing performance optimizations
+- **Clean Implementation**: Efficient parameter handling with fallback values
+
+### Documentation
+- **Color Parameters Guide**: Detailed explanation of all color customization options
+- **Border Radius Examples**: Multiple examples showing different design approaches
+- **Theme Examples**: Light theme, custom themes, and minimal design examples
+- **Parameter Reference**: Complete list of all customization parameters
+
 ## [2.4.1] - 2025-01-29
 
 ### Added

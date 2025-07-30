@@ -97,7 +97,7 @@ CountryPicker(
 )
 ```
 
-### Customize Colors
+### Customize Colors & Border Radius
 
 Easily customize the widget colors for different themes:
 
@@ -131,23 +131,53 @@ CountryPicker(
   textColor: Colors.black87,                  // Main text color in button
   hintTextColor: Colors.grey.shade600,        // Hint text and country code color
   accentColor: Colors.blue,                   // Phone code color
+  hoverColor: Colors.grey.shade200,           // Color when hovering over countries in list
+  borderRadius: 12.0,                         // Border radius for all rounded elements
 )
 ```
 
 ### Multi-Language Support
 
-The widget works with English by default. For multi-language support, add delegates to your MaterialApp:
+The widget automatically detects the language from your app's locale. For multi-language support, add delegates to your MaterialApp:
+
+**⚠️ Note:** If you want to use Flutter's standard localization delegates (`GlobalMaterialLocalizations.delegate`, etc.), add `flutter_localizations` to your dependencies:
+
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+```
+
+**⚠️ Important:** Set the `locale` parameter to specify your app's language. Without it, the widget will use the device's system language.
+
+**How it works:**
+- With `locale`: Uses your app's language
+- Without `locale`: Uses device system language  
+- Unsupported language: Falls back to English
 
 ```dart
-// If you don't have delegates yet:
+// If you don't have localization yet:
 MaterialApp(
-  localizationsDelegates: CountrySearchDelegates.allDelegates,
-  supportedLocales: CountrySearchDelegates.supportedLocales,
-  // ... rest of your app
+  locale: const Locale('de'), // Set your app's language
+  localizationsDelegates: [
+    CountryLocalizations.delegate, // Our delegate
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ],
+  supportedLocales: [
+    const Locale('en'),
+    const Locale('de'),
+    const Locale('ru'),
+    // Add your app's supported languages
+  ],
 )
 
-// If you already have delegates, add ours:
+// If you already have localization, add our delegate:
 MaterialApp(
+  locale: const Locale('de'), // Set your app's language
   localizationsDelegates: [
     // Your existing delegates
     GlobalMaterialLocalizations.delegate,
@@ -162,7 +192,6 @@ MaterialApp(
   ],
 )
 ```
-## 🗂️ Customization
 
 ### Remove Unused Languages
 
@@ -172,12 +201,20 @@ To reduce package size, remove language files you don't need:
 rm lib/src/flutter_country_picker/localizations/country_localizations_es.dart
 ```
 
-**Then update the main localization file:**
-- Remove imports for deleted languages from `lib/src/flutter_country_picker/localizations/country_localizations.dart`
-- Remove language codes from `supportedLocales` list in the same file
-- Remove cases from `lookupCountryLocalizations` function in the same file
+**Then update these files:**
 
-**⚠️ Important:** If you don't update the main localization file, you'll get compilation errors because the code will try to import and reference deleted language files.
+**1. Main localization file (`lib/src/flutter_country_picker/localizations/country_localizations.dart`):**
+- Remove import: `import 'country_localizations_es.dart';`
+- Remove from `supportedLocales`: `Locale('es')`
+- Remove from `isSupported`: `'es'`
+- Remove case from `lookupCountryLocalizations`: `case 'es': return CountryLocalizationsEs();`
+
+**2. Main package file (`lib/country_search.dart`):**
+- Remove export: `export 'src/flutter_country_picker/localizations/country_localizations_es.dart';`
+
+
+
+**⚠️ Important:** If you don't update all these files, you'll get compilation errors because the code will try to import and reference deleted language files.
 
 
 ## 🌍 Supported Languages

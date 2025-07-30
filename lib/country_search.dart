@@ -37,4 +37,3 @@ export 'src/flutter_country_picker/localizations/country_localizations_ko.dart';
 export 'src/flutter_country_picker/localizations/country_localizations_pt.dart';
 export 'src/flutter_country_picker/localizations/country_localizations_ru.dart';
 export 'src/flutter_country_picker/localizations/country_localizations_zh.dart';
-export 'src/flutter_country_picker/localizations/country_search_delegates.dart';
