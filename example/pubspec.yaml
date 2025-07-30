@@ -11,7 +11,8 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  country_search: ^2.3.0
+  country_search:
+    path: ../
 
 dev_dependencies:
   flutter_test:

@@ -44,11 +44,10 @@ packages:
   country_search:
     dependency: "direct main"
     description:
-      name: country_search
-      sha256: f5a6b6c6755ebea3d5f4d4b7373e25eeabe7ac4ccfedce7c9d53b4db7f908367
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.0"
+      path: ".."
+      relative: true
+    source: path
+    version: "2.3.1"
   fake_async:
     dependency: transitive
     description:

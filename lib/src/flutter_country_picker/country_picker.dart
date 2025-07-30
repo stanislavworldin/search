@@ -70,48 +70,68 @@ class _CountryPickerState extends State<CountryPicker> {
 
   void _onSearchChanged() {
     final query = _searchController.text.toLowerCase().trim();
-    _filterCountriesFast(query);
+    _filterAndSortCountries(query);
     setState(() {
       _isSearching = query.isNotEmpty;
       _updateCounter++;
     });
   }
 
-  void _filterCountriesFast(String query) {
+  void _filterAndSortCountries(String query) {
     if (query.isEmpty) {
       _filteredCountries = _allCountries;
       return;
     }
 
+    final countryLocalizations = CountryLocalizations.of(context);
     final results = <Country>[];
+    final exactMatches = <Country>[];
+    final startsWithMatches = <Country>[];
+    final containsMatches = <Country>[];
 
     for (final country in _allCountries) {
+      final countryName =
+          countryLocalizations.getCountryName(country.code).toLowerCase();
+      final countryCode = country.code.toLowerCase();
+      final countryPhoneCode = country.phoneCode.toLowerCase();
+
+      // Single-pass optimized search with early exit
       bool found = false;
 
-      if (country.code.toLowerCase().contains(query)) {
-        results.add(country);
+      // Check exact match first (highest priority)
+      if (countryName == query ||
+          countryCode == query ||
+          countryPhoneCode == query) {
+        exactMatches.add(country);
         found = true;
       }
 
-      if (!found && country.phoneCode.toLowerCase().contains(query)) {
-        results.add(country);
+      // Check startsWith if not found in exact
+      if (!found &&
+          (countryName.startsWith(query) ||
+              countryCode.startsWith(query) ||
+              countryPhoneCode.startsWith(query))) {
+        startsWithMatches.add(country);
         found = true;
       }
 
-      if (!found) {
-        final countryName =
-            CountryLocalizations.getCountryNameSafe(context, country.code)
-                .toLowerCase();
-        if (countryName.contains(query)) {
-          results.add(country);
-        }
+      // Check contains if not found in previous checks
+      if (!found &&
+          (countryName.contains(query) ||
+              countryCode.contains(query) ||
+              countryPhoneCode.contains(query))) {
+        containsMatches.add(country);
       }
     }
 
+    // Combine results in priority order
+    results.addAll(exactMatches);
+    results.addAll(startsWithMatches);
+    results.addAll(containsMatches);
+
     _filteredCountries = results;
     if (kDebugMode) {
-      debugPrint(
-          'DEBUG: Fast search "$query" - found ${results.length} countries');
+      debugPrint('DEBUG: Search "$query" - found ${results.length} countries');
     }
   }
 
@@ -168,7 +188,7 @@ class _CountryPickerState extends State<CountryPicker> {
                         textInputAction: TextInputAction.search,
                         onChanged: (value) {
                           final query = value.toLowerCase().trim();
-                          _filterCountriesFast(query);
+                          _filterAndSortCountries(query);
                           setModalState(() {
                             _isSearching = query.isNotEmpty;
                             _updateCounter++;
