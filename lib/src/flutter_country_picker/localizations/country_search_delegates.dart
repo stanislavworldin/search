@@ -15,8 +15,12 @@ class CountrySearchDelegates {
         const Locale('en'),
         const Locale('es'),
         const Locale('fr'),
+        const Locale('it'),
+        const Locale('ja'),
+        const Locale('ko'),
         const Locale('pt'),
         const Locale('ru'),
+        const Locale('zh'),
       ];
 
   /// Complete list of delegates including Flutter's default delegates
