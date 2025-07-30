@@ -11,6 +11,11 @@ class Country {
   /// Phone dialing code (e.g., '+1', '+7', '+44')
   final String phoneCode;
 
+  /// Creates a new Country instance.
+  ///
+  /// [code] - The ISO 3166-1 alpha-2 country code
+  /// [flag] - The country flag emoji
+  /// [phoneCode] - The international phone dialing code
   const Country({
     required this.code,
     required this.flag,
@@ -35,6 +40,12 @@ class Country {
 
 /// Utility class for managing country data and operations
 class CountryData {
+  /// Creates a new CountryData instance.
+  ///
+  /// This class provides static methods for country operations.
+  /// It cannot be instantiated directly.
+  const CountryData._();
+
   /// Complete list of all supported countries with phone codes
   static const List<Country> countries = [
     Country(code: 'AC', flag: '🇦🇨', phoneCode: '+247'),
@@ -280,7 +291,7 @@ class CountryData {
     Country(code: 'YT', flag: '🇾🇹', phoneCode: '+262'),
     Country(code: 'ZA', flag: '🇿🇦', phoneCode: '+27'),
     Country(code: 'ZM', flag: '🇿🇲', phoneCode: '+260'),
-    Country(code: 'ZW', flag: '🇿��', phoneCode: '+263'),
+    Country(code: 'ZW', flag: '🇿🇼', phoneCode: '+263'),
     Country(code: 'XK', flag: '🇽🇰', phoneCode: '+383'),
   ];
 

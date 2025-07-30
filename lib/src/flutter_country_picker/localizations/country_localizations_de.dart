@@ -2,6 +2,7 @@ import 'country_localizations.dart';
 
 /// German localization for country names
 class CountryLocalizationsDe extends CountryLocalizations {
+  /// Creates a new German localization instance.
   CountryLocalizationsDe() : super('de');
 
   @override

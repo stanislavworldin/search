@@ -19,6 +19,9 @@ import 'country_localizations_zh.dart';
 /// Callers can lookup localized country names with an instance of CountryLocalizations
 /// returned by `CountryLocalizations.of(context)`.
 abstract class CountryLocalizations {
+  /// Creates a new CountryLocalizations instance.
+  ///
+  /// [locale] - The locale identifier (e.g., 'en', 'ru', 'ko')
   CountryLocalizations(String locale);
 
   // Removed unused localeName field
