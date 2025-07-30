@@ -3,26 +3,11 @@ import 'package:flutter/material.dart';
 import 'country_data.dart';
 import 'localizations/country_localizations.dart';
 
-/// A beautiful and customizable country picker widget
-///
-/// This widget displays a list of countries with flags and names.
-/// It supports search functionality and works with English by default.
-/// For multi-language support, configure localization delegates.
 class CountryPicker extends StatefulWidget {
-  /// Currently selected country
   final Country? selectedCountry;
-
-  /// Callback function called when a country is selected
   final Function(Country) onCountrySelected;
-
-  /// Custom label text for the picker
   final String? labelText;
-
-  /// Custom hint text when no country is selected
   final String? hintText;
-
-  /// Whether to show phone codes in the country list
-  /// Default is true
   final bool showPhoneCodes;
 
   const CountryPicker({
@@ -56,7 +41,6 @@ class _CountryPickerState extends State<CountryPicker> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Update sorting when language changes (only if delegates are configured)
     _updateCountriesForLanguage();
   }
 
@@ -73,7 +57,6 @@ class _CountryPickerState extends State<CountryPicker> {
       if (kDebugMode) {
         debugPrint('DEBUG: Failed to update countries for language: $e');
       }
-      // Fallback to unsorted list
       _allCountries = CountryData.countries;
       _filteredCountries = _allCountries;
     }
@@ -87,59 +70,48 @@ class _CountryPickerState extends State<CountryPicker> {
 
   void _onSearchChanged() {
     final query = _searchController.text.toLowerCase().trim();
-    _filterAndSortCountries(query);
+    _filterCountriesFast(query);
     setState(() {
       _isSearching = query.isNotEmpty;
       _updateCounter++;
     });
   }
 
-  void _filterAndSortCountries(String query) {
+  void _filterCountriesFast(String query) {
     if (query.isEmpty) {
       _filteredCountries = _allCountries;
       return;
     }
 
     final results = <Country>[];
-    final exactMatches = <Country>[];
-    final startsWithMatches = <Country>[];
-    final containsMatches = <Country>[];
 
     for (final country in _allCountries) {
-      final countryName =
-          CountryLocalizations.getCountryNameSafe(context, country.code)
-              .toLowerCase();
-      final countryCode = country.code.toLowerCase();
-      final countryPhoneCode = country.phoneCode.toLowerCase();
+      bool found = false;
 
-      // Exact match
-      if (countryName == query ||
-          countryCode == query ||
-          countryPhoneCode == query) {
-        exactMatches.add(country);
+      if (country.code.toLowerCase().contains(query)) {
+        results.add(country);
+        found = true;
       }
-      // Starts with query
-      else if (countryName.startsWith(query) ||
-          countryCode.startsWith(query) ||
-          countryPhoneCode.startsWith(query)) {
-        startsWithMatches.add(country);
+
+      if (!found && country.phoneCode.toLowerCase().contains(query)) {
+        results.add(country);
+        found = true;
       }
-      // Contains query
-      else if (countryName.contains(query) ||
-          countryCode.contains(query) ||
-          countryPhoneCode.contains(query)) {
-        containsMatches.add(country);
+
+      if (!found) {
+        final countryName =
+            CountryLocalizations.getCountryNameSafe(context, country.code)
+                .toLowerCase();
+        if (countryName.contains(query)) {
+          results.add(country);
+        }
       }
     }
 
-    // Combine results in priority order
-    results.addAll(exactMatches);
-    results.addAll(startsWithMatches);
-    results.addAll(containsMatches);
-
     _filteredCountries = results;
     if (kDebugMode) {
-      debugPrint('DEBUG: Search "$query" - found ${results.length} countries');
+      debugPrint(
+          'DEBUG: Fast search "$query" - found ${results.length} countries');
     }
   }
 
@@ -196,7 +168,7 @@ class _CountryPickerState extends State<CountryPicker> {
                         textInputAction: TextInputAction.search,
                         onChanged: (value) {
                           final query = value.toLowerCase().trim();
-                          _filterAndSortCountries(query);
+                          _filterCountriesFast(query);
                           setModalState(() {
                             _isSearching = query.isNotEmpty;
                             _updateCounter++;

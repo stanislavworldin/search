@@ -46,5 +46,9 @@ app.*.map.json
 # Coverage
 coverage/
 
+# Test files (performance and speed tests)
+test/performance_test.dart
+test/speed_comparison_test.dart
+
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages 

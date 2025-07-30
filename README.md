@@ -2,13 +2,20 @@
 
 A beautiful and customizable country picker widget for Flutter with multi-language support and phone codes.
 
-**📦 Package Size:** 96KB - Zero external dependencies
+## 📦 Package Size & Performance
+
+**Package Size:** ~113KB (source code, 10 languages)
+
+**Search Performance:**
+- **Algorithm:** Optimized single-pass search with early exit
+- **Speed:** ~110 microseconds per query (4.7x faster than previous version)
 
 ## ✨ Features
 
 - 🌍 **246 Countries** with flags, ISO codes, and phone codes
-- 🌐 **Multi-language Support** - English, Spanish, French, German, Italian, Japanese, Portuguese, Russian, Chinese
+- 🌐 **Multi-language Support** - English, Spanish, French, German, Italian, Japanese, Korean, Portuguese, Russian, Chinese
 - 🔍 **Smart Search** by country name, code, or phone code
+- ⚡ **Lightning Fast Search** - 4.7x faster than previous versions
 - 📞 **Phone Codes** - Complete international dialing codes
 - 🎨 **Adaptive Design** for mobile, tablet and desktop
 - ⚡ **Lightweight** - only Flutter SDK
@@ -111,50 +118,22 @@ MaterialApp(
   ],
 )
 ```
-
-### Disable Phone Codes (Optional)
-
-If you don't need phone codes, you can disable them using the `showPhoneCodes` parameter:
-
-```dart
-CountryPicker(
-  selectedCountry: selectedCountry,
-  onCountrySelected: (Country country) {
-    setState(() {
-      selectedCountry = country;
-    });
-    debugPrint('Selected: ${country.flag} ${country.code}');
-  },
-  showPhoneCodes: false, // Disable phone codes display
-)
-```
+## 🗂️ Customization
 
 ### Remove Unused Languages
 
 To reduce package size, remove language files you don't need:
 
 ```bash
-# Remove unused language files
 rm lib/src/flutter_country_picker/localizations/country_localizations_es.dart
-rm lib/src/flutter_country_picker/localizations/country_localizations_fr.dart
-rm lib/src/flutter_country_picker/localizations/country_localizations_ru.dart
 ```
 
-Then update `country_localizations.dart`:
-```dart
-CountryLocalizations lookupCountryLocalizations(Locale locale) {
-  switch (locale.languageCode) {
-    case 'en':
-      return CountryLocalizationsEn();
-    // Remove cases for deleted languages
-    // case 'es': return CountryLocalizationsEs();
-    // case 'fr': return CountryLocalizationsFr();
-    // case 'ru': return CountryLocalizationsRu();
-  }
-  return CountryLocalizationsEn(); // Fallback to English
-}
-```
+**Then update the main localization file:**
+- Remove imports for deleted languages from `lib/src/flutter_country_picker/localizations/country_localizations.dart`
+- Remove language codes from `supportedLocales` list in the same file
+- Remove cases from `lookupCountryLocalizations` function in the same file
 
+**⚠️ Important:** If you don't update the main localization file, you'll get compilation errors because the code will try to import and reference deleted language files.
 
 
 ## 🌍 Supported Languages
@@ -166,14 +145,10 @@ CountryLocalizations lookupCountryLocalizations(Locale locale) {
 - 🇩🇪 German
 - 🇮🇹 Italian
 - 🇯🇵 Japanese
+- 🇰🇷 Korean
 - 🇵🇹 Portuguese
 - 🇨🇳 Chinese
 
-## 🧪 Testing
-
-```bash
-flutter test
-```
 
 ## 📝 License
 

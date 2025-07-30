@@ -68,7 +68,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 'it':
         return '🇮🇹 Italiano';
       case 'ja':
-        return '🇯🇵 日本語';
+        return '🇯�� 日本語';
+      case 'ko':
+        return '🇰🇷 한국어';
       case 'pt':
         return '🇵🇹 Português';
       case 'ru':
@@ -112,6 +114,10 @@ class _MyHomePageState extends State<MyHomePage> {
               const PopupMenuItem(
                 value: Locale('ja'),
                 child: Text('🇯🇵 日本語'),
+              ),
+              const PopupMenuItem(
+                value: Locale('ko'),
+                child: Text('🇰🇷 한국어'),
               ),
               const PopupMenuItem(
                 value: Locale('pt'),

@@ -9,6 +9,7 @@ import 'country_localizations_es.dart';
 import 'country_localizations_fr.dart';
 import 'country_localizations_it.dart';
 import 'country_localizations_ja.dart';
+import 'country_localizations_ko.dart';
 import 'country_localizations_pt.dart';
 import 'country_localizations_ru.dart';
 import 'country_localizations_zh.dart';
@@ -73,6 +74,7 @@ abstract class CountryLocalizations {
     Locale('fr'),
     Locale('it'),
     Locale('ja'),
+    Locale('ko'),
     Locale('pt'),
     Locale('ru'),
     Locale('zh'),
@@ -117,6 +119,7 @@ class _CountryLocalizationsDelegate
         'fr',
         'it',
         'ja',
+        'ko',
         'pt',
         'ru',
         'zh'
@@ -145,6 +148,8 @@ CountryLocalizations lookupCountryLocalizations(Locale locale) {
       return CountryLocalizationsIt();
     case 'ja':
       return CountryLocalizationsJa();
+    case 'ko':
+      return CountryLocalizationsKo();
     case 'pt':
       return CountryLocalizationsPt();
     case 'ru':

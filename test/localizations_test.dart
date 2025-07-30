@@ -100,6 +100,17 @@ void main() {
       expect(localizations.selectYourCountry, equals('选择您的国家'));
     });
 
+    test('Korean localizations work correctly', () {
+      final localizations = CountryLocalizationsKo();
+
+      expect(localizations.getCountryName('US'), equals('미국'));
+      expect(localizations.getCountryName('RU'), equals('러시아'));
+      expect(localizations.getCountryName('KR'), equals('대한민국'));
+      expect(localizations.selectCountry, equals('국가 선택'));
+      expect(localizations.searchCountry, equals('국가 검색...'));
+      expect(localizations.selectYourCountry, equals('국가를 선택하세요'));
+    });
+
     test('All localizations have same country codes', () {
       final en = CountryLocalizationsEn();
       final es = CountryLocalizationsEs();
@@ -109,6 +120,7 @@ void main() {
       final pt = CountryLocalizationsPt();
       final it = CountryLocalizationsIt();
       final ja = CountryLocalizationsJa();
+      final ko = CountryLocalizationsKo();
       final zh = CountryLocalizationsZh();
 
       expect(en.allCountryNames.keys, equals(es.allCountryNames.keys));
@@ -118,18 +130,19 @@ void main() {
       expect(en.allCountryNames.keys, equals(pt.allCountryNames.keys));
       expect(en.allCountryNames.keys, equals(it.allCountryNames.keys));
       expect(en.allCountryNames.keys, equals(ja.allCountryNames.keys));
+      expect(en.allCountryNames.keys, equals(ko.allCountryNames.keys));
       expect(en.allCountryNames.keys, equals(zh.allCountryNames.keys));
     });
 
     test('Localizations delegate works', () {
       expect(CountryLocalizations.delegate, isNotNull);
       expect(CountryLocalizations.supportedLocales, isNotEmpty);
-      expect(CountryLocalizations.supportedLocales.length, equals(9));
+      expect(CountryLocalizations.supportedLocales.length, equals(10));
     });
 
     test('Fallback to English for unsupported locale', () {
-      // Test with unsupported locale (Korean)
-      const unsupportedLocale = Locale('ko');
+      // Test with unsupported locale (Thai)
+      const unsupportedLocale = Locale('th');
       final localizations = lookupCountryLocalizations(unsupportedLocale);
 
       // Should fallback to English

@@ -9,6 +9,7 @@ export 'src/flutter_country_picker/localizations/country_localizations_es.dart';
 export 'src/flutter_country_picker/localizations/country_localizations_fr.dart';
 export 'src/flutter_country_picker/localizations/country_localizations_it.dart';
 export 'src/flutter_country_picker/localizations/country_localizations_ja.dart';
+export 'src/flutter_country_picker/localizations/country_localizations_ko.dart';
 export 'src/flutter_country_picker/localizations/country_localizations_pt.dart';
 export 'src/flutter_country_picker/localizations/country_localizations_ru.dart';
 export 'src/flutter_country_picker/localizations/country_localizations_zh.dart';
