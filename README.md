@@ -112,7 +112,7 @@ CountryPicker(
   },
 )
 
-// Light theme
+// Light theme with custom colors
 CountryPicker(
   selectedCountry: selectedCountry,
   onCountrySelected: (Country country) {
@@ -120,14 +120,17 @@ CountryPicker(
       selectedCountry = country;
     });
   },
-  backgroundColor: Colors.white,
-  headerColor: Colors.grey.shade100,
-  textColor: Colors.black87,
-  accentColor: Colors.blue,
-  searchFieldColor: Colors.grey.shade50,
-  searchFieldBorderColor: Colors.grey.shade300,
-  cursorColor: Colors.blue,
-  hintTextColor: Colors.grey.shade600,
+  // Modal window colors (when picker is opened):
+  backgroundColor: Colors.white,        // Background of the modal window
+  headerColor: Colors.grey.shade100,   // Header background color
+  cursorColor: Colors.blue,            // Search field cursor color
+  
+  // Button colors (the widget itself):
+  searchFieldColor: Colors.grey.shade50,      // Button background color
+  searchFieldBorderColor: Colors.grey.shade300, // Button border color
+  textColor: Colors.black87,                  // Main text color in button
+  hintTextColor: Colors.grey.shade600,        // Hint text and country code color
+  accentColor: Colors.blue,                   // Phone code color
 )
 ```
 
