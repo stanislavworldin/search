@@ -54,6 +54,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Country? selectedCountry;
+  bool _isDarkTheme = true;
 
   String _getLanguageName(String code) {
     switch (code) {
@@ -88,6 +89,15 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('Country Picker Demo'),
         actions: [
+          // Theme toggle button
+          IconButton(
+            icon: Icon(_isDarkTheme ? Icons.light_mode : Icons.dark_mode),
+            onPressed: () {
+              setState(() {
+                _isDarkTheme = !_isDarkTheme;
+              });
+            },
+          ),
           PopupMenuButton<Locale>(
             onSelected: widget.onLanguageChanged,
             itemBuilder: (BuildContext context) => [
@@ -201,6 +211,74 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
+            const SizedBox(height: 16),
+
+            // Light theme picker
+            const Text(
+              'Light Theme Version:',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            CountryPicker(
+              selectedCountry: selectedCountry,
+              onCountrySelected: (Country country) {
+                setState(() {
+                  selectedCountry = country;
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                        'Selected: ${country.flag} ${country.code} (${country.phoneCode})'),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              },
+              backgroundColor: Colors.white,
+              headerColor: Colors.grey[100]!,
+              textColor: Colors.black87,
+              accentColor: Colors.blue,
+              searchFieldColor: Colors.grey[50]!,
+              searchFieldBorderColor: Colors.grey[300]!,
+              cursorColor: Colors.blue,
+              hintTextColor: Colors.grey[600]!,
+            ),
+            const SizedBox(height: 16),
+
+            // Custom theme picker
+            const Text(
+              'Custom Theme (Purple):',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            CountryPicker(
+              selectedCountry: selectedCountry,
+              onCountrySelected: (Country country) {
+                setState(() {
+                  selectedCountry = country;
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                        'Selected: ${country.flag} ${country.code} (${country.phoneCode})'),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              },
+              backgroundColor: Colors.purple[50]!,
+              headerColor: Colors.purple[100]!,
+              textColor: Colors.purple[900]!,
+              accentColor: Colors.purple,
+              searchFieldColor: Colors.purple[25]!,
+              searchFieldBorderColor: Colors.purple[200]!,
+              cursorColor: Colors.purple,
+              hintTextColor: Colors.purple[600]!,
+            ),
             const SizedBox(height: 32),
 
             // Selected country display
@@ -287,6 +365,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   Text('• Multi-language support'),
                   Text('• Smart search functionality'),
                   Text('• Beautiful dark theme'),
+                  Text('• Light theme support'),
+                  Text('• Custom color themes'),
                   Text('• Customizable labels'),
                   Text('• Responsive design'),
                 ],
