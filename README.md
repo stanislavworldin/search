@@ -2,7 +2,7 @@
 
 A beautiful and customizable country picker widget for Flutter with multi-language support and phone codes.
 
-![Country Picker Demo](./screenshots/0.gif)
+![Country Picker Demo](https://raw.githubusercontent.com/stanislavworldin/country_search/main/screenshots/0.gif)
 
 ## 📦 Package Size & Performance
 
@@ -26,9 +26,9 @@ A beautiful and customizable country picker widget for Flutter with multi-langua
 - 🌐 **Cross-Platform** - works on mobile, web, and desktop
 - 📱 **Weak Device Optimized** - minimalist UI for smooth performance on low-end devices
 
-![Demo](./screenshots/1.png)
+![Demo](https://raw.githubusercontent.com/stanislavworldin/country_search/main/screenshots/1.png)
 
-![Demo with Chinese Language](./screenshots/2.png)
+![Demo with Chinese Language](https://raw.githubusercontent.com/stanislavworldin/country_search/main/screenshots/2.png)
 
 
 ## 📦 Installation
