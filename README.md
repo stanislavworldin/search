@@ -2,6 +2,8 @@
 
 A beautiful and customizable country picker widget for Flutter with multi-language support and phone codes.
 
+![Country Picker Demo](https://raw.githubusercontent.com/stanislavworldin/country_search/main/screenshots/0.gif)
+
 ## 📦 Package Size & Performance
 
 **Package Size:** ~113KB (source code, 10 languages)
@@ -25,6 +27,8 @@ A beautiful and customizable country picker widget for Flutter with multi-langua
 - 📱 **Weak Device Optimized** - minimalist UI for smooth performance on low-end devices
 
 ![Demo](https://raw.githubusercontent.com/stanislavworldin/country_search/main/screenshots/1.png)
+
+![Demo with Chinese Language](https://raw.githubusercontent.com/stanislavworldin/country_search/main/screenshots/2.png)
 
 
 ## 📦 Installation
@@ -117,13 +121,13 @@ CountryPicker(
     });
   },
   backgroundColor: Colors.white,
-  headerColor: Colors.grey[100]!,
+  headerColor: Colors.grey.shade100,
   textColor: Colors.black87,
   accentColor: Colors.blue,
-  searchFieldColor: Colors.grey[50]!,
-  searchFieldBorderColor: Colors.grey[300]!,
+  searchFieldColor: Colors.grey.shade50,
+  searchFieldBorderColor: Colors.grey.shade300,
   cursorColor: Colors.blue,
-  hintTextColor: Colors.grey[600]!,
+  hintTextColor: Colors.grey.shade600,
 )
 ```
 
