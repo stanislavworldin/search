@@ -9,6 +9,7 @@ A beautiful and customizable country picker widget for Flutter with multi-langua
 **Search Performance:**
 - **Algorithm:** Optimized single-pass search with early exit
 - **Speed:** ~110 microseconds per query (4.7x faster than previous version)
+- **Lightweight components** instead of heavy Material widgets
 
 ## ✨ Features
 
@@ -21,6 +22,7 @@ A beautiful and customizable country picker widget for Flutter with multi-langua
 - ⚡ **Lightweight** - only Flutter SDK
 - 🔧 **Highly Customizable** - easily disable unwanted features
 - 🌐 **Cross-Platform** - works on mobile, web, and desktop
+- 📱 **Weak Device Optimized** - minimalist UI for smooth performance on low-end devices
 
 ![Demo](https://raw.githubusercontent.com/stanislavworldin/country_search/main/screenshots/1.png)
 
@@ -69,6 +71,7 @@ The example demonstrates:
 - ✅ Country search by name, code, and phone code
 - ✅ Beautiful dark theme UI
 - ✅ Responsive design for all screen sizes
+- ✅ Optimized performance for weak devices
 
 
 ## 🔧 Customization
