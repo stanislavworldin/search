@@ -29,7 +29,7 @@ A beautiful and customizable country picker widget for Flutter with multi-langua
 
 ```yaml
 dependencies:
-  country_search: ^2.2.0
+  country_search: ^2.3.0
 ```
 
 ## 🚀 Usage
@@ -65,7 +65,7 @@ flutter run
 ```
 
 The example demonstrates:
-- ✅ Multi-language support (9 languages)
+- ✅ Multi-language support (10 languages)
 - ✅ Country search by name, code, and phone code
 - ✅ Beautiful dark theme UI
 - ✅ Responsive design for all screen sizes
