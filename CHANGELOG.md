@@ -1,5 +1,30 @@
 # Changelog
 
+## [2.4.1] - 2025-01-29
+
+### Added
+- **Color Customization**: Added comprehensive color customization parameters for easy UI modification
+- **Light Theme Support**: Added examples for light theme implementation
+- **Custom Theme Examples**: Added purple theme example in demo app
+- **Theme Toggle**: Added theme switching functionality in example app
+- **Enhanced Documentation**: Added multiple screenshots and GIF animation to README
+
+### UI Improvements
+- **Easy Color Customization**: Added 8 color parameters (backgroundColor, headerColor, textColor, accentColor, etc.)
+- **Backward Compatibility**: All new parameters are optional, maintaining default dark theme
+- **Web Compatibility**: Fixed color issues for web platform using standard Flutter colors
+- **Performance**: Maintained all previous optimizations for weak devices
+
+### Documentation
+- **Visual Examples**: Added GIF animation and multiple screenshots
+- **Color Examples**: Added comprehensive examples for light and custom themes
+- **Usage Guide**: Enhanced README with detailed customization instructions
+
+### Technical Improvements
+- **Standard Flutter Colors**: Replaced custom colors with standard Flutter color system
+- **Web Optimization**: Fixed null check operator issues for web platform
+- **Better Examples**: Enhanced example app with theme switching functionality
+
 ## [2.4.0] - 2025-01-29
 
 ### Performance Improvements
