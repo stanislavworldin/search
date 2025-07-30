@@ -200,16 +200,16 @@ class _CountryPickerState extends State<CountryPicker> {
                     decoration: BoxDecoration(
                       color: headerColor,
                       borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(16)),
+                          const BorderRadius.vertical(top: Radius.circular(16)),
                     ),
                     child: Column(
                       children: [
                         Container(
                           width: 32,
                           height: 3,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             color: Colors.white24,
-                            borderRadius: BorderRadius.all(Radius.circular(1.5)),
+                            borderRadius: BorderRadius.circular(1.5),
                           ),
                         ),
                         const SizedBox(height: 12),
@@ -223,12 +223,12 @@ class _CountryPickerState extends State<CountryPicker> {
                         ),
                         const SizedBox(height: 12),
                         Container(
-                                                      decoration: BoxDecoration(
-                              color: searchFieldColor,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                  color: searchFieldBorderColor, width: 0.5),
-                            ),
+                          decoration: BoxDecoration(
+                            color: searchFieldColor,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                                color: searchFieldBorderColor, width: 0.5),
+                          ),
                           child: TextField(
                             controller: _searchController,
                             style: TextStyle(color: textColor, fontSize: 14),
