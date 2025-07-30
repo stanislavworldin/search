@@ -1,6 +1,6 @@
 name: country_search
 description: A beautiful and customizable country picker widget with search functionality, multi-language support, and phone codes.
-version: 2.3.1
+version: 2.3.2
 homepage: https://github.com/stanislavworldin/country_search
 repository: https://github.com/stanislavworldin/country_search
 issue_tracker: https://github.com/stanislavworldin/country_search/issues
