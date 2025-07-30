@@ -10,6 +10,16 @@ class CountryPicker extends StatefulWidget {
   final String? hintText;
   final bool showPhoneCodes;
 
+  // UI Customization
+  final Color? backgroundColor;
+  final Color? headerColor;
+  final Color? textColor;
+  final Color? accentColor;
+  final Color? searchFieldColor;
+  final Color? searchFieldBorderColor;
+  final Color? cursorColor;
+  final Color? hintTextColor;
+
   const CountryPicker({
     super.key,
     this.selectedCountry,
@@ -17,6 +27,14 @@ class CountryPicker extends StatefulWidget {
     this.labelText,
     this.hintText,
     this.showPhoneCodes = true,
+    this.backgroundColor,
+    this.headerColor,
+    this.textColor,
+    this.accentColor,
+    this.searchFieldColor,
+    this.searchFieldBorderColor,
+    this.cursorColor,
+    this.hintTextColor,
   });
 
   @override
@@ -29,6 +47,29 @@ class _CountryPickerState extends State<CountryPicker> {
   List<Country> _filteredCountries = [];
   bool _isSearching = false;
   int _updateCounter = 0;
+
+  // Default colors for dark theme
+  static const Color _defaultBackgroundColor = Color(0xFF302E2C);
+  static const Color _defaultHeaderColor = Color(0xFF3C3A38);
+  static const Color _defaultTextColor = Colors.white;
+  static const Color _defaultAccentColor = Color(0xFF699B4B);
+  static const Color _defaultSearchFieldColor = Color(0x0D000000); // 5% white
+  static const Color _defaultSearchFieldBorderColor = Colors.white24;
+  static const Color _defaultCursorColor = Colors.white;
+  static const Color _defaultHintTextColor = Colors.white54;
+
+  // Getter methods for colors with fallback
+  Color get backgroundColor =>
+      widget.backgroundColor ?? _defaultBackgroundColor;
+  Color get headerColor => widget.headerColor ?? _defaultHeaderColor;
+  Color get textColor => widget.textColor ?? _defaultTextColor;
+  Color get accentColor => widget.accentColor ?? _defaultAccentColor;
+  Color get searchFieldColor =>
+      widget.searchFieldColor ?? _defaultSearchFieldColor;
+  Color get searchFieldBorderColor =>
+      widget.searchFieldBorderColor ?? _defaultSearchFieldBorderColor;
+  Color get cursorColor => widget.cursorColor ?? _defaultCursorColor;
+  Color get hintTextColor => widget.hintTextColor ?? _defaultHintTextColor;
 
   @override
   void initState() {
@@ -136,7 +177,7 @@ class _CountryPickerState extends State<CountryPicker> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: const Color(0xFF302E2C),
+      backgroundColor: backgroundColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
@@ -152,8 +193,8 @@ class _CountryPickerState extends State<CountryPicker> {
                 children: [
                   Container(
                     padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF3C3A38),
+                    decoration: BoxDecoration(
+                      color: headerColor,
                       borderRadius:
                           BorderRadius.vertical(top: Radius.circular(16)),
                     ),
@@ -170,8 +211,8 @@ class _CountryPickerState extends State<CountryPicker> {
                         const SizedBox(height: 12),
                         Text(
                           countryLocalizations.selectCountry,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: textColor,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -179,18 +220,17 @@ class _CountryPickerState extends State<CountryPicker> {
                         const SizedBox(height: 12),
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.white.withAlpha((0.05 * 255).toInt()),
+                            color: searchFieldColor,
                             borderRadius: BorderRadius.circular(8),
-                            border:
-                                Border.all(color: Colors.white24, width: 0.5),
+                            border: Border.all(
+                                color: searchFieldBorderColor, width: 0.5),
                           ),
                           child: TextField(
                             controller: _searchController,
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 14),
+                            style: TextStyle(color: textColor, fontSize: 14),
                             autofocus: true,
                             textInputAction: TextInputAction.search,
-                            cursorColor: Colors.white,
+                            cursorColor: cursorColor,
                             onChanged: (value) {
                               final query = value.toLowerCase().trim();
                               _filterAndSortCountries(query);
@@ -201,14 +241,14 @@ class _CountryPickerState extends State<CountryPicker> {
                             },
                             decoration: InputDecoration(
                               hintText: countryLocalizations.searchCountry,
-                              hintStyle: const TextStyle(
-                                  color: Colors.white54, fontSize: 14),
-                              prefixIcon: const Icon(Icons.search,
-                                  color: Colors.white54, size: 20),
+                              hintStyle:
+                                  TextStyle(color: hintTextColor, fontSize: 14),
+                              prefixIcon: Icon(Icons.search,
+                                  color: hintTextColor, size: 20),
                               suffixIcon: _isSearching
                                   ? IconButton(
-                                      icon: const Icon(Icons.clear,
-                                          color: Colors.white54, size: 18),
+                                      icon: Icon(Icons.clear,
+                                          color: hintTextColor, size: 18),
                                       onPressed: () {
                                         _searchController.clear();
                                         setModalState(() {
@@ -249,8 +289,7 @@ class _CountryPickerState extends State<CountryPicker> {
                                 horizontal: 8, vertical: 1),
                             decoration: BoxDecoration(
                               color: isSelected
-                                  ? const Color(0xFF699B4B)
-                                      .withValues(alpha: 0.1)
+                                  ? accentColor.withValues(alpha: 0.1)
                                   : Colors.transparent,
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -281,8 +320,8 @@ class _CountryPickerState extends State<CountryPicker> {
                                               countryName,
                                               style: TextStyle(
                                                 color: isSelected
-                                                    ? const Color(0xFF699B4B)
-                                                    : Colors.white,
+                                                    ? accentColor
+                                                    : textColor,
                                                 fontWeight: isSelected
                                                     ? FontWeight.w600
                                                     : FontWeight.normal,
@@ -296,9 +335,9 @@ class _CountryPickerState extends State<CountryPicker> {
                                                   : country.code,
                                               style: TextStyle(
                                                 color: isSelected
-                                                    ? const Color(0xFF699B4B)
-                                                        .withValues(alpha: 0.7)
-                                                    : Colors.white54,
+                                                    ? accentColor.withValues(
+                                                        alpha: 0.7)
+                                                    : hintTextColor,
                                                 fontSize: 12,
                                               ),
                                             ),
@@ -306,9 +345,9 @@ class _CountryPickerState extends State<CountryPicker> {
                                         ),
                                       ),
                                       if (isSelected)
-                                        const Icon(
+                                        Icon(
                                           Icons.check_circle,
-                                          color: Color(0xFF699B4B),
+                                          color: accentColor,
                                           size: 20,
                                         ),
                                     ],
@@ -344,9 +383,9 @@ class _CountryPickerState extends State<CountryPicker> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.white24, width: 0.5),
+              border: Border.all(color: searchFieldBorderColor, width: 0.5),
               borderRadius: BorderRadius.circular(8),
-              color: Colors.white.withAlpha((0.05 * 255).toInt()),
+              color: searchFieldColor,
             ),
             child: Row(
               children: [
@@ -363,8 +402,8 @@ class _CountryPickerState extends State<CountryPicker> {
                         Text(
                           CountryLocalizations.getCountryNameSafe(
                               context, widget.selectedCountry!.code),
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: textColor,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
@@ -372,8 +411,8 @@ class _CountryPickerState extends State<CountryPicker> {
                         const SizedBox(height: 2),
                         Text(
                           widget.selectedCountry!.code,
-                          style: const TextStyle(
-                            color: Colors.white54,
+                          style: TextStyle(
+                            color: hintTextColor,
                             fontSize: 11,
                           ),
                         ),
@@ -390,20 +429,19 @@ class _CountryPickerState extends State<CountryPicker> {
                     ),
                   ),
                 ] else ...[
-                  const Icon(Icons.flag, color: Colors.white54, size: 18),
+                  Icon(Icons.flag, color: hintTextColor, size: 18),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       widget.hintText ?? countryLocalizations.selectYourCountry,
-                      style: const TextStyle(
-                        color: Colors.white54,
+                      style: TextStyle(
+                        color: hintTextColor,
                         fontSize: 14,
                       ),
                     ),
                   ),
                 ],
-                const Icon(Icons.arrow_drop_down,
-                    color: Colors.white54, size: 20),
+                Icon(Icons.arrow_drop_down, color: hintTextColor, size: 20),
               ],
             ),
           ),

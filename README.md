@@ -31,7 +31,7 @@ A beautiful and customizable country picker widget for Flutter with multi-langua
 
 ```yaml
 dependencies:
-  country_search: ^2.3.0
+  country_search: ^2.4.0
 ```
 
 ## 🚀 Usage
@@ -90,6 +90,40 @@ CountryPicker(
     });
   },
   showPhoneCodes: true, // Default behavior
+)
+```
+
+### Customize Colors
+
+Easily customize the widget colors for different themes:
+
+```dart
+// Dark theme (default)
+CountryPicker(
+  selectedCountry: selectedCountry,
+  onCountrySelected: (Country country) {
+    setState(() {
+      selectedCountry = country;
+    });
+  },
+)
+
+// Light theme
+CountryPicker(
+  selectedCountry: selectedCountry,
+  onCountrySelected: (Country country) {
+    setState(() {
+      selectedCountry = country;
+    });
+  },
+  backgroundColor: Colors.white,
+  headerColor: Colors.grey[100]!,
+  textColor: Colors.black87,
+  accentColor: Colors.blue,
+  searchFieldColor: Colors.grey[50]!,
+  searchFieldBorderColor: Colors.grey[300]!,
+  cursorColor: Colors.blue,
+  hintTextColor: Colors.grey[600]!,
 )
 ```
 
