@@ -49,11 +49,15 @@ class _CountryPickerState extends State<CountryPicker> {
   int _updateCounter = 0;
 
   // Default colors for dark theme
-  static const Color _defaultBackgroundColor = Color(0xFF302E2C); // Original dark theme
-  static const Color _defaultHeaderColor = Color(0xFF3C3A38); // Original dark theme
+  static const Color _defaultBackgroundColor =
+      Color(0xFF302E2C); // Original dark theme
+  static const Color _defaultHeaderColor =
+      Color(0xFF3C3A38); // Original dark theme
   static const Color _defaultTextColor = Colors.white;
-  static const Color _defaultAccentColor = Color(0xFF699B4B); // Original green accent
-  static const Color _defaultSearchFieldColor = Color(0x0D000000); // Original 5% white
+  static const Color _defaultAccentColor =
+      Color(0xFF699B4B); // Original green accent
+  static const Color _defaultSearchFieldColor =
+      Color(0x0D000000); // Original 5% white
   static const Color _defaultSearchFieldBorderColor = Colors.white24;
   static const Color _defaultCursorColor = Colors.white;
   static const Color _defaultHintTextColor = Colors.white54;
@@ -203,9 +207,9 @@ class _CountryPickerState extends State<CountryPicker> {
                         Container(
                           width: 32,
                           height: 3,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: Colors.white24,
-                            borderRadius: BorderRadius.circular(1.5),
+                            borderRadius: BorderRadius.all(Radius.circular(1.5)),
                           ),
                         ),
                         const SizedBox(height: 12),
@@ -219,12 +223,12 @@ class _CountryPickerState extends State<CountryPicker> {
                         ),
                         const SizedBox(height: 12),
                         Container(
-                          decoration: BoxDecoration(
-                            color: searchFieldColor,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                                color: searchFieldBorderColor, width: 0.5),
-                          ),
+                                                      decoration: BoxDecoration(
+                              color: searchFieldColor,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                  color: searchFieldBorderColor, width: 0.5),
+                            ),
                           child: TextField(
                             controller: _searchController,
                             style: TextStyle(color: textColor, fontSize: 14),
