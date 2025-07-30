@@ -393,7 +393,8 @@ class CountryData {
         .toList();
 
     if (kDebugMode) {
-      debugPrint('DEBUG: Phone search "$phoneCode" - found ${results.length} countries');
+      debugPrint(
+          'DEBUG: Phone search "$phoneCode" - found ${results.length} countries');
     }
     return results;
   }
