@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.3.1] - 2025-01-29
+
+### Documentation
+- **Complete API Documentation**: Added dartdoc comments for all public API elements
+- **Library Documentation**: Added comprehensive library-level documentation with features and examples
+- **Constructor Documentation**: Added documentation for all class constructors
+- **Improved Code Quality**: 80.2% API documentation coverage achieved
+
 ## [2.3.0] - 2025-01-29
 
 ### Performance Improvements
@@ -27,12 +35,6 @@
 - **Search Algorithm**: Replaced complex multi-category search with optimized single-pass algorithm
 - **Performance**: All search operations now complete in under 1ms
 - **User Experience**: No more lag during search, especially on older devices
-
-### Documentation
-- **Complete API Documentation**: Added dartdoc comments for all public API elements
-- **Library Documentation**: Added comprehensive library-level documentation with features and examples
-- **Constructor Documentation**: Added documentation for all class constructors
-- **Improved Code Quality**: 80.2% API documentation coverage achieved
 
 ## [2.2.0] - 2025-01-29
 
