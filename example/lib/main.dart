@@ -14,6 +14,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Locale _currentLocale = const Locale('en');
+  bool _isDarkTheme = true;
 
   void _changeLanguage(Locale locale) {
     setState(() {
@@ -22,17 +23,26 @@ class _MyAppState extends State<MyApp> {
     debugPrint('Language changed to: ${locale.languageCode}');
   }
 
+  void _toggleTheme() {
+    setState(() {
+      _isDarkTheme = !_isDarkTheme;
+    });
+    debugPrint('Theme changed to: ${_isDarkTheme ? 'dark' : 'light'}');
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Country Picker Demo',
-      theme: ThemeData.dark(),
+      theme: _isDarkTheme ? ThemeData.dark() : ThemeData.light(),
       locale: _currentLocale,
       localizationsDelegates: CountrySearchDelegates.allDelegates,
       supportedLocales: CountrySearchDelegates.supportedLocales,
       home: MyHomePage(
         onLanguageChanged: _changeLanguage,
+        onThemeChanged: _toggleTheme,
         currentLocale: _currentLocale,
+        isDarkTheme: _isDarkTheme,
       ),
     );
   }
@@ -40,12 +50,16 @@ class _MyAppState extends State<MyApp> {
 
 class MyHomePage extends StatefulWidget {
   final Function(Locale) onLanguageChanged;
+  final VoidCallback onThemeChanged;
   final Locale currentLocale;
+  final bool isDarkTheme;
 
   const MyHomePage({
     super.key,
     required this.onLanguageChanged,
+    required this.onThemeChanged,
     required this.currentLocale,
+    required this.isDarkTheme,
   });
 
   @override
@@ -54,7 +68,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Country? selectedCountry;
-  bool _isDarkTheme = true;
 
   String _getLanguageName(String code) {
     switch (code) {
@@ -91,12 +104,8 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           // Theme toggle button
           IconButton(
-            icon: Icon(_isDarkTheme ? Icons.light_mode : Icons.dark_mode),
-            onPressed: () {
-              setState(() {
-                _isDarkTheme = !_isDarkTheme;
-              });
-            },
+            icon: Icon(widget.isDarkTheme ? Icons.light_mode : Icons.dark_mode),
+            onPressed: widget.onThemeChanged,
           ),
           PopupMenuButton<Locale>(
             onSelected: widget.onLanguageChanged,
@@ -237,13 +246,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
               backgroundColor: Colors.white,
-              headerColor: Colors.grey[100]!,
+              headerColor: Colors.grey.shade100,
               textColor: Colors.black87,
               accentColor: Colors.blue,
-              searchFieldColor: Colors.grey[50]!,
-              searchFieldBorderColor: Colors.grey[300]!,
+              searchFieldColor: Colors.grey.shade50,
+              searchFieldBorderColor: Colors.grey.shade300,
               cursorColor: Colors.blue,
-              hintTextColor: Colors.grey[600]!,
+              hintTextColor: Colors.grey.shade600,
             ),
             const SizedBox(height: 16),
 
@@ -270,14 +279,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 );
               },
-              backgroundColor: Colors.purple[50]!,
-              headerColor: Colors.purple[100]!,
-              textColor: Colors.purple[900]!,
+              backgroundColor: Colors.purple.shade50,
+              headerColor: Colors.purple.shade100,
+              textColor: Colors.purple.shade900,
               accentColor: Colors.purple,
-              searchFieldColor: Colors.purple[25]!,
-              searchFieldBorderColor: Colors.purple[200]!,
+              searchFieldColor: Colors.purple.shade50,
+              searchFieldBorderColor: Colors.purple.shade200,
               cursorColor: Colors.purple,
-              hintTextColor: Colors.purple[600]!,
+              hintTextColor: Colors.purple.shade600,
             ),
             const SizedBox(height: 32),
 

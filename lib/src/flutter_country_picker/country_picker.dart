@@ -49,11 +49,11 @@ class _CountryPickerState extends State<CountryPicker> {
   int _updateCounter = 0;
 
   // Default colors for dark theme
-  static const Color _defaultBackgroundColor = Color(0xFF302E2C);
-  static const Color _defaultHeaderColor = Color(0xFF3C3A38);
+  static const Color _defaultBackgroundColor = Color(0xFF302E2C); // Original dark theme
+  static const Color _defaultHeaderColor = Color(0xFF3C3A38); // Original dark theme
   static const Color _defaultTextColor = Colors.white;
-  static const Color _defaultAccentColor = Color(0xFF699B4B);
-  static const Color _defaultSearchFieldColor = Color(0x0D000000); // 5% white
+  static const Color _defaultAccentColor = Color(0xFF699B4B); // Original green accent
+  static const Color _defaultSearchFieldColor = Color(0x0D000000); // Original 5% white
   static const Color _defaultSearchFieldBorderColor = Colors.white24;
   static const Color _defaultCursorColor = Colors.white;
   static const Color _defaultHintTextColor = Colors.white54;
