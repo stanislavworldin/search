@@ -35,7 +35,7 @@ A beautiful and customizable country picker widget for Flutter with multi-langua
 
 ```yaml
 dependencies:
-  country_search: ^2.4.0
+  country_search: ^2.5.0
 ```
 
 ## 🚀 Usage
@@ -66,7 +66,7 @@ CountryPicker(
 To see the widget in action, run the example app:
 
 ```bash
-cd example
+cd country_search/example
 flutter run
 ```
 
@@ -159,6 +159,8 @@ dependencies:
 
 ```dart
 // If you don't have localization yet:
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 MaterialApp(
   locale: const Locale('de'), // Set your app's language
   localizationsDelegates: [
