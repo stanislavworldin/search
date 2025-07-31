@@ -111,6 +111,109 @@ void main() {
       expect(localizations.selectYourCountry, equals('국가를 선택하세요'));
     });
 
+    test('Dutch localizations work correctly', () {
+      final localizations = CountryLocalizationsNl();
+
+      expect(localizations.getCountryName('US'), equals('Verenigde Staten'));
+      expect(localizations.getCountryName('RU'), equals('Rusland'));
+      expect(localizations.getCountryName('NL'), equals('Nederland'));
+      expect(localizations.selectCountry, equals('Selecteer Land'));
+      expect(localizations.searchCountry, equals('Zoek land...'));
+      expect(localizations.selectYourCountry, equals('Selecteer uw land'));
+    });
+
+    test('Arabic localizations work correctly', () {
+      final localizations = CountryLocalizationsAr();
+
+      expect(localizations.getCountryName('US'), equals('الولايات المتحدة'));
+      expect(localizations.getCountryName('RU'), equals('روسيا'));
+      expect(localizations.getCountryName('SA'),
+          equals('المملكة العربية السعودية'));
+      expect(localizations.selectCountry, equals('اختر البلد'));
+      expect(localizations.searchCountry, equals('البحث عن بلد...'));
+      expect(localizations.selectYourCountry, equals('اختر بلدك'));
+    });
+
+    test('Turkish localizations work correctly', () {
+      final localizations = CountryLocalizationsTr();
+
+      expect(localizations.getCountryName('US'),
+          equals('Amerika Birleşik Devletleri'));
+      expect(localizations.getCountryName('RU'), equals('Rusya'));
+      expect(localizations.getCountryName('TR'), equals('Türkiye'));
+      expect(localizations.selectCountry, equals('Ülke Seç'));
+      expect(localizations.searchCountry, equals('Ülke ara...'));
+      expect(localizations.selectYourCountry, equals('Ülkenizi seçin'));
+    });
+
+    test('Indonesian localizations work correctly', () {
+      final localizations = CountryLocalizationsId();
+
+      expect(localizations.getCountryName('US'), equals('Amerika Serikat'));
+      expect(localizations.getCountryName('RU'), equals('Rusia'));
+      expect(localizations.getCountryName('ID'), equals('Indonesia'));
+      expect(localizations.selectCountry, equals('Pilih Negara'));
+      expect(localizations.searchCountry, equals('Cari negara...'));
+      expect(localizations.selectYourCountry, equals('Pilih negara Anda'));
+    });
+
+    test('Hindi localizations work correctly', () {
+      final localizations = CountryLocalizationsHi();
+
+      expect(
+          localizations.getCountryName('US'), equals('संयुक्त राज्य अमेरिका'));
+      expect(localizations.getCountryName('RU'), equals('रूस'));
+      expect(localizations.getCountryName('IN'), equals('भारत'));
+      expect(localizations.selectCountry, equals('देश चुनें'));
+      expect(localizations.searchCountry, equals('देश खोजें...'));
+      expect(localizations.selectYourCountry, equals('अपना देश चुनें'));
+    });
+
+    test('Polish localizations work correctly', () {
+      final localizations = CountryLocalizationsPl();
+
+      expect(localizations.getCountryName('US'), equals('Stany Zjednoczone'));
+      expect(localizations.getCountryName('RU'), equals('Rosja'));
+      expect(localizations.getCountryName('PL'), equals('Polska'));
+      expect(localizations.selectCountry, equals('Wybierz kraj'));
+      expect(localizations.searchCountry, equals('Szukaj kraju...'));
+      expect(localizations.selectYourCountry, equals('Wybierz swój kraj'));
+    });
+
+    test('Ukrainian localizations work correctly', () {
+      final localizations = CountryLocalizationsUk();
+
+      expect(localizations.getCountryName('US'),
+          equals('Сполучені Штати Америки'));
+      expect(localizations.getCountryName('RU'), equals('Росія'));
+      expect(localizations.getCountryName('UA'), equals('Україна'));
+      expect(localizations.selectCountry, equals('Оберіть країну'));
+      expect(localizations.searchCountry, equals('Пошук країни...'));
+      expect(localizations.selectYourCountry, equals('Оберіть вашу країну'));
+    });
+
+    test('Vietnamese localizations work correctly', () {
+      final localizations = CountryLocalizationsVi();
+
+      expect(localizations.getCountryName('US'), equals('Hoa Kỳ'));
+      expect(localizations.getCountryName('RU'), equals('Nga'));
+      expect(localizations.getCountryName('VN'), equals('Việt Nam'));
+      expect(localizations.selectCountry, equals('Chọn quốc gia'));
+      expect(localizations.searchCountry, equals('Tìm kiếm quốc gia...'));
+      expect(localizations.selectYourCountry, equals('Chọn quốc gia của bạn'));
+    });
+
+    test('Thai localizations work correctly', () {
+      final localizations = CountryLocalizationsTh();
+
+      expect(localizations.getCountryName('US'), equals('สหรัฐอเมริกา'));
+      expect(localizations.getCountryName('RU'), equals('รัสเซีย'));
+      expect(localizations.getCountryName('TH'), equals('ไทย'));
+      expect(localizations.selectCountry, equals('เลือกประเทศ'));
+      expect(localizations.searchCountry, equals('ค้นหาประเทศ...'));
+      expect(localizations.selectYourCountry, equals('เลือกประเทศของคุณ'));
+    });
+
     test('All localizations have same country codes', () {
       final en = CountryLocalizationsEn();
       final es = CountryLocalizationsEs();
@@ -121,6 +224,15 @@ void main() {
       final it = CountryLocalizationsIt();
       final ja = CountryLocalizationsJa();
       final ko = CountryLocalizationsKo();
+      final nl = CountryLocalizationsNl();
+      final ar = CountryLocalizationsAr();
+      final hi = CountryLocalizationsHi();
+      final id = CountryLocalizationsId();
+      final pl = CountryLocalizationsPl();
+      final tr = CountryLocalizationsTr();
+      final uk = CountryLocalizationsUk();
+      final vi = CountryLocalizationsVi();
+      final th = CountryLocalizationsTh();
       final zh = CountryLocalizationsZh();
 
       expect(en.allCountryNames.keys, equals(es.allCountryNames.keys));
@@ -131,18 +243,27 @@ void main() {
       expect(en.allCountryNames.keys, equals(it.allCountryNames.keys));
       expect(en.allCountryNames.keys, equals(ja.allCountryNames.keys));
       expect(en.allCountryNames.keys, equals(ko.allCountryNames.keys));
+      expect(en.allCountryNames.keys, equals(nl.allCountryNames.keys));
+      expect(en.allCountryNames.keys, equals(ar.allCountryNames.keys));
+      expect(en.allCountryNames.keys, equals(hi.allCountryNames.keys));
+      expect(en.allCountryNames.keys, equals(id.allCountryNames.keys));
+      expect(en.allCountryNames.keys, equals(pl.allCountryNames.keys));
+      expect(en.allCountryNames.keys, equals(tr.allCountryNames.keys));
+      expect(en.allCountryNames.keys, equals(uk.allCountryNames.keys));
+      expect(en.allCountryNames.keys, equals(vi.allCountryNames.keys));
+      expect(en.allCountryNames.keys, equals(th.allCountryNames.keys));
       expect(en.allCountryNames.keys, equals(zh.allCountryNames.keys));
     });
 
     test('Localizations delegate works', () {
       expect(CountryLocalizations.delegate, isNotNull);
       expect(CountryLocalizations.supportedLocales, isNotEmpty);
-      expect(CountryLocalizations.supportedLocales.length, equals(10));
+      expect(CountryLocalizations.supportedLocales.length, equals(19));
     });
 
     test('Fallback to English for unsupported locale', () {
-      // Test with unsupported locale (Thai)
-      const unsupportedLocale = Locale('th');
+      // Test with unsupported locale (Swedish)
+      const unsupportedLocale = Locale('sv');
       final localizations = lookupCountryLocalizations(unsupportedLocale);
 
       // Should fallback to English

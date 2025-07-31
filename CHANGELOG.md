@@ -1,5 +1,33 @@
 # Changelog
 
+## [2.6.0] - 2025-01-29
+
+### Added
+- **🔤 Fuzzy Search**: Added intelligent fuzzy search using Levenshtein distance algorithm
+- **4-Level Search System**: Implemented priority-based search with exact, starts-with, contains, and fuzzy matching
+- **Adaptive Threshold**: Smart distance calculation based on query length for optimal results
+- **Typo Tolerance**: Find countries even with misspellings and typos
+- **Enhanced User Experience**: Better search results for users making typing mistakes
+
+### Technical Improvements
+- **Levenshtein Distance Algorithm**: Efficient string similarity calculation
+- **Performance Optimized**: Fuzzy search only activates for queries longer than 2 characters
+- **Debug Information**: Added detailed search result logging for development
+- **English Comments**: All code comments translated to English for better maintainability
+
+### Documentation
+- **Fuzzy Search Guide**: Added comprehensive documentation with examples
+- **Search Examples**: Added real-world examples showing typo tolerance
+- **Algorithm Explanation**: Detailed explanation of 4-level search system
+- **Performance Notes**: Information about adaptive thresholds and optimizations
+
+### Examples of Fuzzy Search
+- `"russi"` → finds `"Russia"`
+- `"germny"` → finds `"Germany"`
+- `"japn"` → finds `"Japan"`
+- `"united sttes"` → finds `"United States"`
+- `"united kingdm"` → finds `"United Kingdom"`
+
 ## [2.5.0] - 2025-01-29
 
 ### Added

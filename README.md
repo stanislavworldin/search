@@ -1,12 +1,12 @@
 # Country Search
 
-A beautiful and customizable country picker widget for Flutter with multi-language support and phone codes.
+A beautiful and customizable country picker widget with multi-language support and phone codes. Find countries even with typos and misspellings.
 
 ![Country Picker Demo](https://raw.githubusercontent.com/stanislavworldin/country_search/main/screenshots/0.gif)
 
 ## 📦 Package Size & Performance
 
-**Package Size:** ~113KB (source code, 10 languages)
+**Package Size:** ~113KB (source code, 19 languages)
 
 **Search Performance:**
 - **Algorithm:** Optimized single-pass search with early exit
@@ -16,8 +16,9 @@ A beautiful and customizable country picker widget for Flutter with multi-langua
 ## ✨ Features
 
 - 🌍 **246 Countries** with flags, ISO codes, and phone codes
-- 🌐 **Multi-language Support** - English, Spanish, French, German, Italian, Japanese, Korean, Portuguese, Russian, Chinese
+- 🌐 **Multi-language Support** - 19 languages including English, Spanish, French, German, Italian, Japanese, Korean, Portuguese, Russian, Chinese, Arabic, Hindi, Indonesian, Polish, Turkish, Ukrainian, Vietnamese, Thai
 - 🔍 **Smart Search** by country name, code, or phone code
+- 🔤 **Fuzzy Search** - find countries even with typos and misspellings
 - ⚡ **Lightning Fast Search** - 4.7x faster than previous versions
 - 📞 **Phone Codes** - Complete international dialing codes
 - 🎨 **Adaptive Design** for mobile, tablet and desktop
@@ -59,6 +60,22 @@ CountryPicker(
 
 **✅ Works immediately without any setup!** The widget uses English by default.
 
+### 🔤 Fuzzy Search
+
+The widget includes intelligent fuzzy search that helps users find countries even when they make typos or misspellings. The search uses a 4-level priority system:
+
+1. **Exact matches** - perfect matches for country name, code, or phone code
+2. **Starts with** - query is the beginning of country name, code, or phone code
+3. **Contains** - query is contained within country name, code, or phone code  
+4. **Fuzzy search** - finds countries even with typos using Levenshtein distance algorithm
+
+**Examples of fuzzy search:**
+- `"russi"` → finds `"Russia"`
+- `"germny"` → finds `"Germany"`
+- `"japn"` → finds `"Japan"`
+- `"united sttes"` → finds `"United States"`
+- `"united kingdm"` → finds `"United Kingdom"`
+
 
 
 ### Run the Example
@@ -71,7 +88,7 @@ flutter run
 ```
 
 The example demonstrates:
-- ✅ Multi-language support (10 languages)
+- ✅ Multi-language support (19 languages)
 - ✅ Country search by name, code, and phone code
 - ✅ Beautiful dark theme UI
 - ✅ Responsive design for all screen sizes
@@ -231,6 +248,14 @@ rm lib/src/flutter_country_picker/localizations/country_localizations_es.dart
 - 🇰🇷 Korean
 - 🇵🇹 Portuguese
 - 🇨🇳 Chinese
+- 🇸🇦 Arabic
+- 🇮🇳 Hindi
+- 🇮🇩 Indonesian
+- 🇵🇱 Polish
+- 🇹🇷 Turkish
+- 🇺🇦 Ukrainian
+- 🇻🇳 Vietnamese
+- 🇹🇭 Thai
 
 
 ## 📝 License

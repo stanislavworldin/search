@@ -77,6 +77,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String _getLanguageName(String code) {
     switch (code) {
+      case 'ar':
+        return '🇸🇦 العربية';
       case 'de':
         return '🇩🇪 Deutsch';
       case 'en':
@@ -85,16 +87,32 @@ class _MyHomePageState extends State<MyHomePage> {
         return '🇪🇸 Español';
       case 'fr':
         return '🇫🇷 Français';
+      case 'hi':
+        return '🇮🇳 हिन्दी';
+      case 'id':
+        return '🇮🇩 Bahasa Indonesia';
       case 'it':
         return '🇮🇹 Italiano';
       case 'ja':
-        return '🇯�� 日本語';
+        return '🇯🇵 日本語';
       case 'ko':
         return '🇰🇷 한국어';
+      case 'nl':
+        return '🇳🇱 Nederlands';
+      case 'pl':
+        return '🇵🇱 Polski';
       case 'pt':
         return '🇵🇹 Português';
       case 'ru':
         return '🇷🇺 Русский';
+      case 'th':
+        return '🇹🇭 ไทย';
+      case 'tr':
+        return '🇹🇷 Türkçe';
+      case 'uk':
+        return '🇺🇦 Українська';
+      case 'vi':
+        return '🇻🇳 Tiếng Việt';
       case 'zh':
         return '🇨🇳 中文';
       default:
@@ -117,6 +135,10 @@ class _MyHomePageState extends State<MyHomePage> {
             onSelected: widget.onLanguageChanged,
             itemBuilder: (BuildContext context) => [
               const PopupMenuItem(
+                value: Locale('ar'),
+                child: Text('🇸🇦 العربية'),
+              ),
+              const PopupMenuItem(
                 value: Locale('de'),
                 child: Text('🇩🇪 Deutsch'),
               ),
@@ -133,6 +155,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Text('🇫🇷 Français'),
               ),
               const PopupMenuItem(
+                value: Locale('hi'),
+                child: Text('🇮🇳 हिन्दी'),
+              ),
+              const PopupMenuItem(
+                value: Locale('id'),
+                child: Text('🇮🇩 Bahasa Indonesia'),
+              ),
+              const PopupMenuItem(
                 value: Locale('it'),
                 child: Text('🇮🇹 Italiano'),
               ),
@@ -145,12 +175,36 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Text('🇰🇷 한국어'),
               ),
               const PopupMenuItem(
+                value: Locale('nl'),
+                child: Text('🇳🇱 Nederlands'),
+              ),
+              const PopupMenuItem(
+                value: Locale('pl'),
+                child: Text('🇵🇱 Polski'),
+              ),
+              const PopupMenuItem(
                 value: Locale('pt'),
                 child: Text('🇵🇹 Português'),
               ),
               const PopupMenuItem(
                 value: Locale('ru'),
                 child: Text('🇷🇺 Русский'),
+              ),
+              const PopupMenuItem(
+                value: Locale('th'),
+                child: Text('🇹🇭 ไทย'),
+              ),
+              const PopupMenuItem(
+                value: Locale('tr'),
+                child: Text('🇹🇷 Türkçe'),
+              ),
+              const PopupMenuItem(
+                value: Locale('uk'),
+                child: Text('🇺🇦 Українська'),
+              ),
+              const PopupMenuItem(
+                value: Locale('vi'),
+                child: Text('🇻🇳 Tiếng Việt'),
               ),
               const PopupMenuItem(
                 value: Locale('zh'),
@@ -381,7 +435,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(height: 8),
                   Text('• 245+ countries with flags'),
                   Text('• Phone codes included'),
-                  Text('• Multi-language support'),
+                  Text('• Multi-language support (19 languages)'),
                   Text('• Smart search functionality'),
                   Text('• Beautiful dark theme'),
                   Text('• Light theme support'),

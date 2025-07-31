@@ -130,6 +130,51 @@ class _CountryPickerState extends State<CountryPicker> {
     });
   }
 
+  // Calculate Levenshtein distance for fuzzy search
+  int _levenshteinDistance(String s1, String s2) {
+    if (s1.isEmpty) return s2.length;
+    if (s2.isEmpty) return s1.length;
+
+    List<List<int>> matrix = List.generate(
+      s1.length + 1,
+      (i) => List.generate(s2.length + 1, (j) => 0),
+    );
+
+    for (int i = 0; i <= s1.length; i++) {
+      matrix[i][0] = i;
+    }
+    for (int j = 0; j <= s2.length; j++) {
+      matrix[0][j] = j;
+    }
+
+    for (int i = 1; i <= s1.length; i++) {
+      for (int j = 1; j <= s2.length; j++) {
+        int cost = s1[i - 1] == s2[j - 1] ? 0 : 1;
+        matrix[i][j] = [
+          matrix[i - 1][j] + 1, // deletion
+          matrix[i][j - 1] + 1, // insertion
+          matrix[i - 1][j - 1] + cost, // substitution
+        ].reduce((a, b) => a < b ? a : b);
+      }
+    }
+
+    return matrix[s1.length][s2.length];
+  }
+
+  // Check fuzzy match with distance threshold
+  bool _isFuzzyMatch(String query, String text, {int maxDistance = 3}) {
+    if (query.length <= 2) {
+      return false; // Skip fuzzy search for very short queries
+    }
+
+    final distance = _levenshteinDistance(query, text);
+    final maxAllowedDistance = (query.length / 3).ceil(); // Adaptive threshold
+    final threshold =
+        maxDistance < maxAllowedDistance ? maxDistance : maxAllowedDistance;
+
+    return distance <= threshold;
+  }
+
   void _filterAndSortCountries(String query) {
     if (query.isEmpty) {
       _filteredCountries = _allCountries;
@@ -141,6 +186,7 @@ class _CountryPickerState extends State<CountryPicker> {
     final exactMatches = <Country>[];
     final startsWithMatches = <Country>[];
     final containsMatches = <Country>[];
+    final fuzzyMatches = <Country>[];
 
     for (final country in _allCountries) {
       final countryName =
@@ -150,6 +196,7 @@ class _CountryPickerState extends State<CountryPicker> {
 
       bool found = false;
 
+      // 1. Exact matches
       if (countryName == query ||
           countryCode == query ||
           countryPhoneCode == query) {
@@ -157,6 +204,7 @@ class _CountryPickerState extends State<CountryPicker> {
         found = true;
       }
 
+      // 2. Starts with query
       if (!found &&
           (countryName.startsWith(query) ||
               countryCode.startsWith(query) ||
@@ -165,21 +213,34 @@ class _CountryPickerState extends State<CountryPicker> {
         found = true;
       }
 
+      // 3. Contains query
       if (!found &&
           (countryName.contains(query) ||
               countryCode.contains(query) ||
               countryPhoneCode.contains(query))) {
         containsMatches.add(country);
+        found = true;
+      }
+
+      // 4. Fuzzy search for typos and misspellings
+      if (!found &&
+          (_isFuzzyMatch(query, countryName) ||
+              _isFuzzyMatch(query, countryCode) ||
+              _isFuzzyMatch(query, countryPhoneCode))) {
+        fuzzyMatches.add(country);
       }
     }
 
     results.addAll(exactMatches);
     results.addAll(startsWithMatches);
     results.addAll(containsMatches);
+    results.addAll(fuzzyMatches);
 
     _filteredCountries = results;
     if (kDebugMode) {
       debugPrint('DEBUG: Search "$query" - found ${results.length} countries');
+      debugPrint(
+          'DEBUG: Exact: ${exactMatches.length}, StartsWith: ${startsWithMatches.length}, Contains: ${containsMatches.length}, Fuzzy: ${fuzzyMatches.length}');
     }
   }
 

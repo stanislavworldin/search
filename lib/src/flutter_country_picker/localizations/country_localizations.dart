@@ -3,15 +3,24 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
+import 'country_localizations_ar.dart';
 import 'country_localizations_de.dart';
 import 'country_localizations_en.dart';
 import 'country_localizations_es.dart';
 import 'country_localizations_fr.dart';
+import 'country_localizations_hi.dart';
+import 'country_localizations_id.dart';
 import 'country_localizations_it.dart';
 import 'country_localizations_ja.dart';
 import 'country_localizations_ko.dart';
+import 'country_localizations_nl.dart';
+import 'country_localizations_pl.dart';
 import 'country_localizations_pt.dart';
 import 'country_localizations_ru.dart';
+import 'country_localizations_tr.dart';
+import 'country_localizations_uk.dart';
+import 'country_localizations_vi.dart';
+import 'country_localizations_th.dart';
 import 'country_localizations_zh.dart';
 
 // ignore_for_file: type=lint
@@ -71,15 +80,24 @@ abstract class CountryLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
+    Locale('ar'),
     Locale('de'),
     Locale('en'),
     Locale('es'),
     Locale('fr'),
+    Locale('hi'),
+    Locale('id'),
     Locale('it'),
     Locale('ja'),
     Locale('ko'),
+    Locale('nl'),
+    Locale('pl'),
     Locale('pt'),
     Locale('ru'),
+    Locale('tr'),
+    Locale('uk'),
+    Locale('vi'),
+    Locale('th'),
     Locale('zh'),
   ];
 
@@ -116,15 +134,24 @@ class _CountryLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) => <String>[
+        'ar',
         'de',
         'en',
         'es',
         'fr',
+        'hi',
+        'id',
         'it',
         'ja',
         'ko',
+        'nl',
+        'pl',
         'pt',
         'ru',
+        'tr',
+        'uk',
+        'vi',
+        'th',
         'zh'
       ].contains(locale.languageCode);
 
@@ -139,6 +166,8 @@ class _CountryLocalizationsDelegate
 CountryLocalizations lookupCountryLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'ar':
+      return CountryLocalizationsAr();
     case 'de':
       return CountryLocalizationsDe();
     case 'en':
@@ -147,16 +176,32 @@ CountryLocalizations lookupCountryLocalizations(Locale locale) {
       return CountryLocalizationsEs();
     case 'fr':
       return CountryLocalizationsFr();
+    case 'hi':
+      return CountryLocalizationsHi();
+    case 'id':
+      return CountryLocalizationsId();
     case 'it':
       return CountryLocalizationsIt();
     case 'ja':
       return CountryLocalizationsJa();
     case 'ko':
       return CountryLocalizationsKo();
+    case 'nl':
+      return CountryLocalizationsNl();
+    case 'pl':
+      return CountryLocalizationsPl();
     case 'pt':
       return CountryLocalizationsPt();
     case 'ru':
       return CountryLocalizationsRu();
+    case 'tr':
+      return CountryLocalizationsTr();
+    case 'uk':
+      return CountryLocalizationsUk();
+    case 'vi':
+      return CountryLocalizationsVi();
+    case 'th':
+      return CountryLocalizationsTh();
     case 'zh':
       return CountryLocalizationsZh();
   }
