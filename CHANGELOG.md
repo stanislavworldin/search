@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.6.3] - 2025-01-29
+
+### Fixed
+- **Emoji Flag Display**: Fixed emoji flag rendering issues in web builds
+- **Web Compatibility**: Improved compatibility with different Flutter web versions
+- **Build Stability**: Enhanced build process for better reliability
+
+### Technical Improvements
+- **Code Optimization**: Minor code improvements for better performance
+- **Documentation Updates**: Updated documentation with latest information
+- **Build Process**: Streamlined build process for web deployment
+
 ## [2.6.2] - 2025-01-29
 
 ### Added
