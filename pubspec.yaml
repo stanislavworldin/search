@@ -1,6 +1,6 @@
 name: country_search
 description: A beautiful, customizable country picker with search, multi-language support, phone codes, and great performance. Find countries even with typos, partial names.
-version: 2.6.1
+version: 2.6.2
 homepage: https://github.com/stanislavworldin/country_search
 repository: https://github.com/stanislavworldin/country_search
 issue_tracker: https://github.com/stanislavworldin/country_search/issues
