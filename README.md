@@ -6,9 +6,13 @@
 
 Lightweight and blazing fast country selector for Flutter apps with full localization, Levenshtein-based search, and full ISO-3166 support — in just 113KB.
 
-![Country Picker Demo](https://raw.githubusercontent.com/stanislavworldin/country_search/main/screenshots/0.gif)
 
 **🌐 Live Demo:** [View on GitHub Pages](https://stanislavworldin.github.io/country_search/)
+
+**🚀 Auto-deployed via GitHub Actions**
+
+![Country Picker Demo](https://raw.githubusercontent.com/stanislavworldin/country_search/main/screenshots/0.gif)
+
 
 ## Features
 
