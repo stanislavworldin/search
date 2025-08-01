@@ -9,7 +9,7 @@ Lightweight and blazing fast country selector for Flutter apps with full localiz
 
 **🌐 Live Demo:** [View on GitHub Pages](https://stanislavworldin.github.io/country_search/)
 
-**🚀 Auto-deployed via GitHub Actions**
+**🚀 Auto-deployed via GitHub Actions (Updated)**
 
 ![Country Picker Demo](https://raw.githubusercontent.com/stanislavworldin/country_search/main/screenshots/0.gif)
 
