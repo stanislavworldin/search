@@ -52,6 +52,22 @@ class _CountryPickerState extends State<CountryPicker> {
   bool _isSearching = false;
   int _updateCounter = 0;
 
+  // Constants for performance optimization
+  static const TextStyle _flagTextStyle = TextStyle(fontSize: 20);
+  static const TextStyle _selectedPhoneCodeTextStyle =
+      TextStyle(fontSize: 9, fontWeight: FontWeight.w500, color: Colors.blue);
+
+  static const EdgeInsets _itemPadding =
+      EdgeInsets.symmetric(horizontal: 12, vertical: 8);
+  static const EdgeInsets _buttonPadding =
+      EdgeInsets.symmetric(horizontal: 12, vertical: 10);
+  static const EdgeInsets _itemMargin =
+      EdgeInsets.symmetric(horizontal: 8, vertical: 1);
+
+  static const SizedBox _spacer12 = SizedBox(width: 12);
+  static const SizedBox _spacer10 = SizedBox(width: 10);
+  static const SizedBox _spacer2 = SizedBox(height: 2);
+
   // Default colors for dark theme
   static const Color _defaultBackgroundColor =
       Color(0xFF302E2C); // Original dark theme
@@ -359,8 +375,7 @@ class _CountryPickerState extends State<CountryPicker> {
 
                         return RepaintBoundary(
                           child: Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 1),
+                            margin: _itemMargin,
                             decoration: BoxDecoration(
                               color: isSelected
                                   ? accentColor.withValues(alpha: 0.1)
@@ -378,15 +393,14 @@ class _CountryPickerState extends State<CountryPicker> {
                                   Navigator.of(context).pop();
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 8),
+                                  padding: _itemPadding,
                                   child: Row(
                                     children: [
                                       Text(
                                         country.flag,
-                                        style: const TextStyle(fontSize: 20),
+                                        style: _flagTextStyle,
                                       ),
-                                      const SizedBox(width: 12),
+                                      _spacer12,
                                       Expanded(
                                         child: Column(
                                           crossAxisAlignment:
@@ -404,7 +418,7 @@ class _CountryPickerState extends State<CountryPicker> {
                                                 fontSize: 14,
                                               ),
                                             ),
-                                            const SizedBox(height: 2),
+                                            _spacer2,
                                             Text(
                                               widget.showPhoneCodes
                                                   ? '${country.code} (${country.phoneCode})'
@@ -457,7 +471,7 @@ class _CountryPickerState extends State<CountryPicker> {
           onTap: _showCountryPicker,
           borderRadius: BorderRadius.circular(borderRadius),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            padding: _buttonPadding,
             decoration: BoxDecoration(
               border: Border.all(color: searchFieldBorderColor, width: 0.5),
               borderRadius: BorderRadius.circular(borderRadius),
@@ -470,7 +484,7 @@ class _CountryPickerState extends State<CountryPicker> {
                     widget.selectedCountry!.flag,
                     style: const TextStyle(fontSize: 18),
                   ),
-                  const SizedBox(width: 10),
+                  _spacer10,
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -484,7 +498,7 @@ class _CountryPickerState extends State<CountryPicker> {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        const SizedBox(height: 2),
+                        _spacer2,
                         Text(
                           widget.selectedCountry!.code,
                           style: TextStyle(
@@ -495,18 +509,14 @@ class _CountryPickerState extends State<CountryPicker> {
                         if (widget.showPhoneCodes)
                           Text(
                             widget.selectedCountry!.phoneCode,
-                            style: const TextStyle(
-                              color: Colors.blue,
-                              fontSize: 9,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: _selectedPhoneCodeTextStyle,
                           ),
                       ],
                     ),
                   ),
                 ] else ...[
                   Icon(Icons.flag, color: hintTextColor, size: 18),
-                  const SizedBox(width: 10),
+                  _spacer10,
                   Expanded(
                     child: Text(
                       widget.hintText ?? countryLocalizations.selectYourCountry,

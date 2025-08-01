@@ -1,5 +1,5 @@
 name: country_search
-description: A beautiful and customizable country picker widget with search functionality, multi-language support, phone codes, and optimized performance for weak devices. Find countries even with typos and misspellings.
+description: A beautiful, customizable country picker with search, multi-language support, phone codes, and great performance. Find countries even with typos, partial names.
 version: 2.6.0
 homepage: https://github.com/stanislavworldin/country_search
 repository: https://github.com/stanislavworldin/country_search
@@ -8,7 +8,7 @@ documentation: https://github.com/stanislavworldin/country_search#readme
 topics:
   - flags
   - country
-  - picker
+  - picke
   - search
   - phone-codes
 

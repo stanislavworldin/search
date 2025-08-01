@@ -27,6 +27,22 @@ A beautiful and customizable country picker widget with multi-language support a
 - 🌐 **Cross-Platform** - works on mobile, web, and desktop
 - 📱 **Weak Device Optimized** - minimalist UI for smooth performance on low-end devices
 
+**✅ Works immediately without any setup!** The widget uses English by default.
+
+### 🔤 Fuzzy Search
+
+The widget includes intelligent fuzzy search that helps users find countries even when they make typos or misspellings. The search uses a 4-level priority system:
+
+1. **Exact matches** - perfect matches for country name, code, or phone code
+2. **Starts with** - query is the beginning of country name, code, or phone code
+3. **Contains** - query is contained within country name, code, or phone code  
+4. **Fuzzy search** - finds countries even with typos using Levenshtein distance algorithm
+
+**Examples of fuzzy search:**
+- `"germny"` → finds `"Germany"`
+- `"japn"` → finds `"Japan"`
+- `"united sttes"` → finds `"United States"`
+
 ![Demo](https://raw.githubusercontent.com/stanislavworldin/country_search/main/screenshots/1.png)
 
 ![Demo with Chinese Language](https://raw.githubusercontent.com/stanislavworldin/country_search/main/screenshots/2.png)
@@ -36,7 +52,7 @@ A beautiful and customizable country picker widget with multi-language support a
 
 ```yaml
 dependencies:
-  country_search: ^2.5.0
+  country_search: ^2.6.0
 ```
 
 ## 🚀 Usage
@@ -57,26 +73,6 @@ CountryPicker(
   showPhoneCodes: true, // Show phone codes (default)
 )
 ```
-
-**✅ Works immediately without any setup!** The widget uses English by default.
-
-### 🔤 Fuzzy Search
-
-The widget includes intelligent fuzzy search that helps users find countries even when they make typos or misspellings. The search uses a 4-level priority system:
-
-1. **Exact matches** - perfect matches for country name, code, or phone code
-2. **Starts with** - query is the beginning of country name, code, or phone code
-3. **Contains** - query is contained within country name, code, or phone code  
-4. **Fuzzy search** - finds countries even with typos using Levenshtein distance algorithm
-
-**Examples of fuzzy search:**
-- `"russi"` → finds `"Russia"`
-- `"germny"` → finds `"Germany"`
-- `"japn"` → finds `"Japan"`
-- `"united sttes"` → finds `"United States"`
-- `"united kingdm"` → finds `"United Kingdom"`
-
-
 
 ### Run the Example
 
