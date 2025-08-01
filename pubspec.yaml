@@ -1,5 +1,5 @@
 name: country_search
-description: A beautiful, customizable country picker with search, multi-language support, phone codes, and great performance. Find countries even with typos, partial names.
+description: Fast and lightweight country selector for Flutter with localization, fuzzy search, and ISO 3166 support — only 113KB.
 version: 2.6.2
 homepage: https://github.com/stanislavworldin/country_search
 repository: https://github.com/stanislavworldin/country_search
@@ -8,9 +8,9 @@ documentation: https://github.com/stanislavworldin/country_search#readme
 topics:
   - flags
   - country
-  - picke
+  - picker
   - search
-  - phone-codes
+  - codes
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
