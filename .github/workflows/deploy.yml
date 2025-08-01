@@ -38,7 +38,7 @@ jobs:
     - name: Build web
       run: |
         cd example
-        flutter build web --release
+        flutter build web --release --base-href /country_search/
     
     - name: Setup Pages
       uses: actions/configure-pages@v4
