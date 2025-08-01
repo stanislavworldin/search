@@ -1,6 +1,6 @@
 name: country_search
 description: Fast and lightweight country selector for Flutter with localization, fuzzy search, and ISO 3166 support — only 113KB.
-version: 2.6.3
+version: 2.6.4
 homepage: https://github.com/stanislavworldin/country_search
 repository: https://github.com/stanislavworldin/country_search
 issue_tracker: https://github.com/stanislavworldin/country_search/issues

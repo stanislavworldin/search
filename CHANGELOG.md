@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.6.4] - 2025-01-29
+
+### Fixed
+- **Code Formatting**: Fixed Dart formatter issues for static analysis compliance
+- **Static Analysis**: Resolved all formatting and linting warnings
+
+### Technical Improvements
+- **Code Quality**: Ensured all code follows Dart formatting standards
+- **Analysis Compliance**: Passed all static analysis checks
+
 ## [2.6.3] - 2025-01-29
 
 ### Fixed
