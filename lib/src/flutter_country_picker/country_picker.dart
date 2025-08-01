@@ -378,7 +378,7 @@ class _CountryPickerState extends State<CountryPicker> {
                             margin: _itemMargin,
                             decoration: BoxDecoration(
                               color: isSelected
-                                  ? accentColor.withValues(alpha: 0.1)
+                                  ? accentColor.withOpacity(0.1)
                                   : Colors.transparent,
                               borderRadius: BorderRadius.circular(borderRadius),
                             ),
@@ -425,7 +425,7 @@ class _CountryPickerState extends State<CountryPicker> {
                                                   : country.code,
                                               style: TextStyle(
                                                 color: isSelected
-                                                    ? accentColor.withValues(alpha: 0.7)
+                                                    ? accentColor.withOpacity(0.7)
                                                     : hintTextColor,
                                                 fontSize: 12,
                                               ),
