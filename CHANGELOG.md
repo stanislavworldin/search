@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.6.2] - 2025-01-29
+
+### Added
+- **Complete ISO 3166-1 Compliance**: Updated to 252 countries matching official ISO 3166-1 standard
+- **7 New Countries Added**: BQ (Caribbean Netherlands), BV (Bouvet Island), DZ (Algeria), MF (Saint Martin), MQ (Martinique), MU (Mauritius), SN (Senegal)
+- **Full Synchronization**: All 19 language files now contain exactly 252 countries
+- **Official Standard**: Now matches complete ISO 3166-1 list including sovereign states, dependent territories, and autonomous regions
+
+### Technical Improvements
+- **Data Integrity**: Ensured all country codes, flags, and phone codes are synchronized across all files
+- **Translation Completeness**: All 7 new countries have translations in all 19 supported languages
+- **Standard Compliance**: Full compliance with international country code standards
+
+### Documentation
+- **Updated Country Count**: Changed from 246 to 252 countries in documentation
+- **ISO 3166-1 Reference**: Added information about official standard compliance
+- **Complete Coverage**: Documentation now reflects full international country coverage
+
 ## [2.6.1] - 2025-01-29
 
 ### Performance Improvements

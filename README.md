@@ -8,6 +8,12 @@ A beautiful and customizable country picker widget with multi-language support a
 
 **Package Size:** ~113KB (source code, 19 languages)
 
+**Country Coverage:**
+- **252 Countries** - Complete ISO 3166-1 standard compliance
+- **Sovereign States** - All 195 UN member states
+- **Dependent Territories** - All major territories and autonomous regions
+- **International Standard** - Matches official ISO 3166-1 alpha-2 codes
+
 **Search Performance:**
 - **Algorithm:** Optimized single-pass search with early exit
 - **Speed:** ~110 microseconds per query (4.7x faster than previous version)
@@ -15,7 +21,7 @@ A beautiful and customizable country picker widget with multi-language support a
 
 ## ✨ Features
 
-- 🌍 **246 Countries** with flags, ISO codes, and phone codes
+- 🌍 **252 Countries** with flags, ISO codes, and phone codes (ISO 3166-1 compliant)
 - 🌐 **Multi-language Support** - 19 languages including English, Spanish, French, German, Italian, Japanese, Korean, Portuguese, Russian, Chinese, Arabic, Hindi, Indonesian, Polish, Turkish, Ukrainian, Vietnamese, Thai
 - 🔍 **Smart Search** by country name, code, or phone code
 - 🔤 **Fuzzy Search** - find countries even with typos and misspellings
