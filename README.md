@@ -2,7 +2,7 @@
 
 [![Pub](https://img.shields.io/pub/v/country_search.svg)](https://pub.dev/packages/country_search)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/stanislavworldin/country_search/blob/main/LICENSE)
-[![Flutter](https://img.shields.io/badge/flutter-%E2%89%A53.10-blue?logo=flutter)](https://flutter.dev)
+[![Flutter](https://img.shields.io/badge/flutter-%E2%89%A53.0-blue?logo=flutter)](https://flutter.dev)
 
 Lightweight and blazing fast country selector for Flutter apps with full localization, Levenshtein-based search, and full ISO-3166 support — in just 113KB.
 
