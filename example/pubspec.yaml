@@ -9,8 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  multiselector:
-    path: ../
+  multiselector: ^1.0.0
 
 dev_dependencies:
   flutter_test:
