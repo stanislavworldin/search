@@ -1,4 +1,4 @@
-include: package:flutter_lints/flutter.yaml
+include: package:lints/recommended.yaml
 
 linter:
   rules:
@@ -20,11 +20,9 @@ linter:
     - library_names
     - library_prefixes
     - non_constant_identifier_names
-    # - package_api_docs  # Removed in Dart 3.7.0
     - package_names
     - package_prefixed_library_names
     - prefer_const_constructors
-    - prefer_const_literals_to_create_immutables
     - prefer_final_fields
     - prefer_is_empty
     - prefer_is_not_empty
@@ -40,10 +38,4 @@ linter:
     - unnecessary_statements
     - unrelated_type_equality_checks
     - use_rethrow_when_possible
-    - valid_regexps
-
-analyzer:
-  exclude:
-    - "example/**"
-    - "**/*.g.dart"
-    - "**/*.freezed.dart" 
+    - valid_regexps 

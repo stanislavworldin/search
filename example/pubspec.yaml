@@ -1,15 +1,17 @@
-name: multiselector_example
-description: Example app for multiselector package
-version: 1.0.0
+name: search_example
+description: Example app for the search package.
+publish_to: 'none'
+
+version: 1.0.0+1
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
-  flutter: ">=3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  multiselector: ^1.0.0
+  search:
+    path: ../
 
 dev_dependencies:
   flutter_test:

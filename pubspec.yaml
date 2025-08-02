@@ -1,33 +1,25 @@
-name: multiselector
-description: Fast and lightweight universal item selector for Flutter with fuzzy search and customizable UI — lightweight and flexible.
-version: 1.0.1
-homepage: https://github.com/stanislavworldin/multiselector
-repository: https://github.com/stanislavworldin/multiselector
-issue_tracker: https://github.com/stanislavworldin/multiselector/issues
-documentation: https://github.com/stanislavworldin/multiselector#readme
+name: search
+description: Fast and lightweight search engine for Dart/Flutter with fuzzy search capabilities — lightweight and flexible.
+version: 1.0.0
+homepage: https://github.com/stanislavworldin/search
+repository: https://github.com/stanislavworldin/search
+issue_tracker: https://github.com/stanislavworldin/search/issues
+documentation: https://github.com/stanislavworldin/search#readme
 topics:
-  - selector
-  - picker
   - search
+  - fuzzy-search
+  - engine
   - items
-  - dropdown
+  - filtering
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
-  flutter: ">=3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
+  # No dependencies needed - pure Dart implementation
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^3.0.0
+  test: ^1.24.0
+  lints: ^3.0.0
 
-flutter:
-  # No assets needed for this package
-
-screenshots:
-  - description: "Universal Selector with search functionality"
-    path: screenshots/1.png
+# No assets needed for this package
