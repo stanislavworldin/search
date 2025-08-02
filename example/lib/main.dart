@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:search/search.dart';
+import 'package:fuzzy_search/fuzzy_search.dart';
 
 void main() {
   runApp(const SearchExampleApp());
