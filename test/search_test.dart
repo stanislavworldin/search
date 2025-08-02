@@ -89,7 +89,7 @@ void main() {
           const SearchableItem(id: '1', name: 'Apple', subtitle: 'Fruit'),
           const SearchableItem(id: '2', name: 'Banana', subtitle: 'Fruit'),
         ];
-        
+
         // For 'xy' - should not find anything since no item contains 'xy' and fuzzy is disabled for short queries
         final results = SearchEngine.fuzzySearch(testItemsForFuzzy, 'xy');
         expect(results.length, equals(0));
@@ -117,7 +117,8 @@ void main() {
 
       test('should disable fuzzy search', () {
         const config = SearchConfig(fuzzyEnabled: false);
-        final results = SearchEngine.fuzzySearch(testItems, 'aple', config: config);
+        final results =
+            SearchEngine.fuzzySearch(testItems, 'aple', config: config);
         expect(results.length, equals(0));
       });
     });
