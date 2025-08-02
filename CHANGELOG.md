@@ -1,5 +1,39 @@
 # Changelog
 
+## [1.0.1] - 2024-12-19
+
+### 🔧 Bug Fixes
+- **Fixed API inconsistency in multi-select mode** - `onItemSelected` is now optional for multi-select mode
+- **Updated documentation** - clarified when `onItemSelected` is required vs optional
+- **Added API consistency tests** - ensures proper callback behavior in both modes
+
+#### 🔄 API Changes
+```dart
+// Before (required onItemSelected even in multi-select)
+UniversalSelector(
+  items: items,
+  selectedItems: selectedItems,
+  isMultiSelect: true,
+  onItemSelected: (item) {}, // Required but unused
+  onItemsSelected: (items) { ... },
+)
+
+// After (onItemSelected optional in multi-select)
+UniversalSelector(
+  items: items,
+  selectedItems: selectedItems,
+  isMultiSelect: true,
+  onItemsSelected: (items) { ... }, // Only this is needed
+)
+```
+
+#### 📚 Documentation Updates
+- Updated API table to clarify callback requirements
+- Added examples showing proper usage in both modes
+- Enhanced description of Universal Selection capabilities
+
+---
+
 ## [1.0.0] - 2024-12-19
 
 ### 🎉 Major Release: Universal Selector

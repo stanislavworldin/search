@@ -1,6 +1,6 @@
 name: multiselector
 description: Fast and lightweight universal item selector for Flutter with fuzzy search and customizable UI — lightweight and flexible.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/stanislavworldin/multiselector
 repository: https://github.com/stanislavworldin/multiselector
 issue_tracker: https://github.com/stanislavworldin/multiselector/issues
