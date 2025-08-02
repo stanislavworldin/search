@@ -12,7 +12,7 @@ Lightweight and blazing fast universal item selector for Flutter apps with fuzzy
 
 ## Features
 
-- **Universal Selection** - Works with any list of items (countries, fruits, colors, etc.)
+- **Universal Selection** - Works with any list of items: countries, languages, currencies, timezones, categories, products, users, settings, colors, emojis, tags, and any custom data you need to select from
 - **Multi-Select Support** - Choose single or multiple items with configurable limits
 - **Smart Search** - Find items by name, subtitle, or custom search data with fuzzy matching
 - **Customizable UI** - Dark/light themes with custom colors and styling

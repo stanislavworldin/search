@@ -126,9 +126,10 @@ packages:
   multiselector:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      name: multiselector
+      sha256: "37a9bb923ab0824b54467caad6c1dc96dc6cdc3b7d5a1c6d799e345e62171bf4"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.0.0"
   path:
     dependency: transitive

@@ -6,7 +6,7 @@ class UniversalSelector extends StatefulWidget {
   final List<SelectableItem> items;
   final SelectableItem? selectedItem;
   final List<SelectableItem> selectedItems;
-  final Function(SelectableItem) onItemSelected;
+  final Function(SelectableItem)? onItemSelected;
   final Function(List<SelectableItem>)? onItemsSelected;
   final String? labelText;
   final String? hintText;
@@ -31,7 +31,7 @@ class UniversalSelector extends StatefulWidget {
     required this.items,
     this.selectedItem,
     this.selectedItems = const [],
-    required this.onItemSelected,
+    this.onItemSelected,
     this.onItemsSelected,
     this.labelText,
     this.hintText,
@@ -49,8 +49,9 @@ class UniversalSelector extends StatefulWidget {
     this.hoverColor,
     this.borderRadius,
   }) : assert(
-          !isMultiSelect || onItemsSelected != null,
-          'onItemsSelected must be provided when isMultiSelect is true',
+          (!isMultiSelect && onItemSelected != null) ||
+              (isMultiSelect && onItemsSelected != null),
+          'onItemSelected must be provided for single-select mode, onItemsSelected must be provided for multi-select mode',
         );
 
   @override
@@ -176,7 +177,7 @@ class _UniversalSelectorState extends State<UniversalSelector> {
 
   void _toggleItemSelection(SelectableItem item, StateSetter? setModalState) {
     if (!widget.isMultiSelect) {
-      widget.onItemSelected(item);
+      widget.onItemSelected?.call(item);
       Navigator.of(context).pop();
       return;
     }
