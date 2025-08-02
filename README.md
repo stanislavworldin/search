@@ -8,7 +8,7 @@ Lightweight and blazing fast universal item selector for Flutter apps with fuzzy
 
 **🌐 Live Demo:** [View on GitHub Pages](https://stanislavworldin.github.io/multiselector/)
 
-![Universal Selector Demo](https://raw.githubusercontent.com/stanislavworldin/multiselector/main/screenshots/0.gif)
+![Universal Selector Demo](https://raw.githubusercontent.com/stanislavworldin/multiselector/main/screenshots/1.png)
 
 ## Features
 
@@ -305,25 +305,6 @@ The example demonstrates:
 - Responsive design for all screen sizes
 - Optimized performance for weak devices
 
-## Live Demo
-
-**🌐 Try the live demo:** [https://stanislavworldin.github.io/multiselector/](https://stanislavworldin.github.io/multiselector/)
-
-The demo showcases all features of the multiselector in a web environment.
-
-## Release
-
-**📦 Latest Release:** [v1.0.0](https://github.com/stanislavworldin/multiselector/releases/tag/v1.0.0)
-
-Download the complete source code: [multiselector-v1.0.0.zip](https://github.com/stanislavworldin/multiselector/archive/refs/tags/v1.0.0.zip)
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Author
 
