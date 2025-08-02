@@ -1,4 +1,4 @@
-import 'package:fuzzy_search/fuzzy_search.dart';
+import 'package:fuzzy_search_engine/fuzzy_search.dart';
 import 'package:test/test.dart';
 
 void main() {

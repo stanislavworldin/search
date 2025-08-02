@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  fuzzy_search:
+  fuzzy_search_engine:
     path: ../
 
 dev_dependencies:
