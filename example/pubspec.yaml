@@ -1,5 +1,5 @@
-name: universal_selector_example
-description: Example app for universal_selector package
+name: multiselector_example
+description: Example app for multiselector package
 version: 1.0.0
 
 environment:
@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  universal_selector:
+  multiselector:
     path: ../
 
 dev_dependencies:

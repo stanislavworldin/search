@@ -1,14 +1,14 @@
-# universal_selector
+# multiselector
 
-[![Pub](https://img.shields.io/pub/v/universal_selector.svg)](https://pub.dev/packages/universal_selector)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/stanislavworldin/universal_selector/blob/main/LICENSE)
+[![Pub](https://img.shields.io/pub/v/multiselector.svg)](https://pub.dev/packages/multiselector)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/stanislavworldin/multiselector/blob/main/LICENSE)
 [![Flutter](https://img.shields.io/badge/flutter-%E2%89%A53.0-blue?logo=flutter)](https://flutter.dev)
 
 Lightweight and blazing fast universal item selector for Flutter apps with fuzzy search and customizable UI — perfect for any list selection needs.
 
-**🌐 Live Demo:** [View on GitHub Pages](https://stanislavworldin.github.io/universal_selector/)
+**🌐 Live Demo:** [View on GitHub Pages](https://stanislavworldin.github.io/multiselector/)
 
-![Universal Selector Demo](https://raw.githubusercontent.com/stanislavworldin/universal_selector/main/screenshots/0.gif)
+![Universal Selector Demo](https://raw.githubusercontent.com/stanislavworldin/multiselector/main/screenshots/0.gif)
 
 ## Features
 
@@ -35,7 +35,7 @@ Add the dependency to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  universal_selector: ^1.0.0
+  multiselector: ^1.0.0
 ```
 
 ## Usage
@@ -45,7 +45,7 @@ dependencies:
 #### Single Selection
 
 ```dart
-import 'package:universal_selector/universal_selector.dart';
+import 'package:multiselector/multiselector.dart';
 
 // Define your items
 final List<SelectableItem> items = [

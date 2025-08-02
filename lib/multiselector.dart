@@ -23,5 +23,5 @@
 /// ```
 library multiselector;
 
-export 'src/universal_selector/item_data.dart';
-export 'src/universal_selector/universal_selector.dart';
+export 'src/multiselector/item_data.dart';
+export 'src/multiselector/multiselector.dart';

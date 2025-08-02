@@ -283,7 +283,8 @@ class _UniversalSelectorState extends State<UniversalSelector> {
                                 _selectedItems.isNotEmpty) ...[
                               Text(
                                 _selectedItems.length.toString(),
-                                key: ValueKey('selected_count_${_selectedItems.length}'),
+                                key: ValueKey(
+                                    'selected_count_${_selectedItems.length}'),
                                 style: TextStyle(
                                   color: accentColor,
                                   fontSize: 14,
@@ -395,7 +396,8 @@ class _UniversalSelectorState extends State<UniversalSelector> {
                                 onTap: isMaxReached
                                     ? null
                                     : () {
-                                        _toggleItemSelection(item, setModalState);
+                                        _toggleItemSelection(
+                                            item, setModalState);
                                       },
                                 child: Padding(
                                   padding: _itemPadding,

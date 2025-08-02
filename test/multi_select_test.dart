@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:universal_selector/universal_selector.dart';
+import 'package:multiselector/multiselector.dart';
 
 void main() {
   group('Multi-Select Tests', () {
