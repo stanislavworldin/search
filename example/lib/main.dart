@@ -31,7 +31,7 @@ class SearchExamplePage extends StatefulWidget {
 class _SearchExamplePageState extends State<SearchExamplePage> {
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController _fuzzySearchController = TextEditingController();
-
+  
   List<SearchableItem> _allItems = [];
   List<SearchableItem> _searchResults = [];
   List<SearchableItem> _fuzzyResults = [];
@@ -158,9 +158,9 @@ class _SearchExamplePageState extends State<SearchExamplePage> {
                 },
               ),
             ),
-
+            
             const Divider(height: 32),
-
+            
             // Fuzzy Search Section
             const Text(
               'Fuzzy Search (try typos like "aple", "bananna")',
