@@ -1,34 +1,33 @@
-# country_search
+# universal_selector
 
-[![Pub](https://img.shields.io/pub/v/country_search.svg)](https://pub.dev/packages/country_search)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/stanislavworldin/country_search/blob/main/LICENSE)
+[![Pub](https://img.shields.io/pub/v/universal_selector.svg)](https://pub.dev/packages/universal_selector)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/stanislavworldin/universal_selector/blob/main/LICENSE)
 [![Flutter](https://img.shields.io/badge/flutter-%E2%89%A53.0-blue?logo=flutter)](https://flutter.dev)
 
-Lightweight and blazing fast country selector for Flutter apps with full localization, Levenshtein-based search, and full ISO-3166 support — in just 113KB.
+Lightweight and blazing fast universal item selector for Flutter apps with fuzzy search and customizable UI — perfect for any list selection needs.
 
+**🌐 Live Demo:** [View on GitHub Pages](https://stanislavworldin.github.io/universal_selector/)
 
-**🌐 Live Demo:** [View on GitHub Pages](https://stanislavworldin.github.io/country_search/)
-
-
-![Country Picker Demo](https://raw.githubusercontent.com/stanislavworldin/country_search/main/screenshots/0.gif)
-
+![Universal Selector Demo](https://raw.githubusercontent.com/stanislavworldin/universal_selector/main/screenshots/0.gif)
 
 ## Features
 
-- **252 Countries** - Complete ISO 3166-1 standard compliance with flags and phone codes
-- **Smart Search** - Find countries by name, code, or phone code with fuzzy matching
-- **Multi-language Support** - 19 languages including English, Spanish, French, German, and more
-- **High Performance** - Optimized search algorithm (~110μs per query)
+- **Universal Selection** - Works with any list of items (countries, fruits, colors, etc.)
+- **Multi-Select Support** - Choose single or multiple items with configurable limits
+- **Smart Search** - Find items by name, subtitle, or custom search data with fuzzy matching
 - **Customizable UI** - Dark/light themes with custom colors and styling
+- **High Performance** - Optimized search algorithm with fuzzy search support
 - **Responsive Design** - Works perfectly on mobile, tablet, and desktop
 - **Easy Integration** - Zero configuration required, works out of the box
+- **Flexible Data** - Support for icons, subtitles, and custom search data
 
 ## Performance
 
-- **Package Size:** ~113KB (source code, 19 languages)
-- **Search Speed:** ~110 microseconds per query
-- **Country Coverage:** 252 countries (ISO 3166-1 compliant)
+- **Package Size:** ~50KB (lightweight, no translations)
+- **Search Speed:** Fast fuzzy search with typos support
 - **Memory Usage:** Optimized for weak devices
+- **Multi-Select:** Efficient handling of multiple selections
+- **Flexible:** Works with any data structure
 
 ## Installation
 
@@ -36,115 +35,159 @@ Add the dependency to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  country_search: ^2.6.3
+  universal_selector: ^1.0.0
 ```
 
 ## Usage
 
 ### Basic Usage
 
-```dart
-import 'package:country_search/country_search.dart';
+#### Single Selection
 
-CountryPicker(
-  selectedCountry: selectedCountry,
-  onCountrySelected: (Country country) {
+```dart
+import 'package:universal_selector/universal_selector.dart';
+
+// Define your items
+final List<SelectableItem> items = [
+  const SelectableItem(
+    id: 'apple',
+    name: 'Apple',
+    icon: '🍎',
+    subtitle: 'Red fruit',
+    searchData: 'apple fruit red sweet',
+  ),
+  const SelectableItem(
+    id: 'banana',
+    name: 'Banana',
+    icon: '🍌',
+    subtitle: 'Yellow fruit',
+    searchData: 'banana fruit yellow potassium',
+  ),
+];
+
+// Single selection
+UniversalSelector(
+  items: items,
+  selectedItem: selectedItem,
+  onItemSelected: (SelectableItem item) {
     setState(() {
-      selectedCountry = country;
+      selectedItem = item;
     });
-    debugPrint('Selected: ${country.flag} ${country.code} (${country.phoneCode})');
+    debugPrint('Selected: ${item.icon} ${item.name}');
   },
 )
 ```
 
-### Multi-language Support
-
-The widget automatically detects the language from your app's locale. For multi-language support, add delegates to your `MaterialApp`.
-
-**Note:** If you want to use Flutter's standard localization delegates, add `flutter_localizations` to your dependencies:
-
-```yaml
-dependencies:
-  flutter:
-    sdk: flutter
-  flutter_localizations:
-    sdk: flutter
-```
-
-**Important:** Set the `locale` parameter to specify your app's language. Without it, the widget will use the device's system language.
+#### Multi Selection
 
 ```dart
-import 'package:flutter_localizations/flutter_localizations.dart';
+// Multi selection
+List<SelectableItem> selectedItems = [];
 
-MaterialApp(
-  locale: const Locale('de'), // Set your app's language
-  localizationsDelegates: [
-    CountryLocalizations.delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-  ],
-  supportedLocales: [
-    const Locale('en'),
-    const Locale('de'),
-    const Locale('ru'),
-    // Add your app's supported languages
-  ],
+UniversalSelector(
+  items: items,
+  selectedItems: selectedItems,
+  isMultiSelect: true,
+  onItemsSelected: (List<SelectableItem> items) {
+    setState(() {
+      selectedItems = items;
+    });
+    debugPrint('Selected ${items.length} items');
+  },
+  maxSelections: 3, // Optional: limit selections
 )
 ```
 
-**How it works:**
-- With `locale`: Uses your app's language
-- Without `locale`: Uses device system language  
-- Unsupported language: Falls back to English
-
 ## API Reference
 
-### CountryPicker
+### UniversalSelector
 
-The main widget for country selection.
+The main widget for item selection.
 
 #### Properties
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `selectedCountry` | `Country?` | `null` | Currently selected country object. Pass `null` for no selection |
-| `onCountrySelected` | `Function(Country)` | Required | Callback function triggered when user selects a country |
-| `showPhoneCodes` | `bool` | `true` | Whether to display international phone codes next to country names |
-| `backgroundColor` | `Color?` | Dark theme | Background color of the modal dialog when picker is opened |
-| `headerColor` | `Color?` | Dark theme | Background color of the modal header containing search field |
-| `textColor` | `Color?` | Dark theme | Primary text color for country names and other text elements |
-| `accentColor` | `Color?` | Green | Color for phone codes and accent elements (like selected items) |
+| `items` | `List<SelectableItem>` | Required | List of items to display in the selector |
+| `selectedItem` | `SelectableItem?` | `null` | Currently selected item. Pass `null` for no selection |
+| `selectedItems` | `List<SelectableItem>` | `[]` | List of currently selected items for multi-select mode |
+| `onItemSelected` | `Function(SelectableItem)` | Required | Callback function triggered when user selects an item |
+| `onItemsSelected` | `Function(List<SelectableItem>)?` | `null` | Callback function for multi-select mode |
+| `isMultiSelect` | `bool` | `false` | Enable multi-select mode |
+| `maxSelections` | `int?` | `null` | Maximum number of items that can be selected |
+| `labelText` | `String?` | `'Select Item'` | Text displayed in the modal header |
+| `hintText` | `String?` | `'Search items...'` | Placeholder text in the search field |
+| `showSubtitle` | `bool` | `true` | Whether to display subtitles for items |
+| `backgroundColor` | `Color?` | Dark theme | Background color of the modal dialog |
+| `headerColor` | `Color?` | Dark theme | Background color of the modal header |
+| `textColor` | `Color?` | Dark theme | Primary text color for item names |
+| `accentColor` | `Color?` | Green | Color for accent elements (like selected items) |
 | `searchFieldColor` | `Color?` | Dark theme | Background color of the search input field |
 | `searchFieldBorderColor` | `Color?` | Dark theme | Border color of the search input field |
 | `cursorColor` | `Color?` | White | Color of the text cursor in the search field |
-| `hintTextColor` | `Color?` | Dark theme | Color of placeholder text in search field and secondary text |
-| `hoverColor` | `Color?` | Dark theme | Background color when hovering over country items in the list |
-| `borderRadius` | `double?` | `8.0` | Border radius applied to all rounded elements (buttons, modal, etc.) |
+| `hintTextColor` | `Color?` | Dark theme | Color of placeholder text in search field |
+| `hoverColor` | `Color?` | Dark theme | Background color when hovering over items |
+| `borderRadius` | `double?` | `8.0` | Border radius applied to all rounded elements |
 
-### Country
+### SelectableItem
 
-Represents a country with its properties.
+Represents a selectable item with its properties.
 
 #### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `name` | `String` | Localized country name in the current app language |
-| `code` | `String` | ISO 3166-1 alpha-2 country code (e.g., "US", "DE", "RU") |
-| `flag` | `String` | Unicode flag emoji representing the country (e.g., "🇺🇸", "🇩🇪") |
-| `phoneCode` | `String` | International dialing code with "+" prefix (e.g., "+1", "+49") |
+| `id` | `String` | Unique identifier for the item |
+| `name` | `String` | Display name of the item |
+| `icon` | `String?` | Optional icon/emoji for the item |
+| `subtitle` | `String?` | Optional subtitle/description |
+| `searchData` | `String?` | Optional additional data for search |
+| `data` | `dynamic` | Optional custom data object |
 
 ## Examples
+
+### Countries Selection
+
+```dart
+final List<SelectableItem> countries = [
+  const SelectableItem(
+    id: 'us',
+    name: 'United States',
+    icon: '🇺🇸',
+    subtitle: 'USA',
+    searchData: 'united states america us usa',
+  ),
+  const SelectableItem(
+    id: 'ru',
+    name: 'Russia',
+    icon: '🇷🇺',
+    subtitle: 'Russian Federation',
+    searchData: 'russia russian federation',
+  ),
+];
+
+UniversalSelector(
+  items: countries,
+  selectedItem: selectedCountry,
+  onItemSelected: (SelectableItem country) {
+    setState(() {
+      selectedCountry = country;
+    });
+  },
+  labelText: 'Choose a country',
+  hintText: 'Search countries...',
+)
+```
 
 ### Custom Theme
 
 ```dart
-CountryPicker(
-  selectedCountry: selectedCountry,
-  onCountrySelected: (Country country) {
+UniversalSelector(
+  items: items,
+  selectedItem: selectedItem,
+  onItemSelected: (SelectableItem item) {
     setState(() {
-      selectedCountry = country;
+      selectedItem = item;
     });
   },
   // Custom colors for light theme
@@ -158,89 +201,93 @@ CountryPicker(
   hintTextColor: Colors.grey.shade600,
   hoverColor: Colors.grey.shade200,
   borderRadius: 12.0,
+  labelText: 'Custom theme selector',
+  hintText: 'Search items...',
 )
 ```
 
-### Show/Hide Phone Codes
-
-Control whether phone codes are displayed in the country list:
+### Multi-Select Mode
 
 ```dart
-CountryPicker(
-  selectedCountry: selectedCountry,
-  onCountrySelected: (Country country) {
+List<SelectableItem> selectedItems = [];
+
+UniversalSelector(
+  items: items,
+  selectedItems: selectedItems,
+  isMultiSelect: true,
+  onItemsSelected: (List<SelectableItem> items) {
     setState(() {
-      selectedCountry = country;
+      selectedItems = items;
+    });
+    debugPrint('Selected ${items.length} items');
+  },
+  maxSelections: 5, // Optional: limit to 5 selections
+  labelText: 'Choose multiple items',
+  hintText: 'Search and select items...',
+)
+```
+
+### Multi-Select with No Limit
+
+```dart
+UniversalSelector(
+  items: items,
+  selectedItems: selectedItems,
+  isMultiSelect: true,
+  onItemsSelected: (List<SelectableItem> items) {
+    setState(() {
+      selectedItems = items;
     });
   },
-  showPhoneCodes: false, // Hide phone codes
+  // No maxSelections = unlimited selections
+)
+```
+
+### Hide Subtitles
+
+```dart
+UniversalSelector(
+  items: items,
+  selectedItem: selectedItem,
+  onItemSelected: (SelectableItem item) {
+    setState(() {
+      selectedItem = item;
+    });
+  },
+  showSubtitle: false, // Hide subtitles
 )
 ```
 
 ## Fuzzy Search
 
-The widget includes intelligent fuzzy search that helps users find countries even with typos:
+The widget includes intelligent fuzzy search that helps users find items even with typos:
 
-- **Exact matches** - Perfect matches for country name, code, or phone code
-- **Starts with** - Query is the beginning of country name, code, or phone code
-- **Contains** - Query is contained within country name, code, or phone code  
-- **Fuzzy search** - Finds countries even with typos using Levenshtein distance
+- **Exact matches** - Perfect matches for item name, subtitle, or search data
+- **Starts with** - Query is the beginning of item name, subtitle, or search data
+- **Contains** - Query is contained within item name, subtitle, or search data  
+- **Fuzzy search** - Finds items even with typos using Levenshtein distance
 
 **Examples:**
-- `"germny"` → finds `"Germany"`
-- `"japn"` → finds `"Japan"`
+- `"appl"` → finds `"Apple"`
+- `"bannana"` → finds `"Banana"`
 - `"united sttes"` → finds `"United States"`
 
-![Demo](https://raw.githubusercontent.com/stanislavworldin/country_search/main/screenshots/1.png)
+## Use Cases
 
-![Demo with Chinese Language](https://raw.githubusercontent.com/stanislavworldin/country_search/main/screenshots/2.png)
+The Universal Selector is perfect for:
 
-## Customization
-
-### Remove Unused Languages
-
-To reduce package size, remove language files you don't need:
-
-```bash
-rm lib/src/flutter_country_picker/localizations/country_localizations_es.dart
-```
-
-**Then update these files:**
-
-**1. Main localization file (`lib/src/flutter_country_picker/localizations/country_localizations.dart`):**
-- Remove import: `import 'country_localizations_es.dart';`
-- Remove from `supportedLocales`: `Locale('es')`
-- Remove from `isSupported`: `'es'`
-- Remove case from `lookupCountryLocalizations`: `case 'es': return CountryLocalizationsEs();`
-
-**2. Main package file (`lib/country_search.dart`):**
-- Remove export: `export 'src/flutter_country_picker/localizations/country_localizations_es.dart';`
-
-**Important:** If you don't update all these files, you'll get compilation errors because the code will try to import and reference deleted language files.
-
-## Supported Languages
-
-The widget supports 19 languages:
-
-- 🇺🇸 English
-- 🇷🇺 Russian  
-- 🇪🇸 Spanish
-- 🇫🇷 French
-- 🇩🇪 German
-- 🇮🇹 Italian
-- 🇯🇵 Japanese
-- 🇰🇷 Korean
-- 🇵🇹 Portuguese
-- 🇨🇳 Chinese
-- 🇸🇦 Arabic
-- 🇮🇳 Hindi
-- 🇮🇩 Indonesian
-- 🇵🇱 Polish
-- 🇹🇷 Turkish
-- 🇺🇦 Ukrainian
-- 🇻🇳 Vietnamese
-- 🇹🇭 Thai
-- 🇳🇱 Dutch
+- **Country Selection** - Choose countries with flags and codes
+- **Language Selection** - Pick languages with flags
+- **Category Selection** - Select product categories
+- **Color Selection** - Choose colors with visual indicators
+- **Settings Selection** - Pick app settings or preferences
+- **Multi-Select Scenarios** - Choose multiple items like:
+  - Multiple countries for shipping
+  - Multiple languages for app localization
+  - Multiple categories for filtering
+  - Multiple colors for theme customization
+  - Multiple tags or labels
+- **Any List Selection** - Works with any data you need to select from
 
 ## Running the Example
 
@@ -252,8 +299,8 @@ flutter run
 ```
 
 The example demonstrates:
-- Multi-language support (19 languages)
-- Country search by name, code, and phone code
+- Multiple use cases (fruits, countries, colors)
+- Fuzzy search with typos support
 - Beautiful dark and light themes
 - Responsive design for all screen sizes
 - Optimized performance for weak devices

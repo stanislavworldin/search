@@ -1,5 +1,5 @@
-name: flutter_country_picker_example
-description: Example app for flutter_country_picker package
+name: universal_selector_example
+description: Example app for universal_selector package
 version: 1.0.0
 
 environment:
@@ -9,9 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
-  country_search:
+  universal_selector:
     path: ../
 
 dev_dependencies:

@@ -1,14 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'country_data.dart';
-import 'localizations/country_localizations.dart';
+import 'item_data.dart';
 
-class CountryPicker extends StatefulWidget {
-  final Country? selectedCountry;
-  final Function(Country) onCountrySelected;
+class UniversalSelector extends StatefulWidget {
+  final List<SelectableItem> items;
+  final SelectableItem? selectedItem;
+  final List<SelectableItem> selectedItems;
+  final Function(SelectableItem) onItemSelected;
+  final Function(List<SelectableItem>)? onItemsSelected;
   final String? labelText;
   final String? hintText;
-  final bool showPhoneCodes;
+  final bool showSubtitle;
+  final bool isMultiSelect;
+  final int? maxSelections;
 
   // UI Customization
   final Color? backgroundColor;
@@ -22,13 +26,18 @@ class CountryPicker extends StatefulWidget {
   final Color? hoverColor;
   final double? borderRadius;
 
-  const CountryPicker({
+  const UniversalSelector({
     super.key,
-    this.selectedCountry,
-    required this.onCountrySelected,
+    required this.items,
+    this.selectedItem,
+    this.selectedItems = const [],
+    required this.onItemSelected,
+    this.onItemsSelected,
     this.labelText,
     this.hintText,
-    this.showPhoneCodes = true,
+    this.showSubtitle = true,
+    this.isMultiSelect = false,
+    this.maxSelections,
     this.backgroundColor,
     this.headerColor,
     this.textColor,
@@ -39,23 +48,25 @@ class CountryPicker extends StatefulWidget {
     this.hintTextColor,
     this.hoverColor,
     this.borderRadius,
-  });
+  }) : assert(
+          !isMultiSelect || onItemsSelected != null,
+          'onItemsSelected must be provided when isMultiSelect is true',
+        );
 
   @override
-  State<CountryPicker> createState() => _CountryPickerState();
+  State<UniversalSelector> createState() => _UniversalSelectorState();
 }
 
-class _CountryPickerState extends State<CountryPicker> {
+class _UniversalSelectorState extends State<UniversalSelector> {
   final TextEditingController _searchController = TextEditingController();
-  List<Country> _allCountries = [];
-  List<Country> _filteredCountries = [];
+  List<SelectableItem> _allItems = [];
+  List<SelectableItem> _filteredItems = [];
   bool _isSearching = false;
   int _updateCounter = 0;
+  List<SelectableItem> _selectedItems = [];
 
   // Constants for performance optimization
-  static const TextStyle _flagTextStyle = TextStyle(fontSize: 20);
-  static const TextStyle _selectedPhoneCodeTextStyle =
-      TextStyle(fontSize: 9, fontWeight: FontWeight.w500, color: Colors.blue);
+  static const TextStyle _iconTextStyle = TextStyle(fontSize: 20);
 
   static const EdgeInsets _itemPadding =
       EdgeInsets.symmetric(horizontal: 12, vertical: 8);
@@ -103,31 +114,31 @@ class _CountryPickerState extends State<CountryPicker> {
   void initState() {
     super.initState();
     _searchController.addListener(_onSearchChanged);
-    _allCountries = CountryData.countries;
-    _filteredCountries = _allCountries;
+    _allItems = ItemData.getSortedItems(widget.items);
+    _filteredItems = _allItems;
+    _selectedItems = List.from(widget.selectedItems);
+    if (kDebugMode) {
+      debugPrint('DEBUG: Initialized with ${_allItems.length} items');
+      debugPrint(
+          'DEBUG: MultiSelect: ${widget.isMultiSelect}, Selected: ${_selectedItems.length}');
+    }
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _updateCountriesForLanguage();
-  }
-
-  void _updateCountriesForLanguage() {
-    try {
-      final countryLocalizations = CountryLocalizations.of(context);
-      _allCountries =
-          CountryData.getSortedCountries(countryLocalizations.getCountryName);
-      _filteredCountries = _allCountries;
+  void didUpdateWidget(UniversalSelector oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.items != widget.items) {
+      _allItems = ItemData.getSortedItems(widget.items);
+      _filteredItems = _allItems;
       if (kDebugMode) {
-        debugPrint('DEBUG: Updated countries for language');
+        debugPrint('DEBUG: Updated items list to ${_allItems.length} items');
       }
-    } catch (e) {
+    }
+    if (oldWidget.selectedItems != widget.selectedItems) {
+      _selectedItems = List.from(widget.selectedItems);
       if (kDebugMode) {
-        debugPrint('DEBUG: Failed to update countries for language: $e');
+        debugPrint('DEBUG: Updated selected items to ${_selectedItems.length}');
       }
-      _allCountries = CountryData.countries;
-      _filteredCountries = _allCountries;
     }
   }
 
@@ -139,130 +150,84 @@ class _CountryPickerState extends State<CountryPicker> {
 
   void _onSearchChanged() {
     final query = _searchController.text.toLowerCase().trim();
-    _filterAndSortCountries(query);
+    _filterAndSortItems(query);
     setState(() {
       _isSearching = query.isNotEmpty;
       _updateCounter++;
     });
   }
 
-  // Calculate Levenshtein distance for fuzzy search
-  int _levenshteinDistance(String s1, String s2) {
-    if (s1.isEmpty) return s2.length;
-    if (s2.isEmpty) return s1.length;
-
-    List<List<int>> matrix = List.generate(
-      s1.length + 1,
-      (i) => List.generate(s2.length + 1, (j) => 0),
-    );
-
-    for (int i = 0; i <= s1.length; i++) {
-      matrix[i][0] = i;
-    }
-    for (int j = 0; j <= s2.length; j++) {
-      matrix[0][j] = j;
-    }
-
-    for (int i = 1; i <= s1.length; i++) {
-      for (int j = 1; j <= s2.length; j++) {
-        int cost = s1[i - 1] == s2[j - 1] ? 0 : 1;
-        matrix[i][j] = [
-          matrix[i - 1][j] + 1, // deletion
-          matrix[i][j - 1] + 1, // insertion
-          matrix[i - 1][j - 1] + cost, // substitution
-        ].reduce((a, b) => a < b ? a : b);
-      }
-    }
-
-    return matrix[s1.length][s2.length];
-  }
-
-  // Check fuzzy match with distance threshold
-  bool _isFuzzyMatch(String query, String text, {int maxDistance = 3}) {
-    if (query.length <= 2) {
-      return false; // Skip fuzzy search for very short queries
-    }
-
-    final distance = _levenshteinDistance(query, text);
-    final maxAllowedDistance = (query.length / 3).ceil(); // Adaptive threshold
-    final threshold =
-        maxDistance < maxAllowedDistance ? maxDistance : maxAllowedDistance;
-
-    return distance <= threshold;
-  }
-
-  void _filterAndSortCountries(String query) {
+  void _filterAndSortItems(String query) {
     if (query.isEmpty) {
-      _filteredCountries = _allCountries;
+      _filteredItems = _allItems;
       return;
     }
 
-    final countryLocalizations = CountryLocalizations.of(context);
-    final results = <Country>[];
-    final exactMatches = <Country>[];
-    final startsWithMatches = <Country>[];
-    final containsMatches = <Country>[];
-    final fuzzyMatches = <Country>[];
+    _filteredItems = ItemData.searchItemsWithFuzzy(_allItems, query);
+  }
 
-    for (final country in _allCountries) {
-      final countryName =
-          countryLocalizations.getCountryName(country.code).toLowerCase();
-      final countryCode = country.code.toLowerCase();
-      final countryPhoneCode = country.phoneCode.toLowerCase();
-
-      bool found = false;
-
-      // 1. Exact matches
-      if (countryName == query ||
-          countryCode == query ||
-          countryPhoneCode == query) {
-        exactMatches.add(country);
-        found = true;
-      }
-
-      // 2. Starts with query
-      if (!found &&
-          (countryName.startsWith(query) ||
-              countryCode.startsWith(query) ||
-              countryPhoneCode.startsWith(query))) {
-        startsWithMatches.add(country);
-        found = true;
-      }
-
-      // 3. Contains query
-      if (!found &&
-          (countryName.contains(query) ||
-              countryCode.contains(query) ||
-              countryPhoneCode.contains(query))) {
-        containsMatches.add(country);
-        found = true;
-      }
-
-      // 4. Fuzzy search for typos and misspellings
-      if (!found &&
-          (_isFuzzyMatch(query, countryName) ||
-              _isFuzzyMatch(query, countryCode) ||
-              _isFuzzyMatch(query, countryPhoneCode))) {
-        fuzzyMatches.add(country);
-      }
-    }
-
-    results.addAll(exactMatches);
-    results.addAll(startsWithMatches);
-    results.addAll(containsMatches);
-    results.addAll(fuzzyMatches);
-
-    _filteredCountries = results;
-    if (kDebugMode) {
-      debugPrint('DEBUG: Search "$query" - found ${results.length} countries');
-      debugPrint(
-          'DEBUG: Exact: ${exactMatches.length}, StartsWith: ${startsWithMatches.length}, Contains: ${containsMatches.length}, Fuzzy: ${fuzzyMatches.length}');
+  bool _isItemSelected(SelectableItem item) {
+    if (widget.isMultiSelect) {
+      return _selectedItems.any((selected) => selected.id == item.id);
+    } else {
+      return widget.selectedItem?.id == item.id;
     }
   }
 
-  void _showCountryPicker() {
-    final countryLocalizations = CountryLocalizations.of(context);
+  void _toggleItemSelection(SelectableItem item, StateSetter? setModalState) {
+    if (!widget.isMultiSelect) {
+      widget.onItemSelected(item);
+      Navigator.of(context).pop();
+      return;
+    }
 
+    setState(() {
+      final isSelected = _isItemSelected(item);
+      if (isSelected) {
+        _selectedItems.removeWhere((selected) => selected.id == item.id);
+        if (kDebugMode) {
+          debugPrint('DEBUG: Removed item: ${item.name}');
+        }
+      } else {
+        if (widget.maxSelections != null &&
+            _selectedItems.length >= widget.maxSelections!) {
+          if (kDebugMode) {
+            debugPrint(
+                'DEBUG: Max selections reached (${widget.maxSelections})');
+          }
+          return;
+        }
+        _selectedItems.add(item);
+        if (kDebugMode) {
+          debugPrint('DEBUG: Added item: ${item.name}');
+        }
+      }
+    });
+
+    // Обновляем состояние модального окна
+    if (setModalState != null) {
+      setModalState(() {});
+    }
+
+    widget.onItemsSelected!(_selectedItems);
+    if (kDebugMode) {
+      debugPrint('DEBUG: Selected items count: ${_selectedItems.length}');
+    }
+  }
+
+  String _getSelectedItemsText() {
+    if (_selectedItems.isEmpty) {
+      return widget.hintText ?? 'Select items...';
+    }
+
+    if (_selectedItems.length == 1) {
+      return _selectedItems.first.name;
+    }
+
+    return '${_selectedItems.length} items selected';
+  }
+
+  void _showItemPicker() {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -299,13 +264,48 @@ class _CountryPickerState extends State<CountryPicker> {
                           ),
                         ),
                         const SizedBox(height: 12),
-                        Text(
-                          countryLocalizations.selectCountry,
-                          style: TextStyle(
-                            color: textColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                widget.labelText ??
+                                    (widget.isMultiSelect
+                                        ? 'Select Items'
+                                        : 'Select Item'),
+                                style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            if (widget.isMultiSelect &&
+                                _selectedItems.isNotEmpty) ...[
+                              Text(
+                                _selectedItems.length.toString(),
+                                key: ValueKey('selected_count_${_selectedItems.length}'),
+                                style: TextStyle(
+                                  color: accentColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  'Done',
+                                  style: TextStyle(
+                                    color: accentColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ],
                         ),
                         const SizedBox(height: 12),
                         Container(
@@ -323,14 +323,14 @@ class _CountryPickerState extends State<CountryPicker> {
                             cursorColor: cursorColor,
                             onChanged: (value) {
                               final query = value.toLowerCase().trim();
-                              _filterAndSortCountries(query);
+                              _filterAndSortItems(query);
                               setModalState(() {
                                 _isSearching = query.isNotEmpty;
                                 _updateCounter++;
                               });
                             },
                             decoration: InputDecoration(
-                              hintText: countryLocalizations.searchCountry,
+                              hintText: widget.hintText ?? 'Search items...',
                               hintStyle:
                                   TextStyle(color: hintTextColor, fontSize: 14),
                               prefixIcon: Icon(Icons.search,
@@ -344,7 +344,7 @@ class _CountryPickerState extends State<CountryPicker> {
                                         setModalState(() {
                                           _isSearching = false;
                                           _updateCounter++;
-                                          _filteredCountries = _allCountries;
+                                          _filteredItems = _allItems;
                                         });
                                       },
                                     )
@@ -363,17 +363,19 @@ class _CountryPickerState extends State<CountryPicker> {
                   Expanded(
                     child: ListView.builder(
                       key: ValueKey(
-                          'country_list_${_filteredCountries.length}_$_updateCounter'),
+                          'item_list_${_filteredItems.length}_${_selectedItems.length}_$_updateCounter'),
                       controller: scrollController,
-                      itemCount: _filteredCountries.length,
+                      itemCount: _filteredItems.length,
                       itemBuilder: (context, index) {
-                        final country = _filteredCountries[index];
-                        final isSelected =
-                            widget.selectedCountry?.code == country.code;
-                        final countryName =
-                            countryLocalizations.getCountryName(country.code);
+                        final item = _filteredItems[index];
+                        final isSelected = _isItemSelected(item);
+                        final isMaxReached = widget.isMultiSelect &&
+                            widget.maxSelections != null &&
+                            _selectedItems.length >= widget.maxSelections! &&
+                            !isSelected;
 
                         return RepaintBoundary(
+                          key: ValueKey('item_${item.id}_$isSelected'),
                           child: Container(
                             margin: _itemMargin,
                             decoration: BoxDecoration(
@@ -387,27 +389,32 @@ class _CountryPickerState extends State<CountryPicker> {
                               child: InkWell(
                                 borderRadius:
                                     BorderRadius.circular(borderRadius),
-                                hoverColor: hoverColor,
-                                onTap: () {
-                                  widget.onCountrySelected(country);
-                                  Navigator.of(context).pop();
-                                },
+                                hoverColor: isMaxReached
+                                    ? Colors.grey.withValues(alpha: 0.1)
+                                    : hoverColor,
+                                onTap: isMaxReached
+                                    ? null
+                                    : () {
+                                        _toggleItemSelection(item, setModalState);
+                                      },
                                 child: Padding(
                                   padding: _itemPadding,
                                   child: Row(
                                     children: [
-                                      Text(
-                                        country.flag,
-                                        style: _flagTextStyle,
-                                      ),
-                                      _spacer12,
+                                      if (item.icon != null) ...[
+                                        Text(
+                                          item.icon!,
+                                          style: _iconTextStyle,
+                                        ),
+                                        _spacer12,
+                                      ],
                                       Expanded(
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              countryName,
+                                              item.name,
                                               style: TextStyle(
                                                 color: isSelected
                                                     ? accentColor
@@ -418,26 +425,35 @@ class _CountryPickerState extends State<CountryPicker> {
                                                 fontSize: 14,
                                               ),
                                             ),
-                                            _spacer2,
-                                            Text(
-                                              widget.showPhoneCodes
-                                                  ? '${country.code} (${country.phoneCode})'
-                                                  : country.code,
-                                              style: TextStyle(
-                                                color: isSelected
-                                                    ? accentColor.withValues(
-                                                        alpha: 0.7)
-                                                    : hintTextColor,
-                                                fontSize: 12,
+                                            if (widget.showSubtitle &&
+                                                item.subtitle != null) ...[
+                                              _spacer2,
+                                              Text(
+                                                item.subtitle!,
+                                                style: TextStyle(
+                                                  color: isSelected
+                                                      ? accentColor.withValues(
+                                                          alpha: 0.7)
+                                                      : hintTextColor,
+                                                  fontSize: 12,
+                                                ),
                                               ),
-                                            ),
+                                            ],
                                           ],
                                         ),
                                       ),
                                       if (isSelected)
                                         Icon(
-                                          Icons.check_circle,
+                                          widget.isMultiSelect
+                                              ? Icons.check_box
+                                              : Icons.check_circle,
                                           color: accentColor,
+                                          size: 20,
+                                        )
+                                      else if (widget.isMultiSelect)
+                                        Icon(
+                                          Icons.check_box_outline_blank,
+                                          color: hintTextColor,
                                           size: 20,
                                         ),
                                     ],
@@ -461,14 +477,12 @@ class _CountryPickerState extends State<CountryPicker> {
 
   @override
   Widget build(BuildContext context) {
-    final countryLocalizations = CountryLocalizations.of(context);
-
     return RepaintBoundary(
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          key: ValueKey('country_picker_$_updateCounter'),
-          onTap: _showCountryPicker,
+          key: ValueKey('universal_selector_$_updateCounter'),
+          onTap: _showItemPicker,
           borderRadius: BorderRadius.circular(borderRadius),
           child: Container(
             padding: _buttonPadding,
@@ -479,47 +493,82 @@ class _CountryPickerState extends State<CountryPicker> {
             ),
             child: Row(
               children: [
-                if (widget.selectedCountry != null) ...[
-                  Text(
-                    widget.selectedCountry!.flag,
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                  _spacer10,
+                if (widget.isMultiSelect) ...[
+                  if (_selectedItems.isNotEmpty) ...[
+                    if (_selectedItems.length == 1 &&
+                        _selectedItems.first.icon != null) ...[
+                      Text(
+                        _selectedItems.first.icon!,
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                      _spacer10,
+                    ] else ...[
+                      Icon(Icons.check_box, color: accentColor, size: 18),
+                      _spacer10,
+                    ],
+                    Expanded(
+                      child: Text(
+                        _getSelectedItemsText(),
+                        style: TextStyle(
+                          color: textColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ] else ...[
+                    Icon(Icons.list, color: hintTextColor, size: 18),
+                    _spacer10,
+                    Expanded(
+                      child: Text(
+                        widget.hintText ?? 'Select items...',
+                        style: TextStyle(
+                          color: hintTextColor,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ],
+                ] else if (widget.selectedItem != null) ...[
+                  if (widget.selectedItem!.icon != null) ...[
+                    Text(
+                      widget.selectedItem!.icon!,
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                    _spacer10,
+                  ],
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          CountryLocalizations.getCountryNameSafe(
-                              context, widget.selectedCountry!.code),
+                          widget.selectedItem!.name,
                           style: TextStyle(
                             color: textColor,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        _spacer2,
-                        Text(
-                          widget.selectedCountry!.code,
-                          style: TextStyle(
-                            color: hintTextColor,
-                            fontSize: 11,
-                          ),
-                        ),
-                        if (widget.showPhoneCodes)
+                        if (widget.showSubtitle &&
+                            widget.selectedItem!.subtitle != null) ...[
+                          _spacer2,
                           Text(
-                            widget.selectedCountry!.phoneCode,
-                            style: _selectedPhoneCodeTextStyle,
+                            widget.selectedItem!.subtitle!,
+                            style: TextStyle(
+                              color: hintTextColor,
+                              fontSize: 11,
+                            ),
                           ),
+                        ],
                       ],
                     ),
                   ),
                 ] else ...[
-                  Icon(Icons.flag, color: hintTextColor, size: 18),
+                  Icon(Icons.list, color: hintTextColor, size: 18),
                   _spacer10,
                   Expanded(
                     child: Text(
-                      widget.hintText ?? countryLocalizations.selectYourCountry,
+                      widget.hintText ?? 'Select an item',
                       style: TextStyle(
                         color: hintTextColor,
                         fontSize: 14,

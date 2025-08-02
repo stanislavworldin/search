@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:country_search/country_search.dart';
+import 'package:universal_selector/universal_selector.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,15 +13,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale _currentLocale = const Locale('en');
   bool _isDarkTheme = true;
-
-  void _changeLanguage(Locale locale) {
-    setState(() {
-      _currentLocale = locale;
-    });
-    debugPrint('Language changed to: ${locale.languageCode}');
-  }
 
   void _toggleTheme() {
     setState(() {
@@ -34,20 +25,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Country Picker Demo',
+      title: 'Universal Selector Demo',
       theme: _isDarkTheme ? ThemeData.dark() : ThemeData.light(),
-      locale: _currentLocale,
-      localizationsDelegates: [
-        CountryLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: CountryLocalizations.supportedLocales,
       home: MyHomePage(
-        onLanguageChanged: _changeLanguage,
         onThemeChanged: _toggleTheme,
-        currentLocale: _currentLocale,
         isDarkTheme: _isDarkTheme,
       ),
     );
@@ -55,16 +36,12 @@ class _MyAppState extends State<MyApp> {
 }
 
 class MyHomePage extends StatefulWidget {
-  final Function(Locale) onLanguageChanged;
   final VoidCallback onThemeChanged;
-  final Locale currentLocale;
   final bool isDarkTheme;
 
   const MyHomePage({
     super.key,
-    required this.onLanguageChanged,
     required this.onThemeChanged,
-    required this.currentLocale,
     required this.isDarkTheme,
   });
 
@@ -73,155 +50,134 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Country? selectedCountry;
+  SelectableItem? selectedItem;
+  List<SelectableItem> selectedItems = [];
 
-  String _getLanguageName(String code) {
-    switch (code) {
-      case 'ar':
-        return '🇸🇦 العربية';
-      case 'de':
-        return '🇩🇪 Deutsch';
-      case 'en':
-        return '🇺🇸 English';
-      case 'es':
-        return '🇪🇸 Español';
-      case 'fr':
-        return '🇫🇷 Français';
-      case 'hi':
-        return '🇮🇳 हिन्दी';
-      case 'id':
-        return '🇮🇩 Bahasa Indonesia';
-      case 'it':
-        return '🇮🇹 Italiano';
-      case 'ja':
-        return '🇯🇵 日本語';
-      case 'ko':
-        return '🇰🇷 한국어';
-      case 'nl':
-        return '🇳🇱 Nederlands';
-      case 'pl':
-        return '🇵🇱 Polski';
-      case 'pt':
-        return '🇵🇹 Português';
-      case 'ru':
-        return '🇷🇺 Русский';
-      case 'th':
-        return '🇹🇭 ไทย';
-      case 'tr':
-        return '🇹🇷 Türkçe';
-      case 'uk':
-        return '🇺🇦 Українська';
-      case 'vi':
-        return '🇻🇳 Tiếng Việt';
-      case 'zh':
-        return '🇨🇳 中文';
-      default:
-        return '🇺🇸 English';
-    }
-  }
+  // Sample data for different use cases
+  final List<SelectableItem> fruits = [
+    const SelectableItem(
+      id: 'apple',
+      name: 'Apple',
+      icon: '🍎',
+      subtitle: 'Red fruit',
+      searchData: 'apple fruit red sweet',
+    ),
+    const SelectableItem(
+      id: 'banana',
+      name: 'Banana',
+      icon: '🍌',
+      subtitle: 'Yellow fruit',
+      searchData: 'banana fruit yellow potassium',
+    ),
+    const SelectableItem(
+      id: 'orange',
+      name: 'Orange',
+      icon: '🍊',
+      subtitle: 'Orange fruit',
+      searchData: 'orange fruit citrus vitamin c',
+    ),
+    const SelectableItem(
+      id: 'grape',
+      name: 'Grape',
+      icon: '🍇',
+      subtitle: 'Purple fruit',
+      searchData: 'grape fruit purple wine',
+    ),
+    const SelectableItem(
+      id: 'strawberry',
+      name: 'Strawberry',
+      icon: '🍓',
+      subtitle: 'Red berry',
+      searchData: 'strawberry berry red sweet',
+    ),
+  ];
+
+  final List<SelectableItem> countries = [
+    const SelectableItem(
+      id: 'us',
+      name: 'United States',
+      icon: '🇺🇸',
+      subtitle: 'USA',
+      searchData: 'united states america us usa',
+    ),
+    const SelectableItem(
+      id: 'ru',
+      name: 'Russia',
+      icon: '🇷🇺',
+      subtitle: 'Russian Federation',
+      searchData: 'russia russian federation',
+    ),
+    const SelectableItem(
+      id: 'cn',
+      name: 'China',
+      icon: '🇨🇳',
+      subtitle: 'People\'s Republic of China',
+      searchData: 'china chinese',
+    ),
+    const SelectableItem(
+      id: 'de',
+      name: 'Germany',
+      icon: '🇩🇪',
+      subtitle: 'Federal Republic of Germany',
+      searchData: 'germany german deutschland',
+    ),
+    const SelectableItem(
+      id: 'jp',
+      name: 'Japan',
+      icon: '🇯🇵',
+      subtitle: 'Land of the Rising Sun',
+      searchData: 'japan japanese nippon',
+    ),
+  ];
+
+  final List<SelectableItem> colors = [
+    const SelectableItem(
+      id: 'red',
+      name: 'Red',
+      icon: '🔴',
+      subtitle: 'Primary color',
+      searchData: 'red primary warm',
+    ),
+    const SelectableItem(
+      id: 'blue',
+      name: 'Blue',
+      icon: '🔵',
+      subtitle: 'Primary color',
+      searchData: 'blue primary cool',
+    ),
+    const SelectableItem(
+      id: 'green',
+      name: 'Green',
+      icon: '🟢',
+      subtitle: 'Secondary color',
+      searchData: 'green secondary nature',
+    ),
+    const SelectableItem(
+      id: 'yellow',
+      name: 'Yellow',
+      icon: '🟡',
+      subtitle: 'Primary color',
+      searchData: 'yellow primary bright',
+    ),
+    const SelectableItem(
+      id: 'purple',
+      name: 'Purple',
+      icon: '🟣',
+      subtitle: 'Secondary color',
+      searchData: 'purple secondary royal',
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Country Picker Demo'),
+        title: const Text('Universal Selector Demo'),
         actions: [
           // Theme toggle button
           IconButton(
             icon: Icon(widget.isDarkTheme ? Icons.light_mode : Icons.dark_mode),
             onPressed: widget.onThemeChanged,
-          ),
-          PopupMenuButton<Locale>(
-            onSelected: widget.onLanguageChanged,
-            itemBuilder: (BuildContext context) => [
-              const PopupMenuItem(
-                value: Locale('ar'),
-                child: Text('🇸🇦 العربية'),
-              ),
-              const PopupMenuItem(
-                value: Locale('de'),
-                child: Text('🇩🇪 Deutsch'),
-              ),
-              const PopupMenuItem(
-                value: Locale('en'),
-                child: Text('🇺🇸 English'),
-              ),
-              const PopupMenuItem(
-                value: Locale('es'),
-                child: Text('🇪🇸 Español'),
-              ),
-              const PopupMenuItem(
-                value: Locale('fr'),
-                child: Text('🇫🇷 Français'),
-              ),
-              const PopupMenuItem(
-                value: Locale('hi'),
-                child: Text('🇮🇳 हिन्दी'),
-              ),
-              const PopupMenuItem(
-                value: Locale('id'),
-                child: Text('🇮🇩 Bahasa Indonesia'),
-              ),
-              const PopupMenuItem(
-                value: Locale('it'),
-                child: Text('🇮🇹 Italiano'),
-              ),
-              const PopupMenuItem(
-                value: Locale('ja'),
-                child: Text('🇯🇵 日本語'),
-              ),
-              const PopupMenuItem(
-                value: Locale('ko'),
-                child: Text('🇰🇷 한국어'),
-              ),
-              const PopupMenuItem(
-                value: Locale('nl'),
-                child: Text('🇳🇱 Nederlands'),
-              ),
-              const PopupMenuItem(
-                value: Locale('pl'),
-                child: Text('🇵🇱 Polski'),
-              ),
-              const PopupMenuItem(
-                value: Locale('pt'),
-                child: Text('🇵🇹 Português'),
-              ),
-              const PopupMenuItem(
-                value: Locale('ru'),
-                child: Text('🇷🇺 Русский'),
-              ),
-              const PopupMenuItem(
-                value: Locale('th'),
-                child: Text('🇹🇭 ไทย'),
-              ),
-              const PopupMenuItem(
-                value: Locale('tr'),
-                child: Text('🇹🇷 Türkçe'),
-              ),
-              const PopupMenuItem(
-                value: Locale('uk'),
-                child: Text('🇺🇦 Українська'),
-              ),
-              const PopupMenuItem(
-                value: Locale('vi'),
-                child: Text('🇻🇳 Tiếng Việt'),
-              ),
-              const PopupMenuItem(
-                value: Locale('zh'),
-                child: Text('🇨🇳 中文'),
-              ),
-            ],
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.language),
-                  const SizedBox(width: 4),
-                  Text(_getLanguageName(widget.currentLocale.languageCode)),
-                ],
-              ),
-            ),
           ),
         ],
       ),
@@ -230,7 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Language indicator
+            // Theme indicator
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
@@ -241,10 +197,14 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.language, size: 16, color: Colors.blue),
+                  Icon(
+                    widget.isDarkTheme ? Icons.dark_mode : Icons.light_mode,
+                    size: 16,
+                    color: Colors.blue,
+                  ),
                   const SizedBox(width: 4),
                   Text(
-                    'Current Language: ${_getLanguageName(widget.currentLocale.languageCode)}',
+                    'Theme: ${widget.isDarkTheme ? 'Dark' : 'Light'}',
                     style: const TextStyle(
                       color: Colors.blue,
                       fontSize: 12,
@@ -256,33 +216,91 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             const SizedBox(height: 24),
 
-            // Country picker section
+            // Fruits selector
             const Text(
-              'Select your country:',
+              'Select a fruit:',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 16),
-            CountryPicker(
-              selectedCountry: selectedCountry,
-              onCountrySelected: (Country country) {
+            UniversalSelector(
+              items: fruits,
+              selectedItem: selectedItem,
+              onItemSelected: (SelectableItem item) {
                 setState(() {
-                  selectedCountry = country;
+                  selectedItem = item;
                 });
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(
-                        'Selected: ${country.flag} ${country.code} (${country.phoneCode})'),
+                    content: Text('Selected: ${item.icon} ${item.name}'),
                     backgroundColor: Colors.green,
                   ),
                 );
               },
+              labelText: 'Choose a fruit',
+              hintText: 'Search fruits...',
+            ),
+            const SizedBox(height: 24),
+
+            // Countries selector
+            const Text(
+              'Select a country:',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 16),
+            UniversalSelector(
+              items: countries,
+              selectedItem: selectedItem,
+              onItemSelected: (SelectableItem item) {
+                setState(() {
+                  selectedItem = item;
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Selected: ${item.icon} ${item.name}'),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              },
+              labelText: 'Choose a country',
+              hintText: 'Search countries...',
+            ),
+            const SizedBox(height: 24),
 
-            // Light theme picker
+            // Colors selector
+            const Text(
+              'Select a color:',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
+            UniversalSelector(
+              items: colors,
+              selectedItem: selectedItem,
+              onItemSelected: (SelectableItem item) {
+                setState(() {
+                  selectedItem = item;
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Selected: ${item.icon} ${item.name}'),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              },
+              labelText: 'Choose a color',
+              hintText: 'Search colors...',
+            ),
+            const SizedBox(height: 24),
+
+            // Light theme selector example
             const Text(
               'Light Theme Version:',
               style: TextStyle(
@@ -291,16 +309,16 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             const SizedBox(height: 8),
-            CountryPicker(
-              selectedCountry: selectedCountry,
-              onCountrySelected: (Country country) {
+            UniversalSelector(
+              items: fruits,
+              selectedItem: selectedItem,
+              onItemSelected: (SelectableItem item) {
                 setState(() {
-                  selectedCountry = country;
+                  selectedItem = item;
                 });
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(
-                        'Selected: ${country.flag} ${country.code} (${country.phoneCode})'),
+                    content: Text('Selected: ${item.icon} ${item.name}'),
                     backgroundColor: Colors.green,
                   ),
                 );
@@ -313,12 +331,14 @@ class _MyHomePageState extends State<MyHomePage> {
               searchFieldBorderColor: Colors.grey.shade300,
               cursorColor: Colors.blue,
               hintTextColor: Colors.grey.shade600,
-              hoverColor: Colors.grey.shade200, // Light theme hover color
-              borderRadius: 12.0, // Custom border radius
+              hoverColor: Colors.grey.shade200,
+              borderRadius: 12.0,
+              labelText: 'Light theme selector',
+              hintText: 'Search items...',
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 24),
 
-            // Custom theme picker
+            // Custom theme selector example
             const Text(
               'Custom Theme (Purple):',
               style: TextStyle(
@@ -327,16 +347,16 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             const SizedBox(height: 8),
-            CountryPicker(
-              selectedCountry: selectedCountry,
-              onCountrySelected: (Country country) {
+            UniversalSelector(
+              items: colors,
+              selectedItem: selectedItem,
+              onItemSelected: (SelectableItem item) {
                 setState(() {
-                  selectedCountry = country;
+                  selectedItem = item;
                 });
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(
-                        'Selected: ${country.flag} ${country.code} (${country.phoneCode})'),
+                    content: Text('Selected: ${item.icon} ${item.name}'),
                     backgroundColor: Colors.green,
                   ),
                 );
@@ -349,15 +369,104 @@ class _MyHomePageState extends State<MyHomePage> {
               searchFieldBorderColor: Colors.purple.shade200,
               cursorColor: Colors.purple,
               hintTextColor: Colors.purple.shade600,
-              hoverColor: Colors.purple.shade200, // Purple theme hover color
-              borderRadius: 16.0, // Larger border radius for purple theme
+              hoverColor: Colors.purple.shade200,
+              borderRadius: 16.0,
+              labelText: 'Purple theme selector',
+              hintText: 'Search items...',
             ),
             const SizedBox(height: 32),
 
-            // Selected country display
-            if (selectedCountry != null) ...[
+            // Multi-select example
+            const Text(
+              'Multi-select (max 3):',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
+            UniversalSelector(
+              items: fruits,
+              selectedItems: selectedItems,
+              isMultiSelect: true,
+              maxSelections: 3,
+              onItemSelected: (SelectableItem item) {
+                // This callback is required but not used in multi-select mode
+              },
+              onItemsSelected: (List<SelectableItem> items) {
+                setState(() {
+                  selectedItems = items;
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Selected ${items.length} items'),
+                    backgroundColor: Colors.blue,
+                  ),
+                );
+              },
+              labelText: 'Choose multiple fruits',
+              hintText: 'Search and select fruits...',
+            ),
+            const SizedBox(height: 24),
+
+            // Selected items display
+            if (selectedItems.isNotEmpty) ...[
               const Text(
-                'Selected Country:',
+                'Selected Items:',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.blue.withAlpha((0.1 * 255).toInt()),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                      color: Colors.blue.withAlpha((0.3 * 255).toInt())),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${selectedItems.length} items selected:',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    ...selectedItems.map((item) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 2),
+                          child: Row(
+                            children: [
+                              if (item.icon != null) ...[
+                                Text(item.icon!,
+                                    style: const TextStyle(fontSize: 16)),
+                                const SizedBox(width: 8),
+                              ],
+                              Expanded(
+                                child: Text(
+                                  item.name,
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+            ],
+
+            // Selected item display
+            if (selectedItem != null) ...[
+              const Text(
+                'Selected Item:',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -373,32 +482,37 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 child: Row(
                   children: [
-                    Text(
-                      selectedCountry!.flag,
-                      style: const TextStyle(fontSize: 32),
-                    ),
-                    const SizedBox(width: 16),
+                    if (selectedItem!.icon != null) ...[
+                      Text(
+                        selectedItem!.icon!,
+                        style: const TextStyle(fontSize: 32),
+                      ),
+                      const SizedBox(width: 16),
+                    ],
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            selectedCountry!.code,
+                            selectedItem!.name,
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
-                            CountryLocalizations.of(context)
-                                .getCountryName(selectedCountry!.code),
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.white70,
+                          if (selectedItem!.subtitle != null) ...[
+                            const SizedBox(height: 4),
+                            Text(
+                              selectedItem!.subtitle!,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.white70,
+                              ),
                             ),
-                          ),
+                          ],
+                          const SizedBox(height: 4),
                           Text(
-                            'Phone: ${selectedCountry!.phoneCode}',
+                            'ID: ${selectedItem!.id}',
                             style: const TextStyle(
                               fontSize: 12,
                               color: Colors.blue,
@@ -433,15 +547,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   SizedBox(height: 8),
-                  Text('• 245+ countries with flags'),
-                  Text('• Phone codes included'),
-                  Text('• Multi-language support (19 languages)'),
-                  Text('• Smart search functionality'),
+                  Text('• Universal item selection'),
+                  Text('• Multi-select support'),
+                  Text('• Fuzzy search with typos support'),
+                  Text('• Customizable icons and subtitles'),
                   Text('• Beautiful dark theme'),
                   Text('• Light theme support'),
                   Text('• Custom color themes'),
                   Text('• Customizable labels'),
                   Text('• Responsive design'),
+                  Text('• Fast and lightweight'),
                 ],
               ),
             ),

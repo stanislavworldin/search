@@ -1,16 +1,16 @@
-name: country_search
-description: Fast and lightweight country selector for Flutter with localization, fuzzy search, and ISO 3166 support — only 113KB.
-version: 2.6.4
-homepage: https://github.com/stanislavworldin/country_search
-repository: https://github.com/stanislavworldin/country_search
-issue_tracker: https://github.com/stanislavworldin/country_search/issues
-documentation: https://github.com/stanislavworldin/country_search#readme
+name: universal_selector
+description: Fast and lightweight universal item selector for Flutter with fuzzy search and customizable UI — lightweight and flexible.
+version: 1.0.0
+homepage: https://github.com/stanislavworldin/universal_selector
+repository: https://github.com/stanislavworldin/universal_selector
+issue_tracker: https://github.com/stanislavworldin/universal_selector/issues
+documentation: https://github.com/stanislavworldin/universal_selector#readme
 topics:
-  - flags
-  - country
+  - selector
   - picker
   - search
-  - codes
+  - items
+  - universal
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -19,8 +19,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -28,8 +26,8 @@ dev_dependencies:
   flutter_lints: ^3.0.0
 
 flutter:
-  # No assets needed for this package screenshots:
+  # No assets needed for this package
 
 screenshots:
-  - description: "Country Picker with search functionality"
+  - description: "Universal Selector with search functionality"
     path: screenshots/1.png
