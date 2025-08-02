@@ -10,7 +10,7 @@ topics:
   - picker
   - search
   - items
-  - universal
+  - dropdown
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
