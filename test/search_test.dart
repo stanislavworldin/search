@@ -117,8 +117,11 @@ void main() {
 
       test('should disable fuzzy search', () {
         const config = SearchConfig(fuzzyEnabled: false);
-        final results =
-            SearchEngine.fuzzySearch(testItems, 'aple', config: config);
+        final results = SearchEngine.fuzzySearch(
+          testItems,
+          'aple',
+          config: config,
+        );
         expect(results.length, equals(0));
       });
     });

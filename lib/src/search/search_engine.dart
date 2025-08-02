@@ -29,8 +29,9 @@ class SearchEngine {
   /// Get a sorted list of items by name
   static List<SearchableItem> getSortedItems(List<SearchableItem> items) {
     final sortedItems = List<SearchableItem>.from(items);
-    sortedItems
-        .sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+    sortedItems.sort(
+      (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()),
+    );
     return sortedItems;
   }
 
@@ -51,8 +52,9 @@ class SearchEngine {
   }) {
     if (query.isEmpty) return items;
 
-    final searchQuery =
-        config.caseSensitive ? query : query.toLowerCase().trim();
+    final searchQuery = config.caseSensitive
+        ? query
+        : query.toLowerCase().trim();
     final results = <SearchableItem>[];
     final exactMatches = <SearchableItem>[];
     final startsWithMatches = <SearchableItem>[];
@@ -63,8 +65,9 @@ class SearchEngine {
         final fieldValue = _getFieldValue(item, field);
         if (fieldValue == null) continue;
 
-        final searchValue =
-            config.caseSensitive ? fieldValue : fieldValue.toLowerCase();
+        final searchValue = config.caseSensitive
+            ? fieldValue
+            : fieldValue.toLowerCase();
 
         // Exact match
         if (searchValue == searchQuery) {
@@ -100,8 +103,9 @@ class SearchEngine {
   }) {
     if (query.isEmpty) return items;
 
-    final searchQuery =
-        config.caseSensitive ? query : query.toLowerCase().trim();
+    final searchQuery = config.caseSensitive
+        ? query
+        : query.toLowerCase().trim();
     final results = <SearchableItem>[];
     final exactMatches = <SearchableItem>[];
     final startsWithMatches = <SearchableItem>[];
@@ -115,8 +119,9 @@ class SearchEngine {
         final fieldValue = _getFieldValue(item, field);
         if (fieldValue == null) continue;
 
-        final searchValue =
-            config.caseSensitive ? fieldValue : fieldValue.toLowerCase();
+        final searchValue = config.caseSensitive
+            ? fieldValue
+            : fieldValue.toLowerCase();
 
         // 1. Exact matches
         if (searchValue == searchQuery) {
@@ -212,8 +217,9 @@ class SearchEngine {
 
     final distance = _levenshteinDistance(query, text);
     final maxAllowedDistance = (query.length / 3).ceil(); // Adaptive threshold
-    final threshold =
-        maxDistance < maxAllowedDistance ? maxDistance : maxAllowedDistance;
+    final threshold = maxDistance < maxAllowedDistance
+        ? maxDistance
+        : maxAllowedDistance;
 
     return distance <= threshold;
   }

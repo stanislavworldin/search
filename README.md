@@ -2,6 +2,8 @@
 
 Fast and lightweight search engine for Dart/Flutter with fuzzy search capabilities — lightweight and flexible.
 
+🌐 Live Demo:** [View on GitHub Pages](https://stanislavworldin.github.io/search/) 
+
 ## How Search Works
 
 The search engine uses a **4-level priority algorithm** to find the most relevant results:
