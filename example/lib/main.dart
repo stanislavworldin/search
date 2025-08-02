@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Universal Selector Demo',
+      title: 'Multiselector Demo',
       theme: _isDarkTheme ? ThemeData.dark() : ThemeData.light(),
       home: MyHomePage(
         onThemeChanged: _toggleTheme,
@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
   SelectableItem? selectedItem;
   List<SelectableItem> selectedItems = [];
 
-  // Sample data for different use cases
+  // Fruits data
   final List<SelectableItem> fruits = [
     const SelectableItem(
       id: 'apple',
@@ -90,81 +90,26 @@ class _MyHomePageState extends State<MyHomePage> {
       subtitle: 'Red berry',
       searchData: 'strawberry berry red sweet',
     ),
-  ];
-
-  final List<SelectableItem> countries = [
     const SelectableItem(
-      id: 'us',
-      name: 'United States',
-      icon: '🇺🇸',
-      subtitle: 'USA',
-      searchData: 'united states america us usa',
+      id: 'pineapple',
+      name: 'Pineapple',
+      icon: '🍍',
+      subtitle: 'Tropical fruit',
+      searchData: 'pineapple tropical sweet',
     ),
     const SelectableItem(
-      id: 'ru',
-      name: 'Russia',
-      icon: '🇷🇺',
-      subtitle: 'Russian Federation',
-      searchData: 'russia russian federation',
+      id: 'watermelon',
+      name: 'Watermelon',
+      icon: '🍉',
+      subtitle: 'Summer fruit',
+      searchData: 'watermelon summer refreshing',
     ),
     const SelectableItem(
-      id: 'cn',
-      name: 'China',
-      icon: '🇨🇳',
-      subtitle: 'People\'s Republic of China',
-      searchData: 'china chinese people republic',
-    ),
-    const SelectableItem(
-      id: 'jp',
-      name: 'Japan',
-      icon: '🇯🇵',
-      subtitle: 'Land of the Rising Sun',
-      searchData: 'japan japanese rising sun',
-    ),
-    const SelectableItem(
-      id: 'de',
-      name: 'Germany',
-      icon: '🇩🇪',
-      subtitle: 'Federal Republic of Germany',
-      searchData: 'germany german federal republic',
-    ),
-  ];
-
-  final List<SelectableItem> colors = [
-    const SelectableItem(
-      id: 'red',
-      name: 'Red',
-      icon: '🔴',
-      subtitle: 'Primary color',
-      searchData: 'red primary color warm',
-    ),
-    const SelectableItem(
-      id: 'blue',
-      name: 'Blue',
-      icon: '🔵',
-      subtitle: 'Primary color',
-      searchData: 'blue primary color cool',
-    ),
-    const SelectableItem(
-      id: 'green',
-      name: 'Green',
-      icon: '🟢',
-      subtitle: 'Primary color',
-      searchData: 'green primary color nature',
-    ),
-    const SelectableItem(
-      id: 'yellow',
-      name: 'Yellow',
-      icon: '🟡',
-      subtitle: 'Primary color',
-      searchData: 'yellow primary color bright',
-    ),
-    const SelectableItem(
-      id: 'purple',
-      name: 'Purple',
-      icon: '🟣',
-      subtitle: 'Secondary color',
-      searchData: 'purple secondary color royal',
+      id: 'mango',
+      name: 'Mango',
+      icon: '🥭',
+      subtitle: 'Tropical fruit',
+      searchData: 'mango tropical sweet',
     ),
   ];
 
@@ -172,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Universal Selector Demo'),
+        title: const Text('Multiselector Demo'),
         backgroundColor: widget.isDarkTheme ? Colors.grey[900] : Colors.blue,
         foregroundColor: Colors.white,
         actions: [
@@ -217,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           const SizedBox(height: 24),
 
-          // Fruits selector
+          // Single fruit selector
           const Text(
             'Select a fruit:',
             style: TextStyle(
@@ -245,65 +190,9 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           const SizedBox(height: 24),
 
-          // Countries selector
-          const Text(
-            'Select a country:',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 16),
-          UniversalSelector(
-            items: countries,
-            selectedItem: selectedItem,
-            onItemSelected: (SelectableItem item) {
-              setState(() {
-                selectedItem = item;
-              });
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Selected: ${item.icon} ${item.name}'),
-                  backgroundColor: Colors.green,
-                ),
-              );
-            },
-            labelText: 'Choose a country',
-            hintText: 'Search countries...',
-          ),
-          const SizedBox(height: 24),
-
-          // Colors selector
-          const Text(
-            'Select a color:',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 16),
-          UniversalSelector(
-            items: colors,
-            selectedItem: selectedItem,
-            onItemSelected: (SelectableItem item) {
-              setState(() {
-                selectedItem = item;
-              });
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Selected: ${item.icon} ${item.name}'),
-                  backgroundColor: Colors.green,
-                ),
-              );
-            },
-            labelText: 'Choose a color',
-            hintText: 'Search colors...',
-          ),
-          const SizedBox(height: 24),
-
           // Multi-select example
           const Text(
-            'Multi-select example:',
+            'Multi-select fruits:',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -323,21 +212,21 @@ class _MyHomePageState extends State<MyHomePage> {
               });
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Selected ${items.length} items'),
+                  content: Text('Selected ${items.length} fruits'),
                   backgroundColor: Colors.blue,
                 ),
               );
             },
             labelText: 'Choose multiple fruits',
             hintText: 'Search and select fruits...',
-            maxSelections: 3,
+            maxSelections: 5,
           ),
           const SizedBox(height: 24),
 
           // Selected item display
           if (selectedItem != null) ...[
             const Text(
-              'Selected Item:',
+              'Selected Fruit:',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -381,15 +270,6 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                         ],
-                        const SizedBox(height: 4),
-                        Text(
-                          'ID: ${selectedItem!.id}',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.blue,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
                       ],
                     ),
                   ),
@@ -397,6 +277,51 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           ],
+
+          // Selected items display (multi-select)
+          if (selectedItems.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            const Text(
+              'Selected Fruits:',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: selectedItems.map((item) {
+                return Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.blue.withValues(alpha: 0.3)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (item.icon != null) ...[
+                        Text(item.icon!, style: const TextStyle(fontSize: 16)),
+                        const SizedBox(width: 4),
+                      ],
+                      Text(
+                        item.name,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
+          ],
+
+          const SizedBox(height: 24),
 
           // Features section
           Container(
@@ -417,14 +342,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 SizedBox(height: 8),
-                Text('• Universal item selection'),
+                Text('• Single item selection'),
                 Text('• Multi-select support'),
                 Text('• Fuzzy search with typos support'),
                 Text('• Customizable icons and subtitles'),
-                Text('• Beautiful dark theme'),
-                Text('• Light theme support'),
-                Text('• Custom color themes'),
-                Text('• Customizable labels'),
+                Text('• Beautiful dark/light themes'),
                 Text('• Responsive design'),
                 Text('• Fast and lightweight'),
               ],
