@@ -56,7 +56,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  fuzzy_search_engine: ^1.0.0
+  fuzzy_search_engine: ^1.0.1
 ```
 
 ## Quick Start

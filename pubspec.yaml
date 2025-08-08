@@ -1,6 +1,6 @@
 name: fuzzy_search_engine
 description: Fast and lightweight search engine for Dart/Flutter with fuzzy search capabilities — lightweight and flexible.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/stanislavworldin/search
 repository: https://github.com/stanislavworldin/search
 issue_tracker: https://github.com/stanislavworldin/search/issues
