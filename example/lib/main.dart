@@ -94,14 +94,22 @@ class _SearchExamplePageState extends State<SearchExamplePage> {
   void _onSearchChanged() {
     final query = _searchController.text;
     setState(() {
-      _searchResults = SearchEngine.search(_allItems, query);
+      _searchResults = SearchEngine.search(
+        _allItems,
+        query,
+        config: SearchConfig(debugLogger: debugPrint),
+      );
     });
   }
 
   void _onFuzzySearchChanged() {
     final query = _fuzzySearchController.text;
     setState(() {
-      _fuzzyResults = SearchEngine.fuzzySearch(_allItems, query);
+      _fuzzyResults = SearchEngine.fuzzySearch(
+        _allItems,
+        query,
+        config: SearchConfig(debugLogger: debugPrint),
+      );
     });
   }
 

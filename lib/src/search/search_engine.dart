@@ -14,11 +14,16 @@ class SearchConfig {
   /// Case sensitive search
   final bool caseSensitive;
 
+  /// Optional debug logger callback. Use to trace internal decisions.
+  /// Example: pass `debugPrint` in Flutter apps.
+  final void Function(String message)? debugLogger;
+
   const SearchConfig({
     this.searchFields = const ['name', 'subtitle', 'searchData'],
     this.fuzzyEnabled = true,
     this.maxFuzzyDistance = 3,
     this.caseSensitive = false,
+    this.debugLogger,
   });
 }
 
@@ -37,11 +42,12 @@ class SearchEngine {
 
   /// Get an item by its ID
   static SearchableItem? getItemById(List<SearchableItem> items, String id) {
-    try {
-      return items.firstWhere((item) => item.id == id);
-    } catch (e) {
-      return null;
+    for (final item in items) {
+      if (item.id == id) {
+        return item;
+      }
     }
+    return null;
   }
 
   /// Search items with basic matching
@@ -52,8 +58,8 @@ class SearchEngine {
   }) {
     if (query.isEmpty) return items;
 
-    final searchQuery =
-        config.caseSensitive ? query : query.toLowerCase().trim();
+    final normalizedQuery = config.caseSensitive ? query : query.toLowerCase();
+    final searchQuery = normalizedQuery.trim();
     final results = <SearchableItem>[];
     final exactMatches = <SearchableItem>[];
     final startsWithMatches = <SearchableItem>[];
@@ -70,16 +76,21 @@ class SearchEngine {
         // Exact match
         if (searchValue == searchQuery) {
           exactMatches.add(item);
+          config.debugLogger?.call('Exact match: id=${item.id}, field=$field');
           break;
         }
         // Starts with query
         else if (searchValue.startsWith(searchQuery)) {
           startsWithMatches.add(item);
+          config.debugLogger
+              ?.call('StartsWith match: id=${item.id}, field=$field');
           break;
         }
         // Contains query
         else if (searchValue.contains(searchQuery)) {
           containsMatches.add(item);
+          config.debugLogger
+              ?.call('Contains match: id=${item.id}, field=$field');
           break;
         }
       }
@@ -101,8 +112,8 @@ class SearchEngine {
   }) {
     if (query.isEmpty) return items;
 
-    final searchQuery =
-        config.caseSensitive ? query : query.toLowerCase().trim();
+    final normalizedQuery = config.caseSensitive ? query : query.toLowerCase();
+    final searchQuery = normalizedQuery.trim();
     final results = <SearchableItem>[];
     final exactMatches = <SearchableItem>[];
     final startsWithMatches = <SearchableItem>[];
@@ -123,6 +134,7 @@ class SearchEngine {
         if (searchValue == searchQuery) {
           exactMatches.add(item);
           found = true;
+          config.debugLogger?.call('Exact match: id=${item.id}, field=$field');
           break;
         }
 
@@ -130,6 +142,8 @@ class SearchEngine {
         if (!found && searchValue.startsWith(searchQuery)) {
           startsWithMatches.add(item);
           found = true;
+          config.debugLogger
+              ?.call('StartsWith match: id=${item.id}, field=$field');
           break;
         }
 
@@ -137,17 +151,33 @@ class SearchEngine {
         if (!found && searchValue.contains(searchQuery)) {
           containsMatches.add(item);
           found = true;
+          config.debugLogger
+              ?.call('Contains match: id=${item.id}, field=$field');
           break;
         }
 
         // 4. Fuzzy search for typos and misspellings (only for queries >= 3 characters)
-        if (!found &&
-            config.fuzzyEnabled &&
-            searchQuery.length >= 3 &&
-            _isFuzzyMatch(searchQuery, searchValue, config.maxFuzzyDistance)) {
-          fuzzyMatches.add(item);
-          found = true;
-          break;
+        if (!found && config.fuzzyEnabled && searchQuery.length >= 3) {
+          // Token-aware fuzzy: split both sides by whitespace for better partial matching
+          final tokens = searchValue.split(RegExp(r"\s+"));
+          bool fuzzyHit = false;
+          for (final token in tokens) {
+            if (_isFuzzyMatch(searchQuery, token, config.maxFuzzyDistance)) {
+              fuzzyHit = true;
+              break;
+            }
+          }
+          // Also check whole field as a fallback
+          fuzzyHit = fuzzyHit ||
+              _isFuzzyMatch(searchQuery, searchValue, config.maxFuzzyDistance);
+
+          if (fuzzyHit) {
+            fuzzyMatches.add(item);
+            found = true;
+            config.debugLogger
+                ?.call('Fuzzy match: id=${item.id}, field=$field');
+            break;
+          }
         }
       }
     }
@@ -179,36 +209,51 @@ class SearchEngine {
     if (s1.isEmpty) return s2.length;
     if (s2.isEmpty) return s1.length;
 
-    List<List<int>> matrix = List.generate(
-      s1.length + 1,
-      (i) => List.generate(s2.length + 1, (j) => 0),
-    );
-
-    for (int i = 0; i <= s1.length; i++) {
-      matrix[i][0] = i;
-    }
-    for (int j = 0; j <= s2.length; j++) {
-      matrix[0][j] = j;
+    // Ensure s1 is the shorter string to reduce memory usage
+    if (s1.length > s2.length) {
+      final tmp = s1;
+      s1 = s2;
+      s2 = tmp;
     }
 
-    for (int i = 1; i <= s1.length; i++) {
-      for (int j = 1; j <= s2.length; j++) {
-        int cost = s1[i - 1] == s2[j - 1] ? 0 : 1;
-        matrix[i][j] = [
-          matrix[i - 1][j] + 1, // deletion
-          matrix[i][j - 1] + 1, // insertion
-          matrix[i - 1][j - 1] + cost, // substitution
-        ].reduce((a, b) => a < b ? a : b);
+    final int len1 = s1.length;
+    final int len2 = s2.length;
+
+    // Use two-row dynamic programming to reduce memory from O(n*m) to O(min(n,m))
+    final previous = List<int>.generate(len2 + 1, (j) => j);
+    final current = List<int>.filled(len2 + 1, 0);
+
+    for (int i = 1; i <= len1; i++) {
+      current[0] = i;
+      for (int j = 1; j <= len2; j++) {
+        final int cost = s1.codeUnitAt(i - 1) == s2.codeUnitAt(j - 1) ? 0 : 1;
+        final deletion = previous[j] + 1;
+        final insertion = current[j - 1] + 1;
+        final substitution = previous[j - 1] + cost;
+        int value = deletion < insertion ? deletion : insertion;
+        if (substitution < value) value = substitution;
+        current[j] = value;
+      }
+      // swap rows
+      for (int j = 0; j <= len2; j++) {
+        final temp = previous[j];
+        previous[j] = current[j];
+        current[j] = temp;
       }
     }
-
-    return matrix[s1.length][s2.length];
+    return previous[len2];
   }
 
   /// Check fuzzy match with distance threshold
   static bool _isFuzzyMatch(String query, String text, int maxDistance) {
     if (query.length < 3) {
       return false; // Skip fuzzy search for very short queries
+    }
+
+    // Quick length filter: if lengths differ too much, skip
+    final int lengthDiff = (query.length - text.length).abs();
+    if (lengthDiff > maxDistance && lengthDiff > (query.length / 3).ceil()) {
+      return false;
     }
 
     final distance = _levenshteinDistance(query, text);

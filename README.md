@@ -56,13 +56,13 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  search: ^1.0.0
+  fuzzy_search_engine: ^1.0.0
 ```
 
 ## Quick Start
 
 ```dart
-import 'package:search/search.dart';
+import 'package:fuzzy_search_engine/fuzzy_search_engine.dart';
 
 void main() {
   final items = [
@@ -115,6 +115,8 @@ List<SearchableItem> results = SearchEngine.search(
   config: SearchConfig(
     searchFields: ['name', 'subtitle'],
     caseSensitive: false,
+    // You can enable debug logs in Flutter apps using debugPrint
+    // debugLogger: debugPrint,
   ),
 );
 ```
@@ -132,6 +134,7 @@ List<SearchableItem> results = SearchEngine.fuzzySearch(
   config: SearchConfig(
     fuzzyEnabled: true,
     maxFuzzyDistance: 3,
+    // debugLogger: debugPrint,
   ),
 );
 ```

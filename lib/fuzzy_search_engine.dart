@@ -23,7 +23,7 @@
 /// // Fuzzy search for typos
 /// final fuzzyResults = SearchEngine.fuzzySearch(items, 'aple');
 /// ```
-library search;
+library fuzzy_search_engine;
 
 export 'src/search/search_engine.dart';
 export 'src/search/searchable_item.dart';

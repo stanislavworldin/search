@@ -36,7 +36,7 @@ class SearchableItem {
   });
 
   @override
-  String toString() => '$icon $name';
+  String toString() => icon != null && icon!.isNotEmpty ? '$icon $name' : name;
 
   @override
   bool operator ==(Object other) =>
@@ -53,7 +53,7 @@ class SearchableItem {
   int get hashCode =>
       id.hashCode ^
       name.hashCode ^
-      icon.hashCode ^
-      subtitle.hashCode ^
-      searchData.hashCode;
+      (icon?.hashCode ?? 0) ^
+      (subtitle?.hashCode ?? 0) ^
+      (searchData?.hashCode ?? 0);
 }
